@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-03-25",
+  "knowledgeBase": "Knowledge Base",
+  "topics": [
+    {
+      "name": "React",
+      "file": "React/React 核心知识体系.md",
+      "aliases": ["react", "React.js", "ReactJS"],
+      "lastModified": "2026-03-25"
+    },
+    {
+      "name": "JavaScript",
+      "file": "JS/JavaScript 核心知识体系.md",
+      "aliases": ["js", "javascript", "JavaScript", "ES6", "ES2015"],
+      "lastModified": "2026-03-25"
+    },
+    {
+      "name": "HTML",
+      "file": "HTML/HTML 核心知识体系.md",
+      "aliases": ["html", "html5", "HTML5"],
+      "lastModified": "2026-03-25"
+    },
+    {
+      "name": "CSS",
+      "file": "CSS/CSS 核心知识体系.md",
+      "aliases": ["css", "css3", "CSS3", "样式", "样式表"],
+      "lastModified": "2026-03-25"
+    },
+    {
+      "name": "ClaudeCode",
+      "file": "ClaudeCode/ClaudeCode 完全指南.md",
+      "aliases": ["claude code", "claude-code", "Claude Code", "ClaudeCode"],
+      "lastModified": "2026-03-25"
+    },
+    {
+      "name": "SKILL",
+      "file": "SKILL/SKILL 核心知识体系.md",
+      "aliases": ["skill", "skills", "Skill"],
+      "lastModified": "2026-03-25"
+    }
+  ],
+  "coverage": {
+    "frontend": ["React", "JavaScript", "HTML", "CSS"],
+    "tools": ["ClaudeCode", "SKILL"]
+  }
+}

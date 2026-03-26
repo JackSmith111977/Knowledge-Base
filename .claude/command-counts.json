@@ -1,0 +1,23 @@
+{
+  "threshold": 3,
+  "patterns": {
+    "deploy": {
+      "count": 3,
+      "lastUsed": "2026-03-25T04:37:43.939Z",
+      "examples": [
+        "帮我部署项目",
+        "部署到测试环境",
+        "怎么部署到生产环境"
+      ],
+      "triggered": true
+    },
+    "test": {
+      "count": 1,
+      "lastUsed": "2026-03-25T04:37:41.521Z",
+      "examples": [
+        "部署到测试环境"
+      ],
+      "triggered": false
+    }
+  }
+}

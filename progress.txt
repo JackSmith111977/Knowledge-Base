@@ -1,0 +1,43 @@
+# 任务进度追踪
+
+## 已完成的任务 (Completed)
+
+- [x] 创建 CLAUDE.md 框架文件
+- [x] 创建 progress.txt 进度追踪文件
+- [x] 创建 Claude Code 完全指南.md 操作手册
+- [x] 创建 JavaScript 核心知识体系.md 文档
+- [x] 创建 技术面试官.md 子 agent 配置
+- [x] 迁移 CLAUDE 配置到 .claude 文件夹
+- [x] 创建 HTML 核心知识体系.md 文档
+- [x] 创建 CSS 核心知识体系.md 文档
+- [x] 完成 CSS 面试并生成评估报告
+- [x] 调研并创建 React 核心知识体系文档
+- [x] 在 CLAUDE.md 中写入知识库文档构建规则
+- [x] 优化 React 核心知识体系文档（添加底层原理和源码解析）
+- [x] 修复 React 文档章节错乱问题（删除重复章节，增强 2.4 单向数据流）
+- [x] 在 CLAUDE.md 中添加文档生成后检查清单（第 9 节）
+- [x] 改进 JavaScript 文档（添加执行上下文、事件循环、原型链、Promise 原理）
+- [x] 改进 HTML 文档（添加 Canvas 渲染原理、表单无障碍、Open Graph、结构化数据）
+- [x] 改进 CSS 文档（添加选择器匹配算法、Flex 布局算法、Grid 轨道计算、层叠上下文、GPU 加速原理）
+- [x] 创建文档调研与整理 Skill（research）
+- [x] 移动 Skill 到 .claude/skills 标准目录
+- [x] 恢复误删的 SKILL 核心知识体系文档
+- [x] 调研 Claude Code Skill 最佳实践并更新 SKILL 文档
+- [x] 创建 Skill Creator Skill（包含 9 种类型模板、检查清单、脚本）
+- [x] 按标准目录结构优化 research Skill（主文档精简至 ~500 行）
+
+
+## 正在进行的任务 (In Progress)
+
+-
+
+
+## 待完成的任务 (Pending)
+
+-
+
+
+## 备注
+
+- 此文件会在任务开始前自动更新
+- 任务完成后会自动标记为已完成
