@@ -25,6 +25,11 @@
 - [x] 调研 Claude Code Skill 最佳实践并更新 SKILL 文档
 - [x] 创建 Skill Creator Skill（包含 9 种类型模板、检查清单、脚本）
 - [x] 按标准目录结构优化 research Skill（主文档精简至 ~500 行）
+- [x] 创建 README.md 项目说明文档
+- [x] 创建 docs/PRD.md 产品需求文档
+- [x] 创建 docs/TECH_STACK.md 技术栈覆盖范围
+- [x] 创建 docs/STYLE_GUIDE.md 文档撰写规范
+- [x] 创建 docs/ROADMAP.md 知识库建设路线图
 
 
 ## 正在进行的任务 (In Progress)
