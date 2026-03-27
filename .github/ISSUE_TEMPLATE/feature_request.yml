@@ -1,0 +1,41 @@
+name: ✨ 功能建议
+description: 提出新内容建议或改进想法
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    attributes:
+      label: 需求描述
+      description: 你希望增加什么内容或功能
+      placeholder: 我希望增加关于...的文档 / 我建议改进...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 使用场景
+      description: 这个功能/内容会在什么场景下使用
+      placeholder: 当用户...时，这个功能可以...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 参考资源
+      description: 是否有相关的参考文档或链接
+      placeholder: 官方文档链接、相关教程等
+  - type: dropdown
+    attributes:
+      label: 优先级
+      description: 你认为这个需求的重要程度
+      options:
+        - P0 - 紧急（严重影响使用）
+        - P1 - 高优先级（重要改进）
+        - P2 - 普通（可有可无）
+        - P3 - 低优先级（锦上添花）
+      default: 2
+  - type: checkboxes
+    attributes:
+      label: 确认事项
+      options:
+        - label: 我已经搜索了现有的 Issue，确认这不是重复的建议
+          required: true
+        - label: 我愿意参与这个功能的实现（如提供内容或协助调研）

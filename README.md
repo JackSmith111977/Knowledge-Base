@@ -3,9 +3,11 @@
 > 基于 Claude Code 的文档优先开发系统知识库
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![GitHub stars](https://img.shields.io/github/stars/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/network)
-[![GitHub issues](https://img.shields.io/github/issues/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/issues)
+[![GitHub stars](https://img.shields.io/github/stars/JackSmith111977/Knowledge-Base.svg?style=flat&logo=github)](https://github.com/JackSmith111977/Knowledge-Base/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JackSmith111977/Knowledge-Base.svg?style=flat&logo=github)](https://github.com/JackSmith111977/Knowledge-Base/network)
+[![GitHub issues](https://img.shields.io/github/issues/JackSmith111977/Knowledge-Base.svg?logo=github)](https://github.com/JackSmith111977/Knowledge-Base/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/JackSmith111977/Knowledge-Base.svg?logo=github)](https://github.com/JackSmith111977/Knowledge-Base/commits/main)
+[![Top Language](https://img.shields.io/github/languages/top/JackSmith111977/Knowledge-Base?color=orange)](https://github.com/JackSmith111977/Knowledge-Base)
 
 ## 项目简介
 
@@ -112,6 +114,14 @@
 ├── progress.txt            # 任务进度追踪
 └── README.md               # 项目说明（本文档）
 ```
+
+---
+
+## 🔗 快速链接
+
+| 👥 贡献指南 | 📖 学习路径 | 💬 讨论区 |
+|------------|------------|----------|
+| [如何参与贡献](#3-贡献知识库) | [文档优先开发流程](#1-学习文档优先开发流程) | [GitHub Issues](https://github.com/JackSmith111977/Knowledge-Base/issues) |
 
 ---
 
