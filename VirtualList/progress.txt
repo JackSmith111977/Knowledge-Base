@@ -1,0 +1,22 @@
+# 调研进度追踪
+
+主题：虚拟列表 (Virtual List)  |  开始：2026-03-27  |  预计：2026-03-27
+
+## 章节进度
+- [x] 1.概述  - [x] 2.核心概念  - [x] 3.工作原理  - [x] 4.基础实现
+- [x] 5.高级特性  - [x] 6.主流库对比  - [x] 7.实战案例  - [x] 8.常见问题
+
+## 当前状态：✅ 调研完成
+## 已查阅来源：
+1. React Native VirtualizedList 官方文档
+2. react-window 官方文档
+3. @tanstack/virtual 官方文档
+4. rc-virtual-list 源码解析 (百度智能云)
+5. 虚拟列表技术深度解析 (CSDN)
+6. 2026 年 DevOps 工程师虚拟滚动调试指南
+7. Vue3 虚拟列表实现原理与实战
+8. Naive UI 虚拟列表性能优化策略
+
+## 生成文件
+- `Knowledge Base/VirtualList/虚拟列表核心知识体系.md` - 主文档
+- `Knowledge Base/VirtualList/progress.txt` - 进度追踪
