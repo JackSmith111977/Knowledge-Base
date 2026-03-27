@@ -2,6 +2,11 @@
 
 > 基于 Claude Code 的文档优先开发系统知识库
 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![GitHub stars](https://img.shields.io/github/stars/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/network)
+[![GitHub issues](https://img.shields.io/github/issues/JackSmith111977/Knowledge-Base.svg)](https://github.com/JackSmith111977/Knowledge-Base/issues)
+
 ## 项目简介
 
 本项目是一个 **文档优先 AI 开发系统** 的知识库，面向有一定开发经验、希望提高开发效率的开发者。
@@ -107,6 +112,24 @@
 ├── progress.txt            # 任务进度追踪
 └── README.md               # 项目说明（本文档）
 ```
+
+---
+
+## 开源协议
+
+本项目采用 **知识共享署名 4.0 国际许可协议 (CC BY 4.0)** 许可。
+
+[![CC BY 4.0](https://i.creativecommons.org/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+
+**你可以：**
+- ✅ 分享 — 在任何媒介以任何形式复制、发行本作品
+- ✅ 演绎 — 修改、转换或以本作品为基础进行创作
+- ✅ 商业使用 — 用于商业目的
+
+**条件：**
+- ⚠️ **署名** — 你必须给出适当的署名，注明是否进行了修改，并链接到本许可协议。
+
+详见 [LICENSE](LICENSE) 文件。
 
 ---
 
