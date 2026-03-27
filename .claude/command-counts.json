@@ -12,10 +12,11 @@
       "triggered": true
     },
     "test": {
-      "count": 1,
-      "lastUsed": "2026-03-25T04:37:41.521Z",
+      "count": 2,
+      "lastUsed": "2026-03-27T07:23:53.951Z",
       "examples": [
-        "部署到测试环境"
+        "部署到测试环境",
+        "test"
       ],
       "triggered": false
     }

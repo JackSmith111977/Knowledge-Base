@@ -5,7 +5,7 @@ aliases: [skill-adapter, skill-migrate, skill 迁移，适配 Skill]
 commands: [/skill-adapter]
 author: Kei
 triggers: [迁移 Skill, 适配 Skill, 这个 Skill 是从别的项目复制的，帮我适配 Skill, skill 移植]
-version: 1.0.0
+version: 1.2.0
 metadata:
   category: 部署流程
   type: 交互式配置向导
@@ -62,12 +62,20 @@ metadata:
 | **Hook 配置** | `settings.local.json` 引用 | `UserPromptSubmit` hooks |
 | **领域特定** | 技术名词库、模式库 | `TECH_ENTITIES`、`COMMAND_PATTERNS` |
 | **文件引用** | 相对路径引用 | `references/xxx.md` |
+| **MCP 服务依赖** | `mcp__` 前缀工具调用 | `mcp__WebSearch__bailian_web_search` |
+| **环境变量** | `$VAR`、`${VAR}` 格式 | `$PROJECT_DIR` |
+| **触发器配置** | YAML Frontmatter 中的 `triggers`/`commands`/`aliases` | `triggers: [调研，研究]` |
 
 ---
 
 ### 阶段 2：列出适配项
 
 **步骤 2.1：汇总适配项**
+
+**路径归一化与合并：**
+- 扫描完成后，对相同路径值进行归一化处理
+- 将使用相同路径的适配项合并为一组
+- 每组路径只提问一次，修改应用到所有位置
 
 输出格式：
 
@@ -78,13 +86,13 @@ metadata:
 
 ### Skill: [Skill 名称]
 
-| 序号 | 适配项类型 | 位置 | 当前值 | 优先级 |
-|------|------------|------|--------|--------|
-| 1 | 硬编码路径 | SKILL.md:56 | `Knowledge Base/` | 高 |
-| 2 | 脚本依赖 | SKILL.md:37 | `.claude/scripts/kb-checker.js` | 高 |
-| 3 | 领域特定 | scripts/xxx.js:20 | `TECH_ENTITIES` | 中 |
+| 序号 | 适配项类型 | 位置 | 当前值 | 优先级 | 合并 |
+|------|------------|------|--------|--------|------|
+| 1 | 硬编码路径 | SKILL.md:56 等 3 处 | `Knowledge Base/` | 高 | ✅ |
+| 2 | 脚本依赖 | SKILL.md:37 | `.claude/scripts/kb-checker.js` | 高 | - |
+| 3 | 领域特定 | scripts/xxx.js:20 | `TECH_ENTITIES` | 中 | - |
 
-**待适配总数：** 3 项
+**待适配总数：** 3 项（已合并 2 处重复路径）
 ```
 
 **步骤 2.2：确认适配顺序**
@@ -345,4 +353,5 @@ metadata:
 
 ---
 
-*Skill 版本：1.0.0 | 作者：Kei | 创建日期：2026-03-25*
+*Skill 版本：1.2.0 | 作者：Kei | 创建日期：2026-03-25*
+*更新：2026-03-27 添加触发器配置适配；添加路径归一化与合并提问规则*

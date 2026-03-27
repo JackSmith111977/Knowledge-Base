@@ -143,6 +143,37 @@ echo $PROJECT_DIR
 
 ---
 
+### 8. 触发器配置 (Trigger Configuration)
+
+**识别模式：**
+- YAML Frontmatter 中的 `triggers:` 字段
+- YAML Frontmatter 中的 `commands:` 字段
+- YAML Frontmatter 中的 `aliases:` 字段
+
+**示例：**
+```yaml
+---
+name: research
+triggers: [调研，研究，整理一份]
+commands: [/research]
+aliases: [skill-adapter, skill-migrate]
+---
+```
+
+**适配方式：**
+- **冲突检查**：检查新项目是否已有相同的命令名称
+- **语境适配**：询问是否需要修改触发词以适应新项目的语境
+- **触发词调整**：询问是否需要添加新项目特定的触发词
+
+**处理建议：**
+| 字段 | 适配策略 |
+|------|----------|
+| `commands:` | 检查与新项目已有 Skill 的命令冲突 |
+| `triggers:` | 根据新项目业务语境调整触发词 |
+| `aliases:` | 通常保留原样，除非有特殊需求 |
+
+---
+
 ## 优先级定义
 
 | 优先级 | 说明 | 处理建议 |
@@ -150,6 +181,67 @@ echo $PROJECT_DIR
 | **高** | 影响核心功能 | 必须立即处理 |
 | **中** | 影响部分功能 | 建议处理 |
 | **低** | 可选优化 | 可跳过 |
+
+---
+
+## 路径归一化与合并规则
+
+### 相同路径合并策略
+
+**目的：** 避免对相同路径配置的重复提问，提升适配效率
+
+**规则：**
+1. **识别阶段**：扫描时记录每个路径值及其出现位置
+2. **分组阶段**：将相同路径值的适配项归为一组
+3. **提问阶段**：对每组路径只提问一次，应用到所有位置
+
+**示例：**
+```
+发现 3 处使用路径 `Knowledge Base/`：
+- SKILL.md:56 - 存储位置
+- scripts/kb-checker.js:10 - 输出目录
+- references/config.md:5 - 引用路径
+
+→ 合并为 1 次提问：
+"发现 3 处使用路径 `Knowledge Base/`，请指定新项目中的对应路径："
+```
+
+### 路径归一化格式
+
+| 原始路径 | 归一化后 | 说明 |
+|------|------|------|
+| `Knowledge Base/` | `Knowledge Base/` | 统一不带尾部斜杠 |
+| `Knowledge Base` | `Knowledge Base/` | 自动添加斜杠 |
+| `./Knowledge Base/` | `Knowledge Base/` | 移除相对路径前缀 |
+| `/path/to/Knowledge Base/` | `Knowledge Base/` | 提取项目相对路径 |
+
+### 合并提问格式
+
+```markdown
+## 适配项 #X：路径配置（合并 3 处）
+
+**路径值：** `Knowledge Base/`
+
+**出现位置：**
+| 文件 | 行号 | 说明 |
+|------|------|------|
+| SKILL.md | 56 | 存储位置 |
+| scripts/kb-checker.js | 10 | 输出目录 |
+| references/config.md | 5 | 引用路径 |
+
+**请选择适配方式：**
+1. **使用默认路径**：`Knowledge Base/`（当前项目目录）
+2. **自定义路径**：输入新路径
+3. **跳过**：暂不处理
+
+请回复选项编号或输入路径。
+```
+
+### 应用修改规则
+
+- 用户确认后，一次性替换所有位置的路径
+- 修改报告中列出所有受影响的文件和行号
+- 支持撤销操作（一次性撤销所有相关修改）
 
 ---
 
@@ -170,6 +262,7 @@ echo $PROJECT_DIR
 | 脚本引用 | `\.claude/scripts/\S+` |
 | 文件引用 | `\`[a-zA-Z0-9_/.-]+\.(md|json|js|sh)\`` |
 | 环境变量 | `\$[A-Z_]+` 或 `\$\{[A-Z_]+\}` |
+| **触发器配置** | `^(triggers\|commands\|aliases):\s*\[.*\]` (YAML Frontmatter) |
 
 ---
 

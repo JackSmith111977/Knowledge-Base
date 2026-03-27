@@ -121,78 +121,53 @@ Object.prototype.toString.call([]);  // "[object Array]"
 
 **执行上下文的组成：**
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   执行上下文                             │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  1. 变量环境（Variable Environment）                    │
-│     - 存储 var 声明的变量                               │
-│     - 存储函数声明                                      │
-│     - 存储 arguments 对象                                │
-│                                                         │
-│  2. 词法环境（Lexical Environment）                     │
-│     - 存储 let/const 声明的变量                         │
-│     - 存储块级作用域                                    │
-│     - 包含对外部词法环境的引用（作用域链）              │
-│                                                         │
-│  3. this 绑定                                           │
-│     - 指向当前执行上下文的调用者                        │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Context[执行上下文]
+        direction TB
+        VE[1. 变量环境 Variable Environment<br/>var 声明、函数声明、arguments 对象]
+        LE[2. 词法环境 Lexical Environment<br/>let/const 声明、块级作用域、作用域链]
+        This[3. this 绑定<br/>指向当前执行上下文的调用者]
+    end
 ```
 
 **执行上下文栈（Call Stack）：**
 
-```
-JavaScript 使用栈来管理执行上下文，遵循 LIFO（后进先出）原则。
+```mermaid
+flowchart TD
+    subgraph S1["1. 初始状态"]
+        direction BT
+        G1[Global]
+    end
 
-示例代码：
-function foo() {
-  console.log('foo');
-  bar();
-}
+    subgraph S2["2. 调用 foo()"]
+        direction BT
+        F2[foo]
+        G2[Global]
+        F2 --- G2
+    end
 
-function bar() {
-  console.log('bar');
-}
+    subgraph S3["3. foo 调用 bar()"]
+        direction BT
+        B3[bar]
+        F3[foo]
+        G3[Global]
+        B3 --- F3 --- G3
+    end
 
-foo();  // 调用 foo
+    subgraph S4["4. bar 执行完毕返回"]
+        direction BT
+        F4[foo]
+        G4[Global]
+        F4 --- G4
+    end
 
-执行栈变化：
+    subgraph S5["5. foo 执行完毕返回"]
+        direction BT
+        G5[Global]
+    end
 
-1. 初始状态
-   ┌─────────┐
-   │  Global │
-   └─────────┘
-
-2. 调用 foo()
-   ┌─────────┐
-   │   foo   │
-   ├─────────┤
-   │  Global │
-   └─────────┘
-
-3. foo 调用 bar()
-   ┌─────────┐
-   │   bar   │
-   ├─────────┤
-   │   foo   │
-   ├─────────┤
-   │  Global │
-   └─────────┘
-
-4. bar 执行完毕返回
-   ┌─────────┐
-   │   foo   │
-   ├─────────┤
-   │  Global │
-   └─────────┘
-
-5. foo 执行完毕返回
-   ┌─────────┐
-   │  Global │
-   └─────────┘
+    S1 --> S2 --> S3 --> S4 --> S5
 ```
 
 **三种类型的执行上下文：**
@@ -321,47 +296,44 @@ JavaScript 是单线程语言，同一时间只能执行一个任务。为了处
 
 **事件循环的完整架构：**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      JavaScript 运行时                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌──────────────┐                                              │
-│  │  调用栈       │                                              │
-│  │  (Call Stack)│                                              │
-│  │  ┌────────┐  │                                              │
-│  │  │ func C │  │                                              │
-│  │  ├────────┤  │                                              │
-│  │  │ func B │  │                                              │
-│  │  ├────────┤  │                                              │
-│  │  │ func A │  │                                              │
-│  │  ├────────┤  │                                              │
-│  │  │  main  │  │                                              │
-│  │  └────────┘  │                                              │
-│  └──────────────┘                                              │
-│         ↓                                                       │
-│  ┌─────────────────────────────────────────┐                   │
-│  │           Web APIs / Node APIs          │                   │
-│  │  - setTimeout                           │                   │
-│  │  - setInterval                          │                   │
-│  │  - fetch / XMLHttpRequest               │                   │
-│  │  - DOM 事件                             │                   │
-│  │  - Promise                              │                   │
-│  └─────────────────────────────────────────┘                   │
-│         ↓                                                       │
-│  ┌──────────────┐    ┌──────────────┐                         │
-│  │  宏任务队列   │    │  微任务队列   │                         │
-│  │  (Task Queue)│    │(Microtask Q.)│                         │
-│  │  ┌────────┐  │    │  ┌────────┐  │                         │
-│  │  │ timer1 │  │    │  │promise1│  │                         │
-│  │  ├────────┤  │    │  ├────────┤  │                         │
-│  │  │  I/O   │  │    │  │promise2│  │                         │
-│  │  ├────────┤  │    │  ├────────┤  │                         │
-│  │  │render  │  │    │  │promise3│  │                         │
-│  │  └────────┘  │    │  └────────┘  │                         │
-│  └──────────────┘    └──────────────┘                         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Runtime[JavaScript 运行时]
+        subgraph CallStack[调用栈 Call Stack]
+            direction BT
+            C[func C]
+            B[func B]
+            A[func A]
+            M[main]
+        end
+
+        subgraph WebAPIs[Web APIs / Node APIs]
+            direction TB
+            T1[setTimeout]
+            T2[setInterval]
+            T3[fetch / XMLHttpRequest]
+            T4[DOM 事件]
+            T5[Promise]
+        end
+
+        subgraph MacroTask[宏任务队列 Task Queue]
+            direction TB
+            MT1[timer1]
+            MT2[I/O]
+            MT3[render]
+        end
+
+        subgraph MicroTask[微任务队列 Microtask Q.]
+            direction TB
+            m1[promise1]
+            m2[promise2]
+            m3[promise3]
+        end
+    end
+
+    CallStack --> WebAPIs
+    WebAPIs --> MacroTask
+    WebAPIs --> MicroTask
 ```
 
 **任务分类：**
@@ -577,62 +549,44 @@ JavaScript 中每个对象都可以有另一个对象作为它的原型，原型
 
 **三个关键概念：**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    原型三要素                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  1. __proto__（隐式原型）                                      │
-│     - 每个对象都有一个__proto__属性                            │
-│     - 指向该对象的原型对象                                     │
-│     - 用于原型链查找                                           │
-│                                                                 │
-│  2. prototype（显式原型）                                      │
-│     - 只有函数才有 prototype 属性                               │
-│     - 指向通过该函数创建的实例的原型                           │
-│     - 用于设置实例的__proto__                                   │
-│                                                                 │
-│  3. constructor（构造函数引用）                                │
-│     - 原型对象上有 constructor 属性                             │
-│     - 指向原型对应的函数                                        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Concepts[原型三要素]
+        direction TB
+        P1["1. __proto__（隐式原型）<br/>每个对象都有，指向原型对象"]
+        P2["2. prototype（显式原型）<br/>只有函数才有，指向实例的原型"]
+        P3["3. constructor（构造函数引用）<br/>原型对象上，指向对应函数"]
+    end
 ```
 
 **原型链关系图：**
 
+```mermaid
+flowchart LR
+    subgraph Instance[实例对象]
+        alice[alice<br/>name: Alice]
+    end
+
+    subgraph PersonProto[Person.prototype 原型对象]
+        direction TB
+        sayHello[sayHello: fn]
+        proto1[__proto__]
+        constructor[constructor]
+    end
+
+    subgraph ObjectProto[Object.prototype]
+        direction TB
+        toString[toString: fn]
+        hasOwn[hasOwnProperty]
+        protoNull[__proto__: null]
+    end
+
+    alice -->|__proto__| PersonProto
+    PersonProto -->|__proto__| ObjectProto
+    ObjectProto -->|__proto__| NULL[null 原型链终点]
+
+    constructor -.->|指向 | PersonC[Person]
 ```
-function Person(name) {
-  this.name = name;
-}
-
-const alice = new Person('Alice');
-
-内存中的关系：
-
-┌─────────────┐     __proto__     ┌──────────────────┐
-│   alice     │ ────────────────> │  Person.prototype│
-│  (实例对象)  │                   │   (原型对象)      │
-│             │                   │                  │
-│ name: Alice │                   │ sayHello: fn     │
-└─────────────┘                   │ __proto__        │──┐
-                                  │ constructor      │  │
-                                  └──────────────────┘  │
-                                           │            │
-                                           │ __proto__  │
-                                           │            │
-                                           ↓            │
-                                  ┌──────────────────┐  │
-                                  │ Object.prototype │  │
-                                  │                  │  │
-                                  │ toString: fn     │  │
-                                  │ hasOwnProperty   │  │
-                                  │ __proto__: null  │  │
-                                  └──────────────────┘
-                                           │
-                                           │ null
-                                           ↓
-                                        (原型链终点)
 
 // 验证关系
 alice.__proto__ === Person.prototype        // true
@@ -786,33 +740,27 @@ Promise 是 JavaScript 中用于处理异步操作的对象。它代表一个异
 
 **Promise 状态机：**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Promise 状态机                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│                      ┌─────────────┐                           │
-│                      │  pending    │                           │
-│                      │  (等待中)    │                           │
-│                      └──────┬──────┘                           │
-│                             │                                   │
-│              ┌──────────────┼──────────────┐                   │
-│              │              │              │                   │
-│              ↓              ↓              ↓                   │
-│        resolve()      reject()      throw error                │
-│              │              │              │                   │
-│              ↓              ↓              ↓                   │
-│     ┌────────────────┐  ┌────────────────┐                    │
-│     │   fulfilled    │  │    rejected    │                    │
-│     │    (成功)      │  │    (失败)      │                    │
-│     └────────────────┘  └────────────────┘                    │
-│                                                                 │
-│  状态转换规则：                                                 │
-│  - pending → fulfilled (调用 resolve 时)                        │
-│  - pending → rejected (调用 reject 或抛出异常时)                │
-│  - fulfilled/rejected → 不可再变化 (状态固化)                   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> pending: 创建 Promise
+
+    state pending {
+        [*] --> waiting
+    end
+
+    pending --> fulfilled: resolve()
+    pending --> rejected: reject()
+    pending --> rejected: throw error
+
+    fulfilled --> [*]
+    rejected --> [*]
+
+    note right of pending
+        状态转换规则
+        pending → fulfilled (resolve)
+        pending → rejected (reject/throw)
+        fulfilled/rejected → 不可变
+    end note
 ```
 
 **Promise 简化实现：**
@@ -1137,34 +1085,27 @@ element.removeEventListener("click", handler);
 
 **事件传播三阶段：**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    事件传播三阶段                               │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  DOM 结构：                                                     │
-│                                                                 │
-│           ┌─────────┐                                          │
-│           │  html   │                                          │
-│           └────┬────┘                                          │
-│                │                                                │
-│           ┌────┴────┐                                          │
-│           │  body   │                                          │
-│           └────┬────┘                                          │
-│                │                                                │
-│           ┌────┴────┐                                          │
-│           │  div    │ ← 捕获阶段：事件从外向内传递              │
-│           └────┬────┘   html → body → div                      │
-│                │                                                │
-│           ┌────┴────┐                                          │
-│           │ button  │ ← 目标阶段：事件到达目标元素              │
-│           └────┬────┘                                          │
-│                │                                                │
-│                │ ← 冒泡阶段：事件从内向外传递                   │
-│                │   button → div → body → html                  │
-│                ↓                                                │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    html[html] --> body[body]
+    body --> div[div]
+    div --> button[button]
+
+    subgraph Capturing[捕获阶段 Capturing Phase]
+        C1[事件从外向内传递<br/>html → body → div]
+    end
+
+    subgraph Target[目标阶段 Target Phase]
+        T1[事件到达目标元素<br/>button 监听器执行]
+    end
+
+    subgraph Bubbling[冒泡阶段 Bubbling Phase]
+        B1[事件从内向外传递<br/>button → div → body → html]
+    end
+
+    div -.-> Capturing
+    button -.-> Target
+    button -.-> Bubbling
 ```
 
 **三个阶段详解：**
@@ -1391,33 +1332,21 @@ const name = user.name ?? "Guest";
 
 **JavaScript 内存模型：**
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    JavaScript 内存模型                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  栈内存（Stack）                                                │
-│  ┌─────────────────────────────────────────┐                   │
-│  │  - 存储基本类型（值类型）                │                   │
-│  │    String, Number, Boolean, null,       │                   │
-│  │    undefined, Symbol, BigInt            │                   │
-│  │                                         │                   │
-│  │  - 存储函数执行上下文                    │                   │
-│  │  - 大小固定，分配快速                    │                   │
-│  │  - 遵循 LIFO（后进先出）                 │                   │
-│  └─────────────────────────────────────────┘                   │
-│                                                                 │
-│  堆内存（Heap）                                                 │
-│  ┌─────────────────────────────────────────┐                   │
-│  │  - 存储引用类型                          │                   │
-│  │    Object, Array, Function, Date, etc.  │                   │
-│  │                                         │                   │
-│  │  - 大小不固定，动态分配                  │                   │
-│  │  - 通过引用访问                          │                   │
-│  │  - 由垃圾回收器管理                      │                   │
-│  └─────────────────────────────────────────┘                   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Stack[栈内存 Stack]
+        direction TB
+        S1["基本类型存储<br/>String, Number, Boolean<br/>null, undefined, Symbol, BigInt"]
+        S2["函数执行上下文"]
+        S3["大小固定，分配快速<br/>LIFO 后进先出"]
+    end
+
+    subgraph Heap[堆内存 Heap]
+        direction TB
+        H1["引用类型存储<br/>Object, Array, Function, Date"]
+        H2["大小不固定，动态分配"]
+        H3["通过引用访问<br/>垃圾回收器管理"]
+    end
 ```
 
 **栈内存 vs 堆内存：**
@@ -1477,51 +1406,48 @@ console.log(obj1.name);  // 'Bob'（受影响）
 
 **标记 - 清除示意图：**
 
-```
-内存中的对象图：
+```mermaid
+flowchart TD
+    subgraph Roots[GC Roots]
+        R[Root 全局对象/栈变量]
+    end
 
-      ┌─────────┐
-      │  Root   │  ← GC 起点（全局对象、栈变量）
-      └────┬────┘
-           │
-     ┌─────┴─────┐
-     ↓           ↓
-┌─────────┐  ┌─────────┐
-│  Obj A  │  │  Obj B  │  ← 可达对象（标记为存活）
-└────┬────┘  └─────────┘
-     │
-     ↓
-┌─────────┐
-│  Obj C  │  ← 可达对象（标记为存活）
-└─────────┘
+    subgraph Reachable[可达对象 标记为存活]
+        A[Obj A]
+        B[Obj B]
+        C[Obj C]
+    end
 
-┌─────────┐
-│  Obj X  │  ← 不可达对象（垃圾，将被清除）
-└─────────┘
+    subgraph Garbage[不可达对象 垃圾]
+        X[Obj X]
+        Y[Obj Y]
+    end
 
-┌─────────┐
-│  Obj Y  │  ← 不可达对象（垃圾，将被清除）
-└─────────┘
+    R --> A
+    R --> B
+    A --> C
+
+    style Reachable fill:#d4edda
+    style Garbage fill:#f8d7da
 ```
 
 **分代回收（Generational GC）：**
 
-```
-V8 引擎（Chrome、Node.js）使用分代回收策略：
+```mermaid
+flowchart LR
+    subgraph Young[新生代 Young Generation]
+        Y1[新创建的对象]
+        Y2[对象死亡率极高]
+        Y3[频繁 Minor GC]
+    end
 
-新生代（Young Generation）
-├─ 存储新创建的对象
-├─ 对象死亡率极高
-└─ 频繁进行小规模 GC（Minor GC）
+    subgraph Old[老生代 Old Generation]
+        O1[存活时间长的对象]
+        O2[从新生代晋升]
+        O3[较少 Major GC]
+    end
 
-老生代（Old Generation）
-├─ 存储存活时间长的对象
-├─ 从新生代晋升的对象
-└─ 较少进行大规模 GC（Major GC）
-
-优化效果：
-- 大部分对象在创建后很快死亡 → 新生代快速回收
-- 只有少量对象存活 → 减少老生代 GC 频率
+    Young -->|晋升 | Old
 ```
 
 ---
