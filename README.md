@@ -31,18 +31,45 @@
 
 ### 技术栈知识库
 
+#### 基础知识
+
 | 技术栈 | 文档 |
 |--------|------|
-| JavaScript | [JS/JavaScript 核心知识体系.md](JS/JavaScript 核心知识体系.md) |
-| HTML | [HTML/HTML 核心知识体系.md](HTML/HTML 核心知识体系.md) |
-| CSS | [CSS/CSS 核心知识体系.md](CSS/CSS 核心知识体系.md) |
-| React | [React/React 核心知识体系.md](React/React 核心知识体系.md) |
-| Next.js | [Next.js/Next.js 核心知识体系.md](Next.js/Next.js 核心知识体系.md) |
-| Vite | [Vite/Vite 核心知识体系.md](Vite/Vite 核心知识体系.md) |
-| webpack | [webpack/webpack 核心知识体系.md](webpack/webpack 核心知识体系.md) |
-| SKILL | [SKILL/SKILL 核心知识体系.md](SKILL/SKILL 核心知识体系.md) |
-| Prompt Engineering | [Prompt Engineering/提示词工程核心知识体系.md](Prompt%20Engineering/提示词工程核心知识体系.md) |
-| VirtualList | [VirtualList/虚拟列表核心知识体系.md](VirtualList/虚拟列表核心知识体系.md) |
+| HTML | [Tech/Fundamentals/HTML/HTML 核心知识体系.md](Tech/Fundamentals/HTML/HTML 核心知识体系.md) |
+| CSS | [Tech/Fundamentals/CSS/CSS 核心知识体系.md](Tech/Fundamentals/CSS/CSS 核心知识体系.md) |
+| JavaScript | [Tech/Fundamentals/JS/JavaScript 核心知识体系.md](Tech/Fundamentals/JS/JavaScript 核心知识体系.md) |
+| Algorithms | [Tech/Fundamentals/Algorithms/滑动窗口核心知识体系.md](Tech/Fundamentals/Algorithms/滑动窗口核心知识体系.md) |
+
+#### 框架
+
+| 技术栈 | 文档 |
+|--------|------|
+| React | [Tech/Frameworks/React/React 核心知识体系.md](Tech/Frameworks/React/React 核心知识体系.md) |
+| Next.js | [Tech/Frameworks/Next.js/Next.js 核心知识体系.md](Tech/Frameworks/Next.js/Next.js 核心知识体系.md) |
+| Taro | [Tech/Frameworks/Taro/Taro 跨端框架核心知识体系.md](Tech/Frameworks/Taro/Taro 跨端框架核心知识体系.md) |
+
+#### 构建工具
+
+| 技术栈 | 文档 |
+|--------|------|
+| Vite | [Tech/BuildTools/Vite/Vite 核心知识体系.md](Tech/BuildTools/Vite/Vite 核心知识体系.md) |
+| webpack | [Tech/BuildTools/webpack/webpack 核心知识体系.md](Tech/BuildTools/webpack/webpack 核心知识体系.md) |
+
+#### AI / 智能体
+
+| 技术栈 | 文档 |
+|--------|------|
+| ClaudeCode | [Tech/AI/ClaudeCode/ClaudeCode 完全指南.md](Tech/AI/ClaudeCode/ClaudeCode 完全指南.md) |
+| Prompt Engineering | [Tech/AI/Prompt Engineering/提示词工程核心知识体系.md](Tech/AI/Prompt%20Engineering/提示词工程核心知识体系.md) |
+| SKILL | [Tech/AI/SKILL/SKILL 核心知识体系.md](Tech/AI/SKILL/SKILL 核心知识体系.md) |
+
+#### 业务专题
+
+| 技术栈 | 文档 |
+|--------|------|
+| DevOps | [Tech/Business/DevOps/DevOps 核心知识体系.md](Tech/Business/DevOps/DevOps 核心知识体系.md) |
+| LazyLoading | [Tech/Business/LazyLoading/懒加载核心知识体系.md](Tech/Business/LazyLoading/懒加载核心知识体系.md) |
+| VirtualList | [Tech/Business/VirtualList/虚拟列表核心知识体系.md](Tech/Business/VirtualList/虚拟列表核心知识体系.md) |
 
 ### 开发规范
 
@@ -100,19 +127,31 @@
 │   ├── TECH_STACK.md      # 技术栈覆盖范围
 │   ├── STYLE_GUIDE.md     # 文档撰写规范
 │   └── ROADMAP.md         # 知识库建设路线图
-├── JS/                     # JavaScript 知识库
-├── HTML/                   # HTML 知识库
-├── CSS/                    # CSS 知识库
-├── React/                  # React 知识库
-├── Next.js/                # Next.js 知识库
-├── Vite/                   # Vite 知识库
-├── webpack/                # webpack 知识库
-├── SKILL/                  # SKILL 知识库
-├── Prompt Engineering/     # Prompt Engineering 知识库
-├── VirtualList/            # 虚拟列表知识库
-├── Guide/                  # 指南文档
-├── progress.txt            # 任务进度追踪
-└── README.md               # 项目说明（本文档）
+├── Tech/                   # 技术知识库
+│   ├── Fundamentals/      # 基础技术
+│   │   ├── HTML/
+│   │   ├── CSS/
+│   │   ├── JS/
+│   │   └── Algorithms/
+│   ├── Frameworks/        # 框架
+│   │   ├── React/
+│   │   ├── Next.js/
+│   │   └── Taro/
+│   ├── BuildTools/        # 构建工具
+│   │   ├── Vite/
+│   │   └── webpack/
+│   ├── AI/                # AI/智能体
+│   │   ├── ClaudeCode/
+│   │   ├── Prompt Engineering/
+│   │   └── SKILL/
+│   └── Business/          # 业务专题
+│       ├── DevOps/
+│       ├── LazyLoading/
+│       └── VirtualList/
+├── Career/                # 职业发展
+├── Guide/                 # 指南文档
+├── progress.txt           # 任务进度追踪
+└── README.md              # 项目说明（本文档）
 ```
 
 ---

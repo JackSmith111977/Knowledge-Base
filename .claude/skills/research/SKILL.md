@@ -1,11 +1,11 @@
 ---
 name: research
-description: 深度调研任意主题并生成结构化知识文档，按渐进式披露原则优化，主文档仅保留核心工作流程
+description: 深度调研任意主题并生成结构化知识文档，按渐进式披露原则优化，主文档仅保留核心工作流程，默认使用 Mermaid 绘制专业图表
 aliases: [research, 调研助手，整理文档，研究]
 commands: [/research]
 author: Kei
 triggers: [调研，研究，整理一份，帮我调研，生成文档，深度分析，整理资料，做调研]
-version: 3.2.0
+version: 4.0.0
 compatibility: 需要 WebSearch 和 WebFetch 能力
 metadata:
   category: 调研整理
@@ -23,9 +23,20 @@ metadata:
 2. 来源优先级：官方文档 > 技术博客 > 源码 > 视频 > 论文
 3. 透明可追溯：所有信息标注来源
 4. 持续可更新：检测已有文档并更新
+5. **图表美观：默认使用 Mermaid 绘制流程图/架构图，禁止 ASCII 字符画图**
 
 **搜索规则：**
 - **禁止使用原生 WebSearch**：必须使用 MCP 提供的 `mcp__WebSearch__bailian_web_search` 进行搜索
+
+**图表规范：**
+- **禁止 ASCII 流程图**：不要使用 `┌─┐│└┘├┤┬┴` 等字符绘制框图
+- **默认使用 Mermaid**：流程图/架构图/状态图等统一使用 Mermaid 语法
+- **图表类型选择**：
+  - 流程/步骤 → `flowchart LR` 或 `flowchart TD`
+  - 架构分层 → `flowchart TB` + `subgraph`
+  - 状态变化 → `stateDiagram-v2`
+  - 组件交互 → `sequenceDiagram`
+  - 数据结构 → `flowchart LR` + `subgraph`
 
 ---
 
@@ -259,11 +270,12 @@ Knowledge Base/
 |------|------|------|
 | 文档结构模板 | `references/doc-structure.md` | 完整文档结构 |
 | 引用格式规范 | `references/citation-guide.md` | 引用标注规则 |
+| **Mermaid 图表规范** | `references/mermaid-guide.md` | **图表绘制指南** |
 | 检查清单 | `checklists/review-checklist.md` | Review 检查 |
 | 踩坑清单 | `references/gotchas.md` | 常见错误 |
 | 示例 | `examples/` | 使用示例 |
 
 ---
 
-*Skill 版本：3.2.0 | 作者：Kei | 更新：2026-03-26*
-*更新说明：添加阶段 1.2 预调研步骤，先执行基础网络搜索识别官方文档和核心资源，再基于实际搜索结果生成调研大纲*
+*Skill 版本：4.0.0 | 作者：Kei | 更新：2026-03-28*
+*更新说明：升级 Mermaid 图表规范，禁止 ASCII 流程图，默认使用 Mermaid 绘制专业美观图表*

@@ -1,0 +1,25 @@
+# 调研进度追踪
+
+主题：Claude Code Skills 全局安装与配置  |  开始：2026-03-28  |  预计：2026-03-28
+
+## 章节进度
+- [x] 1.概述
+- [x] 2.核心概念
+- [x] 3.快速入门
+- [x] 4.全局安装详解
+- [x] 5.SKILL.md 格式规范
+- [x] 6.9 种 Skill 类型
+- [x] 7.实战案例
+- [x] 8.常见问题
+- [x] 9.学习资源
+
+## 当前状态：✅ 调研完成，文档已生成
+## 已查阅来源：
+- Claude Code 官方文档 (code.claude.com/docs/en/skills)
+- Anthropic Skills GitHub 仓库
+- VoltAgent awesome-claude-skills 社区仓库
+- 知乎：Anthropic 官方分享 -9 种类型与最佳实践
+- CSDN: Skills 核心原理与渐进式披露机制
+- 阿里云：从零开始构建第一个 Skill
+- 博客园：Claude Code 10 个必装 Skills 完全指南
+
