@@ -1,0 +1,25 @@
+# Zustand 调研进度追踪
+
+主题：Zustand 状态管理库  |  开始：2026-03-28  |  预计：2026-03-28
+
+## 章节进度
+- [x] 1. 概述
+- [x] 2. 核心概念
+- [x] 3. 快速入门
+- [x] 4. 基础用法
+- [x] 5. 高级特性
+- [x] 6. 底层原理
+- [x] 7. 实战案例
+- [x] 8. 常见问题
+- [x] 9. 学习资源
+
+## 当前状态：完成
+## 已查阅来源：
+- 官方文档：https://docs.pmnd.rs/zustand
+- GitHub: https://github.com/pmndrs/zustand
+- 技术博客：CSDN、知乎、简书
+
+## 生成文件
+- Zustand 核心知识体系.md (主文档)
+- outline.md (大纲)
+- progress.txt (进度追踪)
