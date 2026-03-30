@@ -1,0 +1,23 @@
+# 调研进度追踪
+
+主题：Claude Code 路由系统可行性调研  |  开始：2026-03-30  |  预计：2026-03-30
+
+## 章节进度
+- [x] 1.概述
+- [x] 2.技术架构分析
+- [x] 3.现有解决方案
+- [x] 4.可行性评估
+- [x] 5.实现方案建议
+- [x] 6.类似项目参考
+- [x] 7.风险与限制
+- [x] 8.结论与建议
+
+## 当前状态：已完成
+
+## 已查阅来源
+- Claude Code 官方文档与 SDK
+- MCP (Model Context Protocol) 协议规范
+- Ceros 控制方案技术说明
+- Multi-Agent 编排框架研究 (2025-2026)
+- Azure Scheduler Agent Supervisor 模式
+- tmux/screen 终端复用技术文档
