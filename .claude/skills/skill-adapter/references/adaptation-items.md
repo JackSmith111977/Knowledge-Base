@@ -49,6 +49,7 @@ node .claude/scripts/kb-checker.js --detect "$USER_PROMPT"
 - `settings.local.json` 中的 `hooks` 配置
 - `UserPromptSubmit`、`PostToolUse` 等事件
 - 钩子命令引用
+- **Hooks 脚本路径**：`node` 命令 + 路径引用
 
 **示例：**
 ```json
@@ -66,6 +67,25 @@ node .claude/scripts/kb-checker.js --detect "$USER_PROMPT"
 **适配方式：**
 - 确认是否需要添加到新项目的 settings.local.json
 - 确认命令路径是否需要更新
+- **验证脚本是否存在**：检查引用的脚本文件是否实际存在
+- **检查路径格式**：确认路径分隔符（`/` vs `\`）、环境变量（`%CD%`）是否正确
+
+**Hooks 路径检查规则：**
+
+| 检查项 | 错误示例 | 正确做法 |
+|--------|----------|----------|
+| **脚本存在性** | 路径指向不存在的文件 | 使用 Glob 扫描确认脚本存在 |
+| **路径分隔符** | Linux: `/` 与 Windows: `\` 混用 | 根据平台统一分隔符 |
+| **环境变量展开** | `%CD%` 未展开 | 使用绝对路径或确认 shell 支持 |
+| **空格处理** | 路径含空格未加引号 | 路径用引号包裹，空格转义 |
+| **转义字符** | Windows 路径单反斜杠未转义 | JSON 中使用双反斜杠 `\\` |
+
+**Hooks 验证流程：**
+1. 提取 `settings.local.json` 中所有 hooks 配置
+2. 解析 command 字段，提取脚本路径
+3. 使用 Glob 扫描确认脚本文件存在
+4. 检查路径格式是否正确
+5. 如发现问题，询问用户是否需要修复
 
 ---
 

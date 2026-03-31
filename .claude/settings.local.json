@@ -37,12 +37,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"%CD%\\.claude\\scripts\\count-tracker.js\" --track \"$USER_PROMPT\" 2>&1 || true",
+            "command": "node \"D:\\\\WorkPlace\\\\VibeCoding\\\\Knowledge Base\\\\.claude\\\\scripts\\\\count-tracker.js\" --track \"$USER_PROMPT\" 2>&1 || true",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "node \"%CD%\\.claude\\scripts\\kb-checker.js\" --detect \"$USER_PROMPT\" 2>&1 || true",
+            "command": "node \"D:\\\\WorkPlace\\\\VibeCoding\\\\Knowledge Base\\\\.claude\\\\scripts\\\\kb-checker.js\" --detect \"$USER_PROMPT\" 2>&1 || true",
             "timeout": 10
           }
         ]

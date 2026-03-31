@@ -60,11 +60,37 @@ metadata:
 | **硬编码路径** | 绝对路径或特定目录名 | `Knowledge Base/`、`/Users/xxx/` |
 | **脚本依赖** | `.claude/scripts/` 引用 | `node .claude/scripts/xxx.js` |
 | **Hook 配置** | `settings.local.json` 引用 | `UserPromptSubmit` hooks |
+| **Hooks 脚本路径** | hooks command 中的脚本引用 | `node .claude/scripts/xxx.js` |
 | **领域特定** | 技术名词库、模式库 | `TECH_ENTITIES`、`COMMAND_PATTERNS` |
 | **文件引用** | 相对路径引用 | `references/xxx.md` |
 | **MCP 服务依赖** | `mcp__` 前缀工具调用 | `mcp__WebSearch__bailian_web_search` |
 | **环境变量** | `$VAR`、`${VAR}` 格式 | `$PROJECT_DIR` |
 | **触发器配置** | YAML Frontmatter 中的 `triggers`/`commands`/`aliases` | `triggers: [调研，研究]` |
+
+**步骤 1.4：Hooks 专项检查（如存在）**
+
+如果检测到 `settings.local.json` 中存在 hooks 配置，执行额外检查：
+
+```markdown
+### Hooks 配置检查
+
+检测到 hooks 配置，开始验证...
+
+**检查项：**
+1. 脚本文件是否存在
+2. 路径格式是否正确（Windows/Linux 分隔符）
+3. 环境变量是否可展开（如 %CD%）
+4. 路径是否包含空格需要引号包裹
+```
+
+**Hooks 验证流程：**
+
+| 检查项 | 检测方法 | 修复建议 |
+|--------|----------|----------|
+| **脚本存在性** | Glob 扫描脚本路径 | 确认脚本已复制或路径正确 |
+| **路径分隔符** | 检查 `/` 和 `\` 混用 | 统一为平台适用分隔符 |
+| **环境变量** | 检测 `%VAR%` 或 `$VAR` | 建议改用绝对路径或确认支持 |
+| **JSON 转义** | 检查 Windows 路径单反斜杠 | JSON 中使用 `\\` 双反斜杠 |
 
 ---
 
@@ -353,5 +379,6 @@ metadata:
 
 ---
 
-*Skill 版本：1.2.0 | 作者：Kei | 创建日期：2026-03-25*
+*Skill 版本：1.3.0 | 作者：Kei | 创建日期：2026-03-25*
 *更新：2026-03-27 添加触发器配置适配；添加路径归一化与合并提问规则*
+*更新：2026-03-31 增加 Hooks 脚本路径检查功能，支持验证脚本存在性、路径格式、环境变量*
