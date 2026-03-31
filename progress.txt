@@ -30,6 +30,7 @@
 - [x] 创建 docs/TECH_STACK.md 技术栈覆盖范围
 - [x] 创建 docs/STYLE_GUIDE.md 文档撰写规范
 - [x] 创建 docs/ROADMAP.md 知识库建设路线图
+- [x] 调研 Google 5 种 Agent Skill 设计模式并生成文档（1527 行，含 8 章完整结构）
 
 
 ## 正在进行的任务 (In Progress)
