@@ -32,6 +32,7 @@
 - [x] 创建 docs/ROADMAP.md 知识库建设路线图
 - [x] 调研 Google 5 种 Agent Skill 设计模式并生成文档（1527 行，含 8 章完整结构）
 - [x] 补充 Google 5 种设计模式文档第 6-8 章（Inversion、Pipeline、模式组合）
+- [x] 升级 skill-creator 至 v4.0.0（新增谷歌 5 种设计模式推荐与选择阶段）
 
 
 ## 正在进行的任务 (In Progress)
