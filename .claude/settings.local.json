@@ -1,0 +1,52 @@
+{
+  "skipWebFetchPreflight": true,
+  "permissions": {
+    "allow": [
+      "mcp__WebSearch__bailian_web_search",
+      "mcp__playwright__*",
+      "mcp__next-devtools__*",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log:*)",
+      "Bash(npm run:*)",
+      "Bash(pnpm run:*)",
+      "Bash(yarn:*)",
+      "Bash(node:*)",
+      "Bash(python:*)"
+    ],
+    "deny": [
+      "WebSearch",
+      "Bash(rm -rf *)",
+      "Bash(git push --force)",
+      "Bash(curl * | bash)",
+      "Bash(sudo *)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"%CD%\\.claude\\scripts\\count-tracker.js\" --track \"$USER_PROMPT\" 2>&1 || true",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node \"%CD%\\.claude\\scripts\\kb-checker.js\" --detect \"$USER_PROMPT\" 2>&1 || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

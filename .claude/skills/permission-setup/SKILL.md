@@ -2,7 +2,7 @@
 name: permission-setup
 description: 为项目配置 Claude Code 减少询问模式，扫描现有配置和 MCP 命令后生成 permissions 规则
 aliases: [configure-permissions, setup-auto-accept]
-triggers: [减少询问，自动执行，权限配置，免确认，直接执行]
+triggers: [减少询问，自动执行，权限配置，免确认，直接执行，Fetch 免确认]
 author: Kei
 version: 1.0.0
 compatibility:
@@ -80,8 +80,15 @@ find .claude -name "settings*.json" 2>/dev/null
 ```
 
 **2.3 生成建议规则**
-- 允许：读操作 + 编辑操作 + 扫描到的命令 + MCP 工具
+- 允许：读操作 + 编辑操作 + 扫描到的命令 + MCP 工具 + WebFetch
 - 禁止：危险命令（rm -rf, sudo, curl|bash, git push --force）
+
+**2.4 WebFetch 配置**
+```json
+{
+  "skipWebFetchPreflight": true  // 跳过 WebFetch 确认
+}
+```
 
 ---
 
@@ -111,7 +118,22 @@ find .claude -name "settings*.json" 2>/dev/null
 建议允许所有 MCP 工具？[Y/n]
 ```
 
-**3.3 Hooks 配置询问**
+**3.3 WebFetch 配置询问**
+```markdown
+## WebFetch 权限配置
+
+检测到需要使用 WebFetch 的场景：
+- 抓取网页内容进行数据分析
+- 获取外部文档资料
+
+建议配置：
+- [ ] skipWebFetchPreflight: true（跳过 WebFetch 确认）
+- [ ] WebFetch(domain:example.com)（指定允许域名）
+
+请确认是否需要配置？
+```
+
+**3.4 Hooks 配置询问**
 ```markdown
 ## Hooks 配置
 
@@ -191,6 +213,7 @@ node -e "JSON.parse(require('fs').readFileSync('.claude/settings.local.json'))"
 
 ```json
 {
+  "skipWebFetchPreflight": true,
   "permissions": {
     "allow": [
       "Read",
@@ -199,6 +222,8 @@ node -e "JSON.parse(require('fs').readFileSync('.claude/settings.local.json'))"
       "Glob",
       "Grep",
       "mcp__WebSearch__bailian_web_search",
+      "mcp__playwright__*",
+      "WebFetch(domain:*)",
       "Bash(npm run:*)",
       "Bash(git status)",
       "Bash(git diff)",

@@ -65,7 +65,15 @@
 | Next DevTools | `mcp__next-devtools__` | `mcp__next-devtools__nextjs_index` |
 | Playwright | `mcp__playwright__` | `mcp__playwright__browser_navigate` |
 
-## 测试命令示例
+## WebFetch 配置
+
+| 配置项 | 说明 | 示例 |
+|--------|------|------|
+| `skipWebFetchPreflight` | 跳过所有 WebFetch 确认 | `true` |
+| `WebFetch(domain:*)` | 允许所有域名 | 不推荐 |
+| `WebFetch(domain:example.com)` | 仅允许指定域名 | 推荐 |
+
+## 配置文件内容
 
 ```bash
 # 验证 JSON 格式
