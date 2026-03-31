@@ -4,10 +4,16 @@ description: 分析权限请求日志，生成 permissions 完善建议并支持
 aliases: [analyze-permissions, permission-log]
 triggers: [分析权限，权限建议，完善 permissions, 查看权限日志，权限优化]
 author: Kei
-version: 1.0.1
+version: 2.0.0
 compatibility:
   minVersion: 3.0.0
   features: [PermissionRequest Hook, analyze-permissions.js]
+metadata:
+  category: 部署流程
+  type: 数据分析 + 报告生成
+  patterns: [reviewer, generator]
+  stages: "4"
+  gating: required
 ---
 
 # Permission Analyzer - 权限分析助手

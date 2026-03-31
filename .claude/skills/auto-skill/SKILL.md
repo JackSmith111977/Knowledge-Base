@@ -5,10 +5,13 @@ aliases: [auto-skill, skill 建议器，模式检测]
 commands: [/auto-skill]
 author: Kei
 triggers: [检测到重复，创建 Skill, 这个我经常用，每次都这样，又是这个操作]
-version: 1.0.0
+version: 2.0.0
 metadata:
   category: 团队规范
   type: 自动触发 + 手动询问
+  patterns: [tool-wrapper, generator]
+  stages: "3"
+  gating: optional
 ---
 
 # auto-skill - 重复流程检测与 Skill 建议

@@ -5,10 +5,14 @@ aliases: [skill-adapter, skill-migrate, skill 迁移，适配 Skill]
 commands: [/skill-adapter]
 author: Kei
 triggers: [迁移 Skill, 适配 Skill, 这个 Skill 是从别的项目复制的，帮我适配 Skill, skill 移植]
-version: 1.2.0
+version: 2.0.0
 metadata:
   category: 部署流程
   type: 交互式配置向导
+  pattern: inversion
+  interaction: multi-turn
+  stages: "4"
+  gating: required
 ---
 
 # skill-adapter - Skill 迁移适配向导

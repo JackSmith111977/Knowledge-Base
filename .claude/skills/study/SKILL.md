@@ -5,10 +5,14 @@ aliases: [study, learn, feynman-study, 费曼学习]
 commands: [/study]
 author: Kei
 triggers: [我想学习，教我，帮我理解，带我做，学习，复习，怎么学]
-version: 2.1.0
+version: 3.0.0
 metadata:
   category: 调研整理
   type: 互动教学 + 知识巩固
+  patterns: [pipeline, inversion]
+  interaction: multi-turn
+  stages: "7"
+  gating: required
 ---
 
 # study - 费曼学习法互动教学 Skill
@@ -215,5 +219,5 @@ metadata:
 
 ---
 
-*Skill 版本：2.3.0 | 作者：Kei | 更新：2026-03-29*
-*更新说明：添加出题范围约束，解决测验题目超纲问题*
+*Skill 版本：2.2.0 | 作者：Kei | 更新：2026-03-27*
+*更新说明：添加章节切换机制和进度追踪，解决完成一章后直接结束的问题*

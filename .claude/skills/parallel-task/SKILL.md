@@ -4,10 +4,13 @@ description: 启动并发 SubAgent 执行通用并发任务，支持批量并行
 aliases: [concurrent-agents, multi-agent, parallel-execution]
 triggers: [并发执行，并行处理，多任务分析，批量审查，全面分析，同时执行]
 author: Kei
-version: 1.0.0
+version: 2.0.0
 metadata:
   category: 任务编排
   type: 通用并发任务
+  pattern: pipeline
+  stages: "4"
+  checkpoints: required
 ---
 
 # Parallel-Task Skill

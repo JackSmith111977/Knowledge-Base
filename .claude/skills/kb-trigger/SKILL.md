@@ -5,10 +5,13 @@ aliases: [kb-trigger, 知识库触发器，知识检测，doc-detector]
 commands: [/kb-trigger]
 author: Kei
 triggers: [知识库没有，缺少文档，这个有文档吗，检查一下知识库，是否有关于]
-version: 1.0.0
+version: 2.0.0
 metadata:
   category: 文档生成
   type: 自动触发 + 询问创建
+  patterns: [tool-wrapper, generator]
+  stages: "3"
+  gating: optional
 ---
 
 # kb-trigger - 知识库缺失检测与自动调研触发

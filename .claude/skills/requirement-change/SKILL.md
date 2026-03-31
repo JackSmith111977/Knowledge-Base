@@ -5,11 +5,15 @@ aliases: [req-change, requirement, req]
 commands: [/req-change]
 author: Kei
 triggers: [添加需求，修改 PRD，需求变更，更新需求，调整需求]
-version: 1.0.0
+version: 2.0.0
 compatibility: 需要 WebFetch 能力读取文档
 metadata:
   category: 团队规范 + 文档生成（混合型）
   type: 需求管理
+  patterns: [inversion, pipeline]
+  interaction: multi-turn
+  stages: "4"
+  gating: required
 ---
 
 # 需求变更 Skill

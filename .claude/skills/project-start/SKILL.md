@@ -5,10 +5,14 @@ aliases: [project-start, project-init, doc-first-init, 项目启动]
 commands: [/project-start]
 author: Kei
 triggers: [新项目，初始化项目，创建文档，项目启动，帮我 setup 项目，创建新项目]
-version: 1.0.0
+version: 2.0.0
 metadata:
   category: 部署流程
   type: 交互式初始化向导
+  patterns: [inversion, pipeline]
+  interaction: multi-turn
+  stages: "3"
+  gating: required
 ---
 
 # project-start - 文档优先的 Agent 智能开发启动

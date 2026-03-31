@@ -1,13 +1,19 @@
 ---
 name: permission-setup
-description: 为项目配置 Claude Code 减少询问模式，扫描现有配置和 MCP 命令后生成 permissions 规则，支持渐进式完善
+description: 为项目配置 Claude Code 减少询问模式，扫描现有配置和 MCP 命令后生成 permissions 规则
 aliases: [configure-permissions, setup-auto-accept]
-triggers: [减少询问，自动执行，权限配置，免确认，直接执行，Fetch 免确认，完善权限]
+triggers: [减少询问，自动执行，权限配置，免确认，直接执行，Fetch 免确认]
 author: Kei
-version: 1.3.0
+version: 2.0.0
 compatibility:
   minVersion: 3.0.0
-  features: [settings.json, MCP, Bash hooks, Agent, PermissionRequest logging]
+  features: [settings.json, MCP, Bash hooks, Agent]
+metadata:
+  category: 部署流程
+  type: 交互式配置向导
+  patterns: [pipeline, tool-wrapper]
+  stages: "4"
+  gating: required
 ---
 
 # Permission Setup - 减少询问配置助手
@@ -33,7 +39,6 @@ compatibility:
 2. **分离询问**: 项目配置和全局 MCP 分别确认
 3. **安全默认**: deny 规则默认包含危险命令
 4. **可逆配置**: 生成的配置易于修改和撤销
-5. **渐进式完善**: 通过 PermissionRequest 日志持续学习和完善权限配置
 
 ---
 
@@ -277,186 +282,6 @@ node -e "JSON.parse(require('fs').readFileSync('.claude/settings.local.json'))"
 
 ---
 
-### 阶段 7：渐进式完善权限（新增）
-
-**7.1 配置 PermissionRequest Hook 日志记录**
-
-在初始化配置时，自动添加权限请求日志 Hook：
-
-```json
-{
-  "hooks": {
-    "PermissionRequest": [{
-      "matcher": ".*",
-      "hooks": [{
-        "type": "command",
-        "command": "echo \"$(date '+%Y-%m-%d %H:%M:%S') | $PERMISSION_REQUEST | $USER_PROMPT\" >> .claude/logs/permission-requests.log",
-        "timeout": 5
-      }]
-    }]
-  }
-}
-```
-
-**7.2 日志文件结构**
-
-日志文件格式（`.claude/logs/permission-requests.log`）：
-```
-2026-03-31 10:30:00 | Bash(pnpm test:e2e) | 运行 E2E 测试
-2026-03-31 10:32:15 | Bash(npx playwright test) | 使用 Playwright 测试
-2026-03-31 10:35:00 | Bash(pnpm test:e2e) | 再次运行测试
-```
-
-**7.3 分析并生成建议**
-
-创建分析脚本 `.claude/scripts/analyze-permissions.js`：
-
-```javascript
-/**
- * 分析权限请求日志，生成完善建议
- * 用法：node .claude/scripts/analyze-permissions.js [days]
- */
-
-const fs = require('fs');
-const path = require('path');
-
-const logFile = path.join(__dirname, '../logs/permission-requests.log');
-const days = parseInt(process.argv[2]) || 7; // 默认分析最近 7 天
-
-// 读取日志
-if (!fs.existsSync(logFile)) {
-  console.log('日志文件不存在，尚未记录任何权限请求');
-  process.exit(0);
-}
-
-const lines = fs.readFileSync(logFile, 'utf8').split('\n').filter(Boolean);
-const cutoff = new Date();
-cutoff.setDate(cutoff.getDate() - days);
-
-// 提取命令并统计
-const commandCounts = {};
-const commandExamples = {};
-
-lines.forEach(line => {
-  const parts = line.split(' | ');
-  if (parts.length < 3) return;
-  
-  const timestamp = new Date(parts[0]);
-  if (timestamp < cutoff) return;
-  
-  const match = parts[1].match(/Bash\(([^)]+)\)/);
-  if (!match) return;
-  
-  const cmd = match[1];
-  commandCounts[cmd] = (commandCounts[cmd] || 0) + 1;
-  commandExamples[cmd] = parts[2] || '';
-});
-
-// 生成建议规则
-const suggestions = [];
-const sorted = Object.entries(commandCounts).sort((a, b) => b[1] - a[1]);
-
-sorted.forEach(([cmd, count]) => {
-  // 跳过已在 allow 列表的命令
-  const baseCmd = cmd.split(':')[0] || cmd.split(' ')[0];
-  suggestions.push({
-    cmd: cmd,
-    baseCmd: baseCmd,
-    count: count,
-    example: commandExamples[cmd],
-    suggestion: `Bash(${baseCmd}:*)`
-  });
-});
-
-// 输出去重后的建议
-const uniqueSuggestions = suggestions.filter((v, i, a) => 
-  a.findIndex(s => s.baseCmd === v.baseCmd) === i
-).slice(0, 10); // 最多 10 条
-
-console.log('=== 权限请求分析（最近${days}天）===\n');
-console.log('| 命令模式 | 请求次数 | 建议规则 | 示例场景 |');
-console.log('|----------|----------|----------|----------|');
-
-uniqueSuggestions.forEach(s => {
-  console.log(`| ${s.baseCmd} | ${s.count} | Bash(${s.baseCmd}:*) | ${s.example.slice(0, 20)}... |`);
-});
-
-console.log('\n=== 建议添加的配置 ===\n');
-console.log('将以下规则添加到 `.claude/settings.local.json` 的 permissions.allow：\n');
-const uniqueRules = [...new Set(uniqueSuggestions.map(s => `Bash(${s.baseCmd}:*)`))];
-console.log(JSON.stringify(uniqueRules, null, 2));
-```
-
-**7.4 创建 `/permission-analyzer` Skill**
-
-创建 `.claude/skills/permission-analyzer/SKILL.md`：
-
-```markdown
----
-name: permission-analyzer
-description: 分析权限请求日志，生成 permissions 完善建议
-aliases: [analyze-permissions, permission-log]
-triggers: [分析权限，权限建议，完善 permissions, 查看权限日志]
-version: 1.0.0
----
-
-# Permission Analyzer - 权限分析助手
-
-## 用途
-
-分析 `.claude/logs/permission-requests.log` 中的权限请求记录，识别高频请求的命令模式，生成 permissions 完善建议。
-
-## 工作流程
-
-1. 读取权限请求日志
-2. 统计各命令的请求频率
-3. 识别可合并的通配符模式
-4. 输出建议配置
-5. 询问用户是否应用
-
-## 输出格式
-
-```markdown
-## 权限请求分析（最近 7 天）
-
-| 命令模式 | 请求次数 | 建议规则 | 示例场景 |
-|----------|----------|----------|----------|
-| pnpm test | 15 | Bash(pnpm test:*) | 运行 E2E 测试 |
-| npx playwright | 8 | Bash(npx:*) | Playwright 测试 |
-
-## 建议添加的配置
-
-将以下规则添加到 `.claude/settings.local.json`：
-
-```json
-"Bash(pnpm test:*)",
-"Bash(npx:*)"
-```
-
-是否应用以上配置？回复"是"自动写入。
-```
-
-## 相关 Skill
-
-- `/permission-setup` - 初始权限配置
-- `/permission-analyzer` - 渐进式完善
-```
-
-**7.5 使用方式**
-
-```bash
-# 分析最近 7 天的权限请求
-/permission-analyzer
-
-# 分析最近 30 天
-/permission-analyzer 30
-
-# 应用建议配置
-是
-```
-
----
-
 ## 输出格式
 
 ### 最终配置示例
@@ -528,8 +353,7 @@ version: 1.0.0
 
 ### 显式命令
 ```bash
-/permission-setup           # 初始配置
-/permission-analyzer        # 分析日志并完善
+/permission-setup
 /configure-permissions
 /setup-auto-accept
 ```
@@ -540,13 +364,10 @@ version: 1.0.0
 - "权限配置"
 - "免确认"
 - "直接执行"
-- "完善权限"
-- "分析权限请求"
 
 ---
 
-*Skill 版本：1.3.0 | 作者：Kei | 创建日期：2026-03-31*
+*Skill 版本：1.2.0 | 作者：Kei | 创建日期：2026-03-31*
 *更新：
 - 2026-03-31 增加"是否允许 Claude Code 修改自身配置"询问选项，支持分别配置 settings.local.json 和 settings.json 的编辑/写入权限
 - 2026-03-31 增加 Agent 工具支持，默认允许使用 SubAgent 执行任务
-- 2026-03-31 增加渐进式完善权限功能（阶段 7），新增 PermissionRequest Hook 日志记录和 /permission-analyzer 命令

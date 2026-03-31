@@ -69,7 +69,7 @@ Knowledge Base/
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
-| 职业发展 | Career/ | 软件工程师简历与开源工具指南.md |
+| 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
 
@@ -82,6 +82,13 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | 软件工程师简历与开源工具指南.md | 职业发展 | 2026-03-28 |
+| 前端工程师 AI 转型核心知识体系.md | AI 转型 | 2026-03-31 |
+
+### Tech/AI/Career/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| 前端工程师 AI 转型核心知识体系.md | AI 转型 | 2026-03-31 |
 
 ### Guide/
 

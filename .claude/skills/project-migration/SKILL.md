@@ -4,10 +4,14 @@ description: 为已有代码库的传统项目建立文档优先 AI 开发系统
 aliases: [legacy-migration, doc-migration, migration-assist]
 triggers: [老项目接入 AI, 为这个项目加文档，迁移到文档优先，分析现有代码，制定迁移计划，项目现状分析]
 author: Kei
-version: 1.0.0
+version: 2.0.0
 metadata:
   category: 部署流程
   type: 交互式迁移向导
+  patterns: [inversion, pipeline, generator]
+  interaction: multi-turn
+  stages: "3"
+  gating: required
 ---
 
 # project-migration - 传统项目文档优先迁移
