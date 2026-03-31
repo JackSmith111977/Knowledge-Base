@@ -23,3 +23,25 @@
 - 阿里云：从零开始构建第一个 Skill
 - 博客园：Claude Code 10 个必装 Skills 完全指南
 
+---
+
+主题：Claude Code Hooks 自动化  |  开始：2026-03-31  |  预计：2026-03-31
+
+## 章节进度
+- [x] 1. Hooks 概述与核心机制
+- [x] 2. 13 个生命周期钩子详解
+- [x] 3. 钩子配置语法与规则
+- [x] 4. 实战场景与配置模板
+- [x] 5. Hooks 与 Permissions 协同工作
+- [x] 6. 安全边界与风险控制
+- [x] 7. 调试与故障排查
+- [x] 8. 高级扩展：插件开发
+
+## 当前状态：✅ 调研完成，文档已生成
+## 已查阅来源：
+- CSDN - Claude Code Hooks Mastery 完全指南：13 个生命周期钩子全解析
+- 菜鸟教程 - Claude Code 钩子官方文档
+- GitHub - claude-code-hooks-mastery 项目
+- 知乎 - Claude Code 扩展指南：Skills、MCP、Hooks、Sub-agents 详解
+- 博客园 - Claude Code Windows 通知配置指南
+
