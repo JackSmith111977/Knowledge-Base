@@ -3,10 +3,13 @@
 > **一句话描述：** Taro 是京东出品的开放式跨端跨框架解决方案，支持使用 React/Vue/Nerv 等框架开发微信小程序、H5、React Native、鸿蒙等 10+ 平台应用
 > **特色：** 编译时 + 运行时双重架构、多框架支持、渐进式迁移、AI 增强编译
 
-**版本：** 1.0.0
+**版本：** 1.1.0
 **创建时间：** 2026-03-28
-**最后更新：** 2026-03-28
-**调研状态：** 进行中
+**最后更新：** 2026-03-31
+**调研状态：** ✅ 已完成
+
+**更新记录：**
+- v1.1.0 (2026-03-31): 新增 AST 转换完整流程、Babel 插件生态、SWC 编译器优化、虚拟 DOM 数据结构与 Reconciler 原理、云函数底层原理（Serverless 架构、冷启动/热启动、实例复用、调用链路）
 
 ---
 
@@ -460,6 +463,193 @@ dist/weapp/pages/index/index.json  // 配置
 }
 ```
 
+#### 2.2.5 AST 转换完整流程深度解析
+
+**AST 转换的三个阶段：**
+
+```
+解析 (Parsing) → 转换 (Transformation) → 生成 (Generation)
+```
+
+**阶段 1：解析 - 源代码 → AST**
+
+Taro 使用 `@babel/parser` 将 JSX/TSX代码解析为抽象语法树：
+
+```jsx
+// 源代码
+function App() {
+  return (
+    <View className="container">
+      <Text>Hello Taro</Text>
+    </View>
+  );
+}
+```
+
+经过 `@babel/parser` 解析后生成的 AST（简化版）：
+
+```json
+{
+  "type": "FunctionDeclaration",
+  "id": { "type": "Identifier", "name": "App" },
+  "body": {
+    "type": "BlockStatement",
+    "body": [{
+      "type": "ReturnStatement",
+      "argument": {
+        "type": "JSXElement",
+        "openingElement": {
+          "type": "JSXOpeningElement",
+          "name": { "type": "JSXIdentifier", "name": "View" },
+          "attributes": [{
+            "type": "JSXAttribute",
+            "name": { "type": "JSXIdentifier", "name": "className" },
+            "value": { "type": "StringLiteral", "value": "container" }
+          }]
+        },
+        "children": [{
+          "type": "JSXElement",
+          "openingElement": {
+            "name": { "type": "JSXIdentifier", "name": "Text" }
+          },
+          "children": [{
+            "type": "JSXText",
+            "value": "Hello Taro"
+          }]
+        }]
+      }
+    }]
+  }
+}
+```
+
+**阶段 2：转换 - Visitor 模式遍历与转换**
+
+Taro 通过 `@babel/traverse` 使用 Visitor 模式遍历 AST，`babel-plugin-transform-taro-components`插件负责组件转换：
+
+```javascript
+// babel-plugin-transform-taro-components 核心逻辑（简化版）
+module.exports = function({ types: t }) {
+  return {
+    visitor: {
+      JSXElement(path, state) {
+        const nodeName = path.node.openingElement.name.name;
+        const platform = state.opts.platform; // 'weapp' | 'h5' | 'rn'
+        
+        // 组件名映射表
+        const componentMap = {
+          View: { weapp: 'view', h5: 'div', rn: 'View' },
+          Text: { weapp: 'text', h5: 'span', rn: 'Text' },
+          Button: { weapp: 'button', h5: 'button', rn: 'Button' }
+        };
+        
+        // 转换组件名
+        if (componentMap[nodeName] && componentMap[nodeName][platform]) {
+          path.node.openingElement.name.name = componentMap[nodeName][platform];
+          path.node.closingElement && (
+            path.node.closingElement.name.name = componentMap[nodeName][platform]
+          );
+        }
+        
+        // 转换属性名（className → class）
+        path.node.openingElement.attributes.forEach(attr => {
+          if (attr.name.name === 'className') {
+            attr.name.name = platform === 'weapp' ? 'class' : 'className';
+          }
+        });
+      }
+    }
+  };
+};
+```
+
+**阶段 3：生成 - AST → 目标代码**
+
+使用 `@babel/generator` 将转换后的 AST 生成目标代码：
+
+```javascript
+// 转换完成后，生成各平台特定代码
+const generate = require('@babel/generator').default;
+const output = generate(transformedAst, {}, code);
+
+// 微信小程序目标代码 (WXML)
+<view class="container">
+  <text>Hello Taro</text>
+</view>
+
+// H5 目标代码 (HTML)
+<div class="container">
+  <span>Hello Taro</span>
+</div>
+```
+
+#### 2.2.6 Babel 插件生态系统详解
+
+Taro 构建了一套完整的 Babel 插件体系：
+
+```javascript
+// babel-preset-taro 配置（简化版）
+module.exports = {
+  presets: [
+    ['@babel/preset-env', { modules: false }],
+    '@babel/preset-typescript',
+    '@babel/preset-react'
+  ],
+  plugins: [
+    // Taro 核心插件
+    'babel-plugin-transform-taro-components',  // 组件转换
+    'babel-plugin-transform-taroapi',          // API 导入转换
+    'babel-plugin-transform-jsx-to-stylesheet', // JSX 样式转换
+    
+    // 语法支持插件
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    ['@babel/plugin-transform-class-properties', { loose: true }]
+  ]
+};
+```
+
+**核心插件详解：**
+
+| 插件 | 作用 | 转换示例 |
+|------|------|----------|
+| `babel-plugin-transform-taro-components` | 组件名/属性转换 | `<View>` → `<view>` |
+| `babel-plugin-transform-taroapi` | API 按需引入 | `import Taro from '@tarojs/taro'` → `import { request } from '@tarojs/taro-h5'` |
+| `babel-plugin-transform-jsx-to-stylesheet` | JSX 样式转换 | `className="box"` → `class="box"` |
+
+**API 按需引入转换示例：**
+
+```javascript
+// 转换前（开发者代码）
+import Taro from '@tarojs/taro'
+Taro.request({ url: '/api/data' })
+Taro.showToast({ title: '成功' })
+
+// 转换后（H5 环境）
+import { request } from '@tarojs/taro-h5'
+import { showToast } from '@tarojs/taro-h5'
+request({ url: '/api/data' })
+showToast({ title: '成功' })
+```
+
+#### 2.2.7 SWC 编译器优化策略（Taro 4.x+）
+
+Taro 4.x 集成了基于 Rust 的 SWC 编译器，提供更快的编译速度：
+
+**SWC 插件体系：**
+
+| 插件 | 作用 |
+|------|------|
+| `swc_plugin_compile_mode` | 编译模式优化 |
+| `swc_plugin_define_config` | 配置定义处理 |
+| `swc_plugin_compile_mode_pre_process` | 预处理优化 |
+
+**性能对比：**
+
+| 编译器 | 编译速度 | 内存占用 |
+|--------|----------|----------|
+| Babel | 基准 | 基准 |
+| SWC | 提升 40% | 减少 50% |
+
 ### 2.3 运行时架构与虚拟 DOM
 
 #### 2.3.1 运行时核心任务
@@ -475,16 +665,19 @@ dist/weapp/pages/index/index.json  // 配置
 
 Taro 实现跨平台渲染的关键是抽象了一套**与平台无关的虚拟 DOM (VNode)**，再通过各端的渲染器将 VNode 转换为对应平台的原生节点。
 
-**VNode 核心结构：**
+**VNode 核心数据结构：**
 
 ```typescript
 // packages/taro-runtime/src/dom/element.ts
 class VNode {
-  public tag: string        // 节点标签：view/div(统一抽象)
-  public props: Record<string, any>  // 节点属性
-  public children: VNode[]  // 子节点
-  public key: string | null // 节点唯一标识
-  public platformTag: string | null  // 平台专属标签 (编译时填充)
+  public tag: string                    // 节点标签：view/div(统一抽象)
+  public props: Record<string, any>     // 节点属性
+  public children: VNode[]              // 子节点
+  public key: string | null             // 节点唯一标识
+  public platformTag: string | null     // 平台专属标签 (编译时填充)
+  public _wxNodeId: string              // 小程序节点唯一标识
+  public style: Style                   // 样式对象
+  public dataset: Record<string, any>   // data-* 数据集
 
   constructor(tag: string, props: any, children: VNode[], key?: string) {
     this.tag = tag
@@ -495,26 +688,69 @@ class VNode {
 }
 ```
 
-**各端渲染器适配：**
+**VNode 树结构示例：**
+
+```
+VNode (root)
+│
+├── VNode (View)
+│   ├── _wxNodeId: "0"
+│   ├── props: { className: "container" }
+│   └── children: [
+│       ├── VNode (Text)
+│       │   ├── _wxNodeId: "0-1"
+│       │   └── children: ["Hello Taro"]
+│       └── VNode (Button)
+│           ├── _wxNodeId: "0-2"
+│           └── props: { onClick: [Function] }
+│     ]
+└── VNode (View)
+    └── ...
+```
+
+**各端渲染器适配实现：**
 
 ```typescript
+// packages/taro-runtime/src/renderer/index.ts
 const renderers = {
   // 小程序渲染器：将 VNode 转换为小程序模板和 setData 数据
   miniProgram: (vnode: VNode) => {
     // 转换标签：Taro 统一的 view → 小程序原生 view
     vnode.platformTag = mapTagToMiniProgram(vnode.tag)
+    
     // 生成小程序模板字符串 (编译时输出到 wxml)
     const template = generateMiniProgramTemplate(vnode)
+    
     // 生成 setData 需要的数据 (运行时更新)
     const data = generateMiniProgramData(vnode)
+    
     return { template, data }
   },
 
   // H5 渲染器：转换为 DOM 节点
   h5: (vnode: VNode) => {
     vnode.platformTag = mapTagToH5(vnode.tag)  // view → div
+    
     const el = document.createElement(vnode.platformTag)
-    // 设置属性、挂载子节点...
+    
+    // 设置属性
+    Object.keys(vnode.props).forEach(key => {
+      if (key === 'className') {
+        el.className = vnode.props[key]
+      } else if (key.startsWith('on')) {
+        // 事件绑定
+        const eventType = key.toLowerCase()
+        el.addEventListener(eventType, vnode.props[key])
+      } else {
+        el.setAttribute(key, vnode.props[key])
+      }
+    })
+    
+    // 挂载子节点
+    vnode.children.forEach(child => {
+      el.appendChild(renderH5(child))
+    })
+    
     return el
   },
 
@@ -526,7 +762,126 @@ const renderers = {
 }
 ```
 
-#### 2.3.3 DOM/BOM API 抽象
+**渲染器工作流程：**
+
+```
+1. 接收 VNode 树
+       ↓
+2. 递归遍历每个节点
+       ↓
+3. 根据 platform 映射标签名
+       ↓
+4. 创建平台原生节点
+       ↓
+5. 设置属性/事件
+       ↓
+6. 挂载子节点
+       ↓
+7. 返回原生节点树
+```
+
+#### 2.3.3 虚拟 DOM 更新机制与 Reconciler
+
+**更新队列与批量更新：**
+
+```typescript
+// packages/taro-runtime/src/hydrate/index.ts
+let updateQueue: Record<string, any> = {}
+let isBatching = false
+
+// 添加更新到队列
+function enqueueUpdate(nodeId: string, data: any) {
+  updateQueue[nodeId] = {
+    ...updateQueue[nodeId],
+    ...data
+  }
+  
+  // 非批量模式下立即刷新
+  if (!isBatching) {
+    flushUpdateQueue()
+  }
+}
+
+// 刷新更新队列
+function flushUpdateQueue() {
+  if (Object.keys(updateQueue).length === 0) return
+  
+  // 小程序：调用 setData 批量更新
+  if (process.env.TARO_ENV === 'weapp') {
+    page.setData(updateQueue)
+  }
+  
+  // H5: 直接操作 DOM
+  else {
+    applyDOMUpdates(updateQueue)
+  }
+  
+  updateQueue = {}
+}
+```
+
+**Reconciler 差异对比算法：**
+
+Taro 的 Reconciler 基于 React Reconciler 实现，核心是 Diff 算法：
+
+```typescript
+// packages/taro-runtime/src/reconciler/diff.ts
+function reconcileChildren(oldVNode: VNode, newVNode: VNode) {
+  // 1. 类型不同，直接替换
+  if (oldVNode.tag !== newVNode.tag) {
+    replaceNode(oldVNode, newVNode)
+    return
+  }
+  
+  // 2. 类型相同，对比属性
+  const propUpdates = diffProps(oldVNode.props, newVNode.props)
+  if (propUpdates.length > 0) {
+    updateProperties(oldVNode, propUpdates)
+  }
+  
+  // 3. 对比子节点（Diff 核心）
+  reconcileChildFibers(oldVNode.children, newVNode.children)
+}
+
+// 子节点 Diff 策略
+function reconcileChildFibers(oldChildren: VNode[], newChildren: VNode[]) {
+  // 3.1 key 相同的节点，复用
+  // 3.2 新增节点，创建
+  // 3.3 删除节点，移除
+  // 3.4 移动节点，调整位置
+  
+  // 只对比同一层级，避免跨层级操作
+  // 使用 key 提升复用率
+}
+```
+
+**Reconciler 核心原则：**
+
+| 原则 | 说明 | 效果 |
+|------|------|------|
+| **同层对比** | 只对比同一层级的 VNode，不跨层级 | 时间复杂度 O(n) |
+| **类型判断** | 类型不同直接替换，不深度对比 | 快速失败，减少计算 |
+| **Key 优化** | 使用 key 标识可复用节点 | 提升列表更新性能 |
+| **批量更新** | 多次 setState 合并为一次更新 | 减少 setData 调用次数 |
+
+**Diff 流程示例：**
+
+```
+旧 VNode 树：          新 VNode 树：
+View                  View
+├─ Text "Hello"       ├─ Text "Hello"  ← 相同，复用
+└─ Text "World"       └─ Text "Taro"   ← 文本变化，更新
+
+执行步骤：
+1. 对比根节点：类型相同 (View)，进入属性对比
+2. 对比属性：无变化
+3. 对比子节点：
+   - 第 1 个：Text 类型相同，内容相同 → 复用
+   - 第 2 个：Text 类型相同，内容不同 → 更新文本
+4. 生成更新指令：updateText("0-1", "Taro")
+```
+
+### 2.4 DOM/BOM API 抽象
 
 Taro 在运行时实现了完整的 DOM/BOM API 抽象，使得 React/Vue 能够在小程序等无 DOM 环境中运行：
 
@@ -581,7 +936,7 @@ export const taroWindowProvider = {
 }
 ```
 
-### 2.4 Hooks 实现机制
+### 2.5 Hooks 实现机制
 
 #### 2.4.1 Hooks 链表结构
 
@@ -789,7 +1144,7 @@ useEffect(() => {
 }, [])
 ```
 
-### 2.5 多端适配机制
+### 2.6 多端适配机制
 
 #### 2.5.1 平台差异抹平策略
 
@@ -848,7 +1203,7 @@ function request(options) {
 | H5 | rem/vw | 基于根字体或视口宽度 |
 | React Native | dp | 逻辑像素单位 |
 
-### 2.6 常见误区与注意事项
+### 2.7 常见误区与注意事项
 
 #### 2.6.1 编译时误区
 
@@ -2950,7 +3305,263 @@ export default App
 
 ### 7.3 云函数开发
 
-#### 7.3.1 创建云函数
+#### 7.3.1 云函数底层原理深度解析
+
+**Serverless 架构核心概念：**
+
+Serverless（无服务器）并不代表真的不需要服务器，而是指**服务器由云厂商维护**，开发者只需关注业务逻辑。云函数是 FaaS（Function as a Service）的典型实现。
+
+**云计算演进阶段：**
+
+```
+阶段 1: On-Premise（本地部署）
+  └─ 自建机房、自购服务器、自运维
+
+阶段 2: IaaS（基础设施即服务）
+  └─ 云厂商维护硬件 + 虚拟化，用户维护 OS + 应用
+
+阶段 3: PaaS（平台即服务）
+  └─ 云厂商维护到 Runtime，用户维护应用代码
+
+阶段 4: FaaS（函数即服务）← 云函数位于此层
+  └─ 云厂商维护一切，用户只关注 Function 业务逻辑
+```
+
+**云函数执行环境架构：**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    微信云开发平台                         │
+├─────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
+│  │  实例池 1    │  │  实例池 2    │  │  实例池 N    │     │
+│  │  Node.js    │  │  Node.js    │  │  Node.js    │     │
+│  │  + 云函数 1  │  │  + 云函数 2  │  │  + 云函数 N  │     │
+│  └─────────────┘  └─────────────┘  └─────────────┘     │
+│         │                │                │             │
+│         └────────────────┴────────────────┘             │
+│                           │                             │
+│                   ┌───────┴───────┐                     │
+│                   │  资源调度器    │                     │
+│                   │  (Scheduler)  │                     │
+│                   └───────────────┘                     │
+├─────────────────────────────────────────────────────────┤
+│  基础层：计算资源 + 网络 + 存储 + 监控 + 日志              │
+└─────────────────────────────────────────────────────────┘
+```
+
+**冷启动 vs 热启动详细过程：**
+
+| 启动类型 | 触发条件 | 执行过程 | 耗时 |
+|----------|----------|----------|------|
+| **冷启动** | 首次调用/实例回收后 | 分配资源 → 加载代码 → 启动进程 → 执行 | 80-300ms |
+| **热启动** | 实例复用 | 直接执行 | 10-50ms |
+
+**冷启动详细流程：**
+
+```
+1. 请求到达云开发平台
+       ↓
+2. 调度器检查可用实例
+   ├─ 有闲置实例 → 热启动（跳至步骤 6）
+   └─ 无可用实例 → 进入冷启动流程
+       ↓
+3. 分配计算资源（CPU + 内存）
+   - 从资源池分配容器
+   - 配置网络环境
+   - 挂载存储
+       ↓
+4. 启动 Node.js 进程
+   - 加载 Node.js 运行时
+   - 初始化事件循环
+   - 加载云函数 SDK
+       ↓
+5. 加载用户代码
+   - 读取云函数代码包
+   - 执行 npm 依赖安装
+   - 执行入口文件（index.js）
+   - 注册 exports.main 函数
+       ↓
+6. 执行云函数
+   - 调用 exports.main(event, context)
+   - 等待 Promise .resolve()
+   - 返回结果
+```
+
+**热启动（实例复用）机制：**
+
+```
+实例生命周期：
+创建 → 服务中 (热) → 闲置 (>15 分钟) → 回收 → 销毁
+
+复用原理：
+1. 云函数实例在执行完成后不会立即销毁
+2. 实例保持"热"状态约 15-30 分钟（闲置超时时间）
+3. 闲置期间的实例可以快速响应新请求
+4. 实例的全局变量在复用期间保持
+```
+
+**实例复用最佳实践：**
+
+```javascript
+// 优化前：每次调用都初始化
+exports.main = async (event, context) => {
+  const cloud = require('wx-server-sdk')
+  cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+  
+  const db = cloud.database()
+  const result = await db.collection('users').get()
+  return result.data
+}
+
+// 优化后：利用实例复用，全局缓存
+const cloud = require('wx-server-sdk')
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+
+// 全局变量（实例复用期间保持）
+let cachedDB = null
+
+exports.main = async (event, context) => {
+  // 复用数据库实例
+  if (!cachedDB) {
+    console.log('冷启动：初始化数据库连接')
+    cachedDB = cloud.database()
+  } else {
+    console.log('热启动：复用数据库连接')
+  }
+  
+  const result = await cachedDB.collection('users').get()
+  return result.data
+}
+```
+
+**影响冷启动的因素：**
+
+| 因素 | 影响程度 | 优化方案 |
+|------|----------|----------|
+| **代码包大小** | 高 | 精简依赖，使用按需引入 |
+| **依赖数量** | 高 | 删除未使用依赖，使用轻量库 |
+| **初始化逻辑** | 中 | 移至全局作用戏，利用复用 |
+| **内存规格** | 中 | 选择更高内存规格 |
+| **调用频率** | 低 | 定时触发器预热 |
+
+**冷启动优化策略：**
+
+```javascript
+// 策略 1：精简依赖
+// ❌ 错误：引入整个 SDK
+const cloud = require('wx-server-sdk')
+
+// ✅ 正确：按需引入
+const { database } = require('wx-server-sdk/database')
+const { storage } = require('wx-server-sdk/storage')
+
+// 策略 2：使用轻量库替代
+// ❌ 错误：moment 体积大（~67KB）
+const moment = require('moment')
+
+// ✅ 正确：使用 dayjs（~2KB）
+const dayjs = require('dayjs')
+
+// 策略 3：全局缓存
+let configCache = null
+
+exports.main = async (event) => {
+  if (!configCache) {
+    // 仅在冷启动时执行
+    configCache = await loadConfig()
+  }
+  return configCache
+}
+
+// 策略 4：定时预热（云开发定时触发器）
+// cloudbaserc.json
+{
+  "triggers": [{
+    "name": "warmUp",
+    "type": "timer",
+    "config": "0 */10 * * * * *"  // 每 10 分钟触发
+  }]
+}
+```
+
+**调用链路追踪：**
+
+```
+小程序客户端
+     │
+     │ Taro.cloud.callFunction()
+     ▼
+微信客户端 SDK
+     │
+     │ HTTPS 请求
+     ▼
+API 网关（鉴权 + 限流）
+     │
+     │ 路由分发
+     ▼
+云函数调度器
+     │
+     │ 实例选择/创建
+     ▼
+云函数实例（Node.js 进程）
+     │
+     │ 执行 exports.main(event, context)
+     │ 上下文注入：OPENID, UNIONID, APPID
+     ▼
+业务逻辑执行
+     │
+     │ 调用云数据库/云存储
+     ▼
+返回结果
+     │
+     │ 序列化 + 压缩
+     ▼
+小程序客户端
+```
+
+**上下文对象详解：**
+
+```javascript
+// context 对象包含的信息
+{
+  "OPENID": "用户当前小程序的 openid",
+  "UNIONID": "用户当前微信开放平台的 unionid", 
+  "APPID": "当前小程序的 AppID",
+  "ENV": "当前云函数环境 ID",
+  "SOURCE": "触发来源（MP 表示小程序）",
+  "CLIENTIP": "客户端真实 IP"
+}
+```
+
+**日志与监控：**
+
+```javascript
+// 日志输出（可在云开发控制台查看）
+exports.main = async (event, context) => {
+  console.log('=== 函数开始执行 ===')
+  console.log('请求事件:', JSON.stringify(event))
+  console.log('上下文:', {
+    OPENID: context.OPENID,
+    ENV: context.ENV
+  })
+  
+  try {
+    // 业务逻辑
+    const result = await someOperation()
+    console.log('执行结果:', result)
+    return { success: true, data: result }
+  } catch (error) {
+    console.error('执行错误:', error)
+    throw error
+  }
+}
+
+// 日志查询：云开发控制台 → 云函数 → 日志
+// 支持按请求 ID、时间范围、关键字过滤
+```
+
+#### 7.3.2 创建云函数
 
 **1. 初始化云函数项目**
 
@@ -3001,48 +3612,9 @@ exports.main = async (event, context) => {
 npm install --save wx-server-sdk@latest
 ```
 
-#### 7.3.2 调用云函数
+#### 7.3.3 调用云函数
 
 ```typescript
-// src/pages/index/index.tsx
-import Taro from '@tarojs/taro'
-import { useState, useEffect } from 'react'
-
-export default function Index() {
-  const [userInfo, setUserInfo] = useState<any>(null)
-
-  // 调用云函数
-  const callLoginFunction = async () => {
-    try {
-      const res = await Taro.cloud.callFunction({
-        name: 'login',  // 云函数名称
-        data: {}        // 传给云函数的参数
-      })
-
-      console.log('云函数返回:', res.result)
-      setUserInfo(res.result)
-    } catch (err) {
-      console.error('调用云函数失败:', err)
-    }
-  }
-
-  useEffect(() => {
-    callLoginFunction()
-  }, [])
-
-  return (
-    <View>
-      {userInfo ? (
-        <Text>OpenID: {userInfo.openid}</Text>
-      ) : (
-        <Text>加载中...</Text>
-      )}
-    </View>
-  )
-}
-```
-
-#### 7.3.3 云函数高级用法
 
 **带参数调用：**
 
@@ -3075,6 +3647,10 @@ const [loginRes, dataRes] = await Promise.all([
   Taro.cloud.callFunction({ name: 'getData' })
 ])
 ```
+
+#### 7.3.4 云函数高级用法
+
+**带参数调用：**
 
 ### 7.4 云数据库
 
