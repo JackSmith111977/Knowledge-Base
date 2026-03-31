@@ -5,7 +5,7 @@ aliases: [research, 调研助手，整理文档，研究]
 commands: [/research]
 author: Kei
 triggers: [调研，研究，整理一份，帮我调研，生成文档，深度分析，整理资料，做调研]
-version: 8.0.0
+version: 9.0.0
 compatibility: 需要 WebSearch 和 WebFetch 能力，SubAgent 模式需 parallel-task Skill
 metadata:
   category: 调研整理
@@ -169,7 +169,29 @@ flowchart TD
 
 **3.1 初始化进度追踪** — 创建/更新 `progress.txt`
 
-**3.2 SubAgent 模式询问**
+**3.2 初始化临时工作目录**
+
+创建 SubAgent 专用工作区，用于存放过程性文件：
+
+```
+[存储位置]/.work/[主题名]/drafts/
+```
+
+**目录结构示例：**
+```
+Knowledge Base/Tech/Frameworks/Taro/.work/taro/drafts/
+├── chapter-1.md        # 第 1 章草稿
+├── chapter-2.md        # 第 2 章草稿
+├── chapter-3.md        # 第 3 章草稿
+├── sources.json        # 引用来源汇总
+└── notes/              # 临时笔记
+```
+
+**清理规则：**
+- 最终文档完成后，草稿保留 7 天后自动删除
+- 用户可随时手动清理 `.work/` 目录
+
+**3.3 SubAgent 模式询问**
 
 根据章节数量推荐模式：
 - **≥6 章** → 推荐 SubAgent 并行（预计 15-25 分钟）
@@ -182,7 +204,12 @@ flowchart TD
 
 **详见：** `references/subagent-mode.md`
 
-**3.3 执行调研** — WebSearch → WebFetch → 交叉验证 → 撰写 → 保存
+**3.4 执行调研** — WebSearch → WebFetch → 交叉验证 → 撰写 → 保存
+
+**保存规则（强制）：**
+- 章节草稿 → 必须保存到 `.work/[主题]/drafts/chapter-X.md`
+- 临时笔记 → 必须保存到 `.work/[主题]/drafts/notes/`
+- 禁止在项目根目录或其他位置随意存放过程文件
 
 **进度同步：** 每章完成输出进度更新
 
@@ -202,6 +229,24 @@ flowchart TD
 **4.3 更新 KB-INDEX** — 如主题首次收录，添加到索引
 
 **4.4 写入最终文档** — 保存主文档与进度追踪
+
+**4.5 清理临时文件**
+
+```bash
+# 清理策略
+- 已整合的草稿 → 移动到 `.work/archive/` 保留 7 天
+- 未使用的草稿 → 提示用户确认是否删除
+- 临时笔记 → 直接删除
+```
+
+**清理完成输出：**
+```markdown
+## 临时文件清理完成
+
+- 归档草稿：N 个 → `.work/archive/[日期]/`
+- 删除笔记：M 个
+- 保留期限：7 天后自动删除归档
+```
 
 ---
 
@@ -228,6 +273,8 @@ flowchart TD
 | 大纲 | `[存储位置]/outline.md` | 调研大纲（可选） |
 | 进度 | `[存储位置]/progress.txt` | 进度追踪 |
 | KB-INDEX | `Knowledge Base/KB-INDEX.md` | 索引更新（如新收录） |
+| **临时草稿** | `[存储位置]/.work/[主题]/drafts/` | **章节草稿临时存放** |
+| **归档文件** | `[存储位置]/.work/archive/` | **保留 7 天后删除** |
 
 ### 存储路径规则
 
@@ -255,6 +302,13 @@ Knowledge Base/
 | 内容过浅 | 只列 API | 定义 + 原理 + 示例 + 误区 |
 | 忽视冲突 | 随意选择 | 标注冲突 + 分析原因 |
 | 不更新 | 直接覆盖 | 检测已有 + 添加更新记录 |
+| 重复调研 | 不扫描直接开始 | 先扫描知识库检测重复 |
+| 位置混乱 | 随意存放 | 先查 KB-INDEX，无则创建 |
+| 使用原生 WebSearch | 直接调用 WebSearch | 必须使用 `mcp__WebSearch__bailian_web_search` |
+| SubAgent 滥用 | 小主题也并行 | 按章节数量推荐模式 |
+| **跳过确认** | **预调研后直接开始** | **必须等待用户确认位置和大纲** |
+| **Pipeline 跳步** | **省略检查点** | **严格执行检查点 2（用户确认）** |
+| **过程文件乱放** | **草稿散落在项目各处** | **强制使用 `.work/[主题]/drafts/` 目录** |
 | 重复调研 | 不扫描直接开始 | 先扫描知识库检测重复 |
 | 位置混乱 | 随意存放 | 先查 KB-INDEX，无则创建 |
 | 使用原生 WebSearch | 直接调用 WebSearch | 必须使用 `mcp__WebSearch__bailian_web_search` |
