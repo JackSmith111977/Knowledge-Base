@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-03-31
+**最后更新：** 2026-03-31 (v1.2.0)
 
 ---
 
@@ -51,11 +51,11 @@ Knowledge Base/
 
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
-| Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
+| Agent Skill | Tech/AI/AgentSkill/ | （空） |
 | Claude Code | Tech/AI/ClaudeCode/ | Claude Code Skills 完全指南.md、Claude Code SubAgent 模式.md、Claude Code 完全指南.md、Claude Code 减少询问配置指南.md、Claude Code Hooks 自动化核心知识体系.md、路由系统可行性研究报告.md |
 | Context Engineering | Tech/AI/ContextEngineering/ | 上下文工程核心知识体系.md |
 | Prompt Engineering | Tech/AI/Prompt Engineering/ | 提示词工程核心知识体系.md |
-| SKILL | Tech/AI/SKILL/ | SKILL 核心知识体系.md |
+| SKILL | Tech/AI/SKILL/ | SKILL 核心知识体系.md、Google 5 种设计模式核心知识体系.md |
 | Vite | Tech/BuildTools/Vite/ | Vite 核心知识体系.md |
 | webpack | Tech/BuildTools/webpack/ | webpack 核心知识体系.md |
 | DevOps | Tech/Business/DevOps/ | DevOps 核心知识体系.md |
@@ -125,6 +125,7 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | SKILL 核心知识体系.md | Agent Skills | 2026-03-25 |
+| Google 5 种设计模式核心知识体系.md | Google Agent Skill 设计模式 | 2026-03-31 |
 
 ### Tech/BuildTools/Vite/
 
@@ -256,4 +257,4 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.1.0 | 最后扫描：2026-03-31 | 整理完成*
+*KB-INDEX 版本：1.2.0 | 最后扫描：2026-03-31 | 整理完成*
