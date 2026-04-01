@@ -1,0 +1,70 @@
+# Git 提交规范
+
+> 适用：所有 Git 提交操作
+
+---
+
+## 提交消息格式
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+```
+
+---
+
+## 类型说明
+
+| 类型 | 说明 |
+|------|------|
+| `feat` | 新功能 |
+| `fix` | 修复 Bug |
+| `docs` | 文档变更 |
+| `style` | 代码格式（不影响代码运行） |
+| `refactor` | 重构 |
+| `test` | 测试相关 |
+| `chore` | 构建/工具/配置变更 |
+
+---
+
+## 任务进度追踪
+
+**任务开始前：**
+
+1. 读取 `progress.txt`
+2. 更新"进行中"字段，添加当前任务
+3. 确认更新后再开始任务
+
+**任务完成后：**
+
+1. 更新 `progress.txt`：
+   - 将任务移至"已完成"
+   - 添加新的"进行中"任务（如有）
+2. 执行 `git add progress.txt` 及相关变更
+3. 提交并 push 本次更改
+
+---
+
+## 提交前检查
+
+- [ ] `progress.txt` 已更新
+- [ ] 提交消息符合规范
+- [ ] 相关文档已更新
+
+---
+
+## 示例
+
+```bash
+# 新功能
+feat (skill-creator): v5.0.0 添加谷歌设计模式支持
+
+# 文档更新
+docs (research): 更新 SubAgent 模式文档
+
+# 重构
+refactor (permission-analyzer): 优化日志分析逻辑
+```
