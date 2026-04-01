@@ -36,7 +36,8 @@ Knowledge Base/
 │       ├── Algorithms/
 │       ├── CSS/
 │       ├── HTML/
-│       └── JS/
+│       ├── JS/
+│       └── Network/
 ├── docs/                       # 项目通用文档
 ├── CONTRIBUTING.md
 ├── KB-INDEX.md
@@ -61,7 +62,7 @@ Knowledge Base/
 | DevOps | Tech/Business/DevOps/ | DevOps 核心知识体系.md |
 | Lazy Loading | Tech/Business/LazyLoading/ | 懒加载核心知识体系.md |
 | Virtual List | Tech/Business/VirtualList/ | 虚拟列表核心知识体系.md |
-| Next.js | Tech/Frameworks/Next.js/ | Next.js 核心知识体系.md、Next.js 全栈应用测试全流程.md |
+| Next.js | Tech/Frameworks/Next.js/ | Next.js 核心知识体系.md、Next.js 全栈应用测试全流程.md、Next.js E2E 测试核心知识体系.md |
 | React | Tech/Frameworks/React/ | React 核心知识体系.md |
 | Zustand | Tech/Frameworks/React/Zustand/ | Zustand 核心知识体系.md |
 | Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
@@ -69,6 +70,7 @@ Knowledge Base/
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
+| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
@@ -222,6 +224,13 @@ Knowledge Base/
 | JavaScript 核心知识体系.md | JavaScript | 2026-03-28 |
 | 面试报告.md | 面试资料 | 2026-03-28 |
 
+### Tech/Fundamentals/Network/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| 计算机网络核心知识体系.md | 计算机网络 | 2026-04-01 |
+| progress.txt | 进度追踪 | 2026-04-01 |
+
 ### docs/
 
 | 文件名 | 主题 | 创建日期 |
@@ -248,6 +257,17 @@ Knowledge Base/
 
 ## 整理记录
 
+### 2026-04-01 整理
+
+**执行的操作：**
+1. ✅ 添加 `Tech/Fundamentals/Network/` 目录到索引
+2. ✅ 注册《计算机网络核心知识体系.md》文档
+3. ✅ 更新 KB-INDEX 版本至 1.3.0
+
+**整理后效果：**
+- 计算机网络文档归集到 `Tech/Fundamentals/Network/` 目录
+- 支持后续网络相关知识库扩展
+
 ### 2026-03-31 整理
 
 **执行的操作：**
@@ -264,4 +284,4 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.2.0 | 最后扫描：2026-03-31 | 整理完成*
+*KB-INDEX 版本：1.3.0 | 最后扫描：2026-04-01 | 整理完成*
