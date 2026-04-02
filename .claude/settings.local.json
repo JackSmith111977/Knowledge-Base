@@ -1,5 +1,4 @@
 {
-  "skipWebFetchPreflight": true,
   "permissions": {
     "allow": [
       "mcp__WebSearch__bailian_web_search",
@@ -10,6 +9,10 @@
       "Write",
       "Glob",
       "Grep",
+      "WebFetch",
+      "TaskCreate",
+      "TaskUpdate",
+      "TaskList",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
@@ -20,11 +23,15 @@
       "Bash(pnpm run:*)",
       "Bash(yarn:*)",
       "Bash(node:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(curl -s http://localhost:3456/targets)",
+      "Bash(curl:*)",
+      "Bash(mkdir -p \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试\")",
+      "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.md \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")",
+      "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.json \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")"
     ],
     "deny": [
       "WebSearch",
-      "Bash(rm -rf *)",
       "Bash(git push --force)",
       "Bash(curl * | bash)",
       "Bash(sudo *)"
@@ -48,5 +55,6 @@
         ]
       }
     ]
-  }
+  },
+  "skipWebFetchPreflight": true
 }

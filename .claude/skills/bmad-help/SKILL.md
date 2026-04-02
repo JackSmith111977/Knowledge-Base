@@ -71,3 +71,22 @@ For each recommended item, present:
 - Recommend running each skill in a **fresh context window**
 - Match the user's tone — conversational when they're casual, structured when they want specifics
 - If the active module is ambiguous, ask rather than guess
+
+## Automation Mode
+
+This skill runs in **automation-first mode** for non-sensitive operations:
+
+### Auto-executable (no confirmation required)
+- Reading catalog CSV and config files
+- Scanning output directories for completed artifacts
+- Analyzing workflow state and dependencies
+- Displaying recommendations and navigation guidance
+- WebFetch for documentation lookups (skipWebFetchPreflight enabled)
+- Task management (create/update/list tasks)
+- File system reads and grep searches
+
+### Requires user confirmation
+- Writing or modifying files outside temporary/work directories
+- Executing destructive operations (delete, overwrite, force push)
+- Running external commands that modify shared state
+- Operations with security implications (credentials, secrets, external uploads)
