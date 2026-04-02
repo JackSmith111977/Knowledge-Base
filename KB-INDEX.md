@@ -38,7 +38,9 @@ Knowledge Base/
 │       ├── CSS/
 │       ├── HTML/
 │       ├── JS/
-│       └── Network/
+│       ├── Network/
+│       ├── Node.js/
+│       └── TS/
 ├── docs/                       # 项目通用文档
 ├── CONTRIBUTING.md
 ├── KB-INDEX.md
@@ -75,6 +77,7 @@ Knowledge Base/
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
 | Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md |
+| Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
