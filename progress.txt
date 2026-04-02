@@ -35,6 +35,8 @@
 - [x] 升级 skill-creator 至 v4.0.0（新增谷歌 5 种设计模式推荐与选择阶段）
 - [x] Taro 底层原理调研与文档更新（新增 AST 转换流程、Babel 插件、虚拟 DOM Reconciler、云函数底层原理）
 - [x] 前端工程师 AI 转型调研（8 章完整结构，2.5 万字，含大厂招聘要求与薪资数据）
+- [x] Supabase BaaS 平台调研（8 章完整结构，5 万字，含架构分析/底层原理/生命周期/活动流程解析）
+- [x] 创建 BMad Help Skill（v1.0.0，提供 workflow 导航和下一步推荐功能）
 
 
 ## 正在进行的任务 (In Progress)
