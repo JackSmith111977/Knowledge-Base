@@ -1,0 +1,157 @@
+{
+  "chapter": "MCP 第 4-6 章调研来源",
+  "generated_at": "2026-04-03",
+  "sources": [
+    {
+      "id": 1,
+      "title": "MCP Security: Risks, Challenges, and How to Mitigate",
+      "url": "https://www.docker.com/blog/mcp-security-explained/",
+      "topics": ["MCP 安全", "零信任", "风险评估"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 2,
+      "title": "GitHub - spring-ai-community/mcp-security",
+      "url": "https://github.com/spring-ai-community/mcp-security",
+      "topics": ["OAuth 2.0", "MCP 认证", "Spring Security"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 3,
+      "title": "MCP 安全防护体系：构建零信任架构的实战指南",
+      "url": "https://blog.csdn.net/gitblog_00335/article/details/155702549",
+      "topics": ["零信任", "提示注入", "工具注入"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 4,
+      "title": "【万字长文】Python+MCP 架构实战：从零集成 OAuth2.0 安全认证",
+      "url": "https://blog.csdn.net/m0_59162248/article/details/152725504",
+      "topics": ["OAuth 2.0", "Python", "认证流程"],
+      "used_in": ["chapter-4", "chapter-5"]
+    },
+    {
+      "id": 5,
+      "title": "FastAPI-MCP 高级配置：认证授权与安全最佳实践",
+      "url": "https://blog.csdn.net/gitblog_00708/article/details/150809854",
+      "topics": ["OAuth 2.0", "JWT", "认证配置"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 6,
+      "title": "Model Context Protocol Specification",
+      "url": "https://github.com/ModelContextProtocol/specification",
+      "topics": ["MCP 规范", "协议定义", "Capability"],
+      "used_in": ["chapter-4", "chapter-5", "chapter-6"]
+    },
+    {
+      "id": 7,
+      "title": "GitHub - modelcontextprotocol/python-sdk",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "topics": ["Python SDK", "FastMCP"],
+      "used_in": ["chapter-5"]
+    },
+    {
+      "id": 8,
+      "title": "超强 MCP Python SDK 实战指南：从零构建企业级 LLM 上下文服务器",
+      "url": "https://blog.csdn.net/gitblog_00537/article/details/152038410",
+      "topics": ["Python SDK", "FastMCP", "环境搭建"],
+      "used_in": ["chapter-5"]
+    },
+    {
+      "id": 9,
+      "title": "15 分钟用 FastMCP 搭建你的第一个 MCP Server",
+      "url": "https://www.163.com/dy/article/KLRGUVMR0531D9VR.html",
+      "topics": ["FastMCP", "天气查询", "快速入门"],
+      "used_in": ["chapter-5"]
+    },
+    {
+      "id": 10,
+      "title": "MCP Server 开发实战指南 (Python 版)",
+      "url": "https://blog.csdn.net/qq_31185049/article/details/148036631",
+      "topics": ["Python", "Server 开发", "部署"],
+      "used_in": ["chapter-5"]
+    },
+    {
+      "id": 11,
+      "title": "GitHub - modelcontextprotocol/typescript-sdk",
+      "url": "https://github.com/modelcontextprotocol/typescript-sdk",
+      "topics": ["TypeScript SDK", "API 参考"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 12,
+      "title": "30 分钟快速搭建高性能 MCP 服务器：TypeScript SDK 完整指南",
+      "url": "https://blog.csdn.net/gitblog_01082/article/details/152185171",
+      "topics": ["TypeScript", "SDK", "部署"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 13,
+      "title": "Build a TypeScript MCP server using Azure Container Apps",
+      "url": "https://learn.microsoft.com/en-us/azure/developer/ai/build-mcp-server-ts",
+      "topics": ["TypeScript", "Azure", "部署"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 14,
+      "title": "【快速入门到精通】MCP Typescript SDK 核心概念和快速开发",
+      "url": "https://zhuanlan.zhihu.com/p/1919337071274860704",
+      "topics": ["TypeScript", "快速入门", "SDK API"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 15,
+      "title": "面对 MCP 工具投毒，我们该如何应对",
+      "url": "https://view.inews.qq.com/k/20250513A01Y7D00",
+      "topics": ["工具投毒", "安全攻击", "防护"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 16,
+      "title": "Microsoft MCP 服务器认证",
+      "url": "https://learn.microsoft.com/zh-cn/microsoft-agent-365/mcp-certification",
+      "topics": ["认证", "OAuth 2.0", "安全要求"],
+      "used_in": ["chapter-4"]
+    },
+    {
+      "id": 17,
+      "title": "保护 Azure 容器应用中的 MCP 服务器",
+      "url": "https://learn.microsoft.com/zh-cn/azure/container-apps/mcp-authentication",
+      "topics": ["Azure", "认证", "部署"],
+      "used_in": ["chapter-4", "chapter-5"]
+    },
+    {
+      "id": 18,
+      "title": "MCP TypeScript SDK 官方文档",
+      "url": "https://cloud.tencent.com/developer/mcp/server/11591",
+      "topics": ["TypeScript SDK", "API 文档"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 19,
+      "title": "从零开始开发 MCP Server",
+      "url": "https://zhuanlan.zhihu.com/p/1898059137176303413",
+      "topics": ["Server 开发", "部署", "实践"],
+      "used_in": ["chapter-6"]
+    },
+    {
+      "id": 20,
+      "title": "MCP 新手图文指南：轻松实现 AI 与您的数据和工具无缝对接",
+      "url": "https://www.bilibili.com/read/cv42257532/",
+      "topics": ["入门指南", "架构说明"],
+      "used_in": ["chapter-5", "chapter-6"]
+    }
+  ],
+  "search_queries_used": [
+    "MCP Model Context Protocol security architecture zero trust capability permissions",
+    "MCP security OAuth 2.0 resource server authentication authorization",
+    "MCP server development Python SDK tutorial example",
+    "MCP TypeScript SDK server development tutorial file server example",
+    "MCP Model Context Protocol OAuth 2.0 Bearer token security implementation",
+    "MCP security best practices prompt injection tool poisoning prevention",
+    "MCP Model Context Protocol official documentation specification 2024",
+    "fastmcp Python server weather API example tutorial complete",
+    "MCP TypeScript SDK @modelcontextprotocol/sdk file server read example"
+  ]
+}
