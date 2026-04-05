@@ -16,7 +16,9 @@ Knowledge Base/
 ├── Guide/                      # 指南类文档
 ├── Tech/                       # 技术文档
 │   ├── AI/                     # AI 相关
+│   │   ├── AgentFramework/     # AI Agent 框架
 │   │   ├── AgentSkill/         # Agent Skill 设计模式
+│   │   ├── BMAD/               # BMAD 方法
 │   │   ├── ClaudeCode/         # Claude Code 相关
 │   │   ├── ContextEngineering/ # 上下文工程
 │   │   ├── DocumentFirst/      # 文档优先开发范式
@@ -33,6 +35,7 @@ Knowledge Base/
 │   │   ├── Next.js/
 │   │   ├── React/
 │   │   ├── Supabase/
+│   │   ├── TailwindCSS/
 │   │   └── Taro/
 │   └── Fundamentals/           # 基础知识
 │       ├── Algorithms/
@@ -42,6 +45,8 @@ Knowledge Base/
 │       ├── MCP/
 │       ├── Network/
 │       ├── Node.js/
+│       ├── Security/
+│       ├── Testing/
 │       └── TS/
 ├── docs/                       # 项目通用文档
 ├── CONTRIBUTING.md
@@ -57,7 +62,8 @@ Knowledge Base/
 
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
-| Agent Skill | Tech/AI/AgentSkill/ | （空） |
+| Agent Framework | Tech/AI/AgentFramework/ | Hermes Agent 核心知识体系.md |
+| Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
 | BMAD-METHOD | Tech/AI/BMAD/ | BMAD-METHOD 核心知识体系.md |
 | Claude Code | Tech/AI/ClaudeCode/ | Claude Code Skills 完全指南.md、Claude Code SubAgent 模式.md、Claude Code 完全指南.md、Claude Code 减少询问配置指南.md、Claude Code Hooks 自动化核心知识体系.md、Claude Code Playwright E2E 测试核心知识体系.md、路由系统可行性研究报告.md |
 | Context Engineering | Tech/AI/ContextEngineering/ | 上下文工程核心知识体系.md |
@@ -72,16 +78,19 @@ Knowledge Base/
 | Next.js | Tech/Frameworks/Next.js/ | Next.js 核心知识体系.md、Next.js 全栈应用测试全流程.md、Next.js E2E 测试核心知识体系.md |
 | React | Tech/Frameworks/React/ | React 核心知识体系.md |
 | Zustand | Tech/Frameworks/React/Zustand/ | Zustand 核心知识体系.md |
-| Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
 | Supabase | Tech/Frameworks/Supabase/ | Supabase 核心知识体系.md |
+| Tailwind CSS | Tech/Frameworks/TailwindCSS/ | Tailwind CSS 核心知识体系.md |
+| Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
 | Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md |
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
-| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md |
+| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md、RESTful API 设计规范.md、GraphQL 核心知识体系.md |
 | MCP | Tech/Fundamentals/MCP/ | MCP 核心知识体系.md |
 | Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
+| Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md |
+| Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
@@ -110,6 +119,12 @@ Knowledge Base/
 | GitHub 仓库建设与推广完全指南.md | GitHub 运营 | 2026-03-27 |
 | Mermaid 图表改造指南.md | 图表绘制 | 2026-03-26 |
 | 传统项目接入文档优先 AI 开发系统指南.md | AI 开发系统 | 2026-03-26 |
+
+### Tech/AI/AgentFramework/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Hermes Agent 核心知识体系.md | Hermes Agent 框架 | 2026-04-04 |
 
 ### Tech/AI/AgentSkill/
 
@@ -215,6 +230,13 @@ Knowledge Base/
 | Zustand 核心知识体系.md | Zustand | 2026-03-28 |
 | outline.md | 大纲 | 2026-03-28 |
 
+### Tech/Frameworks/TailwindCSS/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Tailwind CSS 核心知识体系.md | Tailwind CSS | 2026-04-05 |
+| progress.txt | 进度追踪 | 2026-04-05 |
+
 ### Tech/Frameworks/Supabase/
 
 | 文件名 | 主题 | 创建日期 |
@@ -256,12 +278,27 @@ Knowledge Base/
 | JavaScript 核心知识体系.md | JavaScript | 2026-03-28 |
 | 面试报告.md | 面试资料 | 2026-03-28 |
 
+### Tech/Fundamentals/Testing/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Vitest 核心知识体系.md | Vitest 测试框架 | 2026-04-05 |
+| Playwright 测试核心知识体系.md | Playwright E2E 测试 | 2026-04-05 |
+
+### Tech/Fundamentals/Security/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Web 安全核心知识体系.md | Web 安全 | 2026-04-05 |
+
 ### Tech/Fundamentals/Network/
 
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | 计算机网络核心知识体系.md | 计算机网络 | 2026-04-01 |
-| progress.txt | 进度追踪 | 2026-04-01 |
+| RESTful API 设计规范.md | RESTful API | 2026-04-05 |
+| GraphQL 核心知识体系.md | GraphQL | 2026-04-05 |
+| progress.txt | 进度追踪 | 2026-04-05 |
 
 ### Tech/Fundamentals/MCP/
 
@@ -353,7 +390,44 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.8.0 | 最后扫描：2026-04-02 | 整理完成*
+*KB-INDEX 版本：1.10.0 | 最后扫描：2026-04-05 | 整理完成*
+
+---
+
+## 整理记录
+
+### 2026-04-05 整理（P0 调研完成）
+
+**执行的操作：**
+1. ✅ 创建 `Tech/Frameworks/TailwindCSS/` 目录
+2. ✅ 创建 `Tech/Fundamentals/Testing/` 目录
+3. ✅ 创建 `Tech/Fundamentals/Security/` 目录
+4. ✅ 注册 6 篇 P0 优先级文档：
+   - 《Vitest 核心知识体系.md》（约 800+ 行）
+   - 《Playwright 测试核心知识体系.md》（约 900+ 行）
+   - 《Tailwind CSS 核心知识体系.md》（约 900+ 行）
+   - 《RESTful API 设计规范.md》（约 1000+ 行）
+   - 《GraphQL 核心知识体系.md》（约 950+ 行）
+   - 《Web 安全核心知识体系.md》（约 900+ 行）
+5. ✅ 更新 KB-INDEX 版本至 1.10.0
+
+**整理后效果：**
+- P0 优先级 6 个主题全部完成调研和文档创建
+- 新增 3 个分类目录：TailwindCSS、Testing、Security
+- 知识库新增约 5500+ 行高质量技术文档
+- 文档涵盖：测试框架、E2E 测试、CSS 框架、API 设计、GraphQL、Web 安全
+
+### 2026-04-04 整理（Hermes Agent）
+
+**执行的操作：**
+1. ✅ 创建 `Tech/AI/AgentFramework/` 目录
+2. ✅ 注册《Hermes Agent 核心知识体系.md》文档（8 章）
+3. ✅ 更新 KB-INDEX 版本至 1.9.0
+
+**整理后效果：**
+- Hermes Agent 文档归集到 `Tech/AI/AgentFramework/` 目录
+- 与 ClaudeCode、AgentSkill 等并列 AI 技术子目录
+- 支持后续 Agent 框架相关知识库扩展（如 OpenClaw 等）
 
 ---
 

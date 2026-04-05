@@ -24,8 +24,11 @@
       "Bash(yarn:*)",
       "Bash(node:*)",
       "Bash(python:*)",
-      "Bash(curl -s http://localhost:3456/targets)",
+      "Bash(curl -s http://localhost:3456/*)",
+      "Bash(curl -s -X POST http://localhost:3456/*)",
       "Bash(curl:*)",
+      "Bash(D:\\\\Dev-tools\\\\Chrome for Testing\\\\chrome\\\\win64-147.0.7727.24\\\\chrome-win64\\\\chrome.exe*)",
+      "Bash(start-chrome.bat)",
       "Bash(mkdir -p \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试\")",
       "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.md \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")",
       "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.json \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")"
@@ -36,6 +39,10 @@
       "Bash(curl * | bash)",
       "Bash(sudo *)"
     ]
+  },
+  "env": {
+    "CDP_PROXY_PORT": "3456",
+    "CHROME_PATH": "D:\\Dev-tools\\Chrome for Testing\\chrome\\win64-147.0.7727.24\\chrome-win64\\chrome.exe"
   },
   "hooks": {
     "UserPromptSubmit": [

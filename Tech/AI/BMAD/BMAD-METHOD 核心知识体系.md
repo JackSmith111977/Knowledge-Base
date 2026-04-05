@@ -7,8 +7,14 @@
 ## 目录
 
 1. [概述](#1-概述)
+   - [1.1 什么是 BMAD-METHOD](#11-什么是-bmad-method)
+   - [1.2 为什么需要 BMAD](#12-为什么需要-bmad)
+   - [1.3 BMad vs 纯 Skill 系统 vs 多 Agent 系统](#13-bmad-vs-纯-skill-系统-vs-多-agent-系统)
+   - [1.4 v6.2.2 新特性](#14-v622-新特性 2026-年 3 月)
+   - [1.5 适用场景](#15-适用场景)
 2. [核心概念](#2-核心概念)
    - [2.0 C.O.R.E.引擎](#20-core-引擎底层运行时)
+     - [2.0.1 上下文注入机制](#201-上下文注入机制技术深潜)
    - [2.1 Agentic Planning](#21-agentic-planning 代理规划)
    - [2.2 Context-Engineered Development](#22-context-engineered-development 上下文工程化开发)
    - [2.3 C.O.R.E.引擎](#23-core-引擎)
@@ -28,13 +34,22 @@
 
 ### 1.1 什么是 BMAD-METHOD
 
-**BMAD-METHOD**（Breakthrough Method of Agile AI-Driven Development，敏捷 AI 驱动开发的突破性方法）是一个通用的 AI 代理框架，专注于**代理式敏捷驱动开发（Agentic Agile Driven Development）**。
+**BMAD-METHOD**（**B**uild **M**ore **A**rchitect **D**reams，Build BMad Method Module，敏捷 AI 驱动开发的突破性方法）是一个通用的 AI 代理框架，专注于**代理式敏捷驱动开发（Agentic Agile Driven Development）**。
+
+**当前版本：** v6.2.2（2026 年 3 月 26 日发布）
 
 **核心定位：**
 - 🎯 **不是**替代人类思考的工具
 - 🤝 **而是**专家级协作者，引导你完成结构化思考流程
 - 📚 **激发**你的最佳想法（而非替你决定）
 - 🔧 **适配**项目规模和复杂度
+
+**官方定义（GitHub README）：**
+> "Traditional AI tools do the thinking for you, producing average results. BMad agents and facilitated workflows act as expert collaborators who guide you through a structured process to bring out your best thinking in partnership with the AI."
+
+**BMAD 的全称含义：**
+- **B**uild **M**ore **A**rchitect **D**reams — 构建更多架构师的梦想
+- 强调从「想法」到「可交付代码」的完整流程覆盖
 
 ### 1.2 为什么需要 BMAD
 
@@ -46,6 +61,8 @@
 | **上下文丢失** | 任务之间信息断层 | Context-Engineered 开发故事包含完整上下文 |
 | **角色模糊** | 单一 AI 助手，缺乏专业分工 | 12+ 专业 Agent，各司其职 |
 | **流程混乱** | 无结构化工作流 | 遵循真实敏捷方法论 |
+| **状态无感知** | 每次会话从零开始 | bmad-help 自动检测项目进度 |
+| **记忆不持久** | 会话结束信息丢失 | Memory Sidecar 持久化架构 |
 
 **BMAD 的两大核心创新：**
 
@@ -68,19 +85,152 @@ flowchart LR
     style Phase2 fill:#e8f5e9
 ```
 
-### 1.3 技术特性概览
+---
+
+### 1.3 BMad vs 纯 Skill 系统 vs 多 Agent 系统
+
+**BMad Method 不是简单的 Skill 集合，而是一套完整的「AI 驱动敏捷开发方法论」。**
+
+#### 1.3.1 核心维度对比
+
+| 维度 | 纯 Skill 系统 | 多 Agent 系统 | BMad Method |
+|------|--------------|--------------|-------------|
+| **流程结构** | 碎片化功能点 | 部分结构化 | **4 阶段完整生命周期** |
+| **上下文传递** | 无/手动 | 有限 | **文档优先，自动传递** |
+| **自适应能力** | 无 | 有限 | **Scale-Domain-Adaptive** |
+| **记忆持久化** | 通常无 | 部分有 | **Sidecar 架构，三种模式** |
+| **Agent 专业性** | 单一通才 | 2-5 个角色 | **12+ 专业 Agent** |
+| **协作模式** | 无 | 有限 | **Party Mode 多 Agent 讨论** |
+| **状态感知** | 无 | 有限 | **bmad-help 智能引导** |
+| **扩展机制** | 简单添加 | 中等 | **模块化 + 能力注册** |
+| **实现保障** | 无 | 部分 | **Story 循环 + Code Review** |
+
+#### 1.3.2 BMad 的 10 大差异化优势
+
+**1️⃣ 结构化流程 vs 碎片化技能**
+
+| 纯 Skill 系统 | BMad Method |
+|--------------|-------------|
+| 孤立的功能点，无流程引导 | **4 阶段完整生命周期**：Analysis → Planning → Solutioning → Implementation |
+| 用户需要知道下一步做什么 | **bmad-help 智能引导**：自动检测项目状态，推荐下一步 |
+| 技能之间信息断层 | **上下文工程化**：每个阶段产出文档传递给下一阶段 |
+
+**2️⃣ Scale-Domain-Adaptive（规模自适应）**
+
+BMad 根据项目复杂度自动调整规划深度：
+
+| 规划轨道 | 适用场景 | 产出文档 |
+|----------|----------|----------|
+| **Quick Flow** | Bug 修复、简单功能（1-15 stories） | 仅技术规格 |
+| **BMad Method** | 产品、平台、复杂功能（10-50+ stories） | PRD + 架构 + UX |
+| **Enterprise** | 合规、多租户系统（30+ stories） | PRD + 架构 + 安全 + DevOps |
+
+**3️⃣ Spec-First（文档优先）架构**
+
+```
+阶段 1: Agentic Planning
+Analyst → PM → Architect → 产出：PRD.md + architecture.md
+
+阶段 2: Context-Engineered Dev
+Scrum Master → 超详细 Story 文件 → Dev → QA → 可交付代码
+```
+
+| 传统多 Agent | BMad Method |
+|-------------|-------------|
+| Agent 直接生成代码 | **先锁定逻辑和架构**，再生成代码 |
+| 口头传递需求，信息丢失 | **文档作为单一事实源**，所有 Agent 基于同一份文档 |
+| 架构随意变更 | **架构文档锁定**，变更需评审 |
+
+**4️⃣ bmad-help：智能上下文感知引导**
+
+官方强调的核心特性：
+> "BMad-Help doesn't just answer questions — it automatically runs at the end of every workflow to tell you exactly what to do next."
+
+**功能：**
+- 检查项目状态，识别已完成的工作
+- 显示基于已安装模块的选项
+- 推荐下一步操作（包括首个必需任务）
+- 回答情境问题：「我有一个 SaaS 想法，从哪里开始？」
+
+**5️⃣ Memory Sidecar 架构（记忆持久化）**
+
+| 模式 | 结构 | 适用场景 |
+|------|------|----------|
+| **个人 Sidecar 仅** | 每个 Agent 独立 `_bmad/memory/{skillName}-sidecar/` | 领域隔离 |
+| **个人 + 共享模块** | 个人 sidecar + 模块级共享 memory | 部分共享 |
+| **单模块 Sidecar** | 所有 Agent 共享 `daily/` + `curated/` | 紧耦合协作 |
+
+**6️⃣ Party Mode（多 Agent 协作讨论）**
+
+BMad 支持多个 Agent 在同一会话中协同讨论，产出综合方案。
+
+**7️⃣ Story 循环机制（实现保障）**
+
+```
+Create Story → Validate Story → Dev Story → Code Review → 验收通过
+     ↓                                            ↓
+  准备上下文                                    回到 DS 修复
+```
+
+**8️⃣ 模块化扩展系统**
+
+```
+模块 = module.yaml(定义) + config.yaml(配置) + module-help.csv(能力注册) + Skills(实现)
+```
+
+**官方模块：**
+- **BMad Method (BMM)** — 核心框架，34+ 工作流
+- **BMad Builder (BMB)** — 创建自定义 Agent 和工作流
+- **Test Architect (TEA)** — 基于风险的测试策略
+- **Game Dev Studio (BMGD)** — 游戏开发工作流
+- **Creative Intelligence Suite (CIS)** — 创新、头脑风暴
+
+**9️⃣ 100% 开源 vs 付费墙**
+
+> "100% free and open source. No paywalls. No gated content. No gated Discord. We believe in empowering everyone, not just those who can pay."
+
+**🔟 专业 Agent 角色系统**
+
+| Agent | 职责 | 专业产出 |
+|-------|------|----------|
+| **Business Analyst** | 可行性验证、竞品分析 | 项目简报 |
+| **Product Manager** | PRD 撰写、用户故事拆解 | PRD.md |
+| **Architect** | 系统架构、技术选型 | architecture.md |
+| **Scrum Master** | 任务拆解、进度跟踪 | sprint-status.yaml |
+| **Developer** | 代码实现、单元测试 | 可运行代码 |
+| **QA** | 测试用例、Bug 验证 | 测试报告 |
+| **UX Designer** | 界面设计、交互流程 | UX 规范 |
+| **Tech Writer** | API 文档、用户手册 | 技术文档 |
+| **DevOps** | CI/CD、部署脚本 | 部署配置 |
+| **Security** | 安全审计、漏洞扫描 | 安全报告 |
+
+---
+
+### 1.4 v6.2.2 新特性（2026 年 3 月）
+
+**当前版本：** v6.2.2（最新稳定版，2026 年 3 月 26 日发布）
+
+**v6 核心更新：**
 
 | 特性 | 说明 |
 |------|------|
-| **Scale-Domain-Adaptive** | 自动调整规划深度，适配项目规模 |
-| **12+ 专业 AI Agents** | PM、架构师、开发者、UX、Scrum Master 等 |
-| **结构化工作流** | 涵盖分析、规划、架构、实现全流程 |
-| **Party Mode** | 多个 Agent 协同讨论 |
-| **IDE 集成** | Claude Code、Cursor、Windsurf 无缝支持 |
-| **平台无关** | Web UI + IDE 双重部署模式 |
-| **100% 开源** | MIT 协议，无付费墙、无封闭内容 |
+| **🧩 Universal Skills Architecture** | 一次编写，跨平台运行（Claude、Codex、Kimi 等） |
+| **🏗️ BMad Builder v1** | 创建生产级 AI Agent 和工作流 |
+| **🧠 Project Context System** | 框架感知的上下文管理 |
+| **📦 Centralized Skills** | 集中式技能安装，跨项目复用 |
+| **🔄 Adaptive Skills** | 针对不同 AI 工具优化技能行为 |
+| **⚡ Dev Loop Automation** | 可选的自动化开发循环 |
 
-### 1.4 适用场景
+**Roadmap（进行中）：**
+- 🎙️ The BMad Method Podcast
+- 🎓 The BMad Method Master Class
+- 🖥️ 官方 UI 界面
+- 🔒 BMad in a Box（自托管、企业级）
+- 💎 社区模块扩展
+
+---
+
+### 1.5 适用场景
 
 **推荐使用：**
 - ✅ 软件项目开发（绿色场/棕色场）
@@ -94,30 +244,43 @@ flowchart LR
 - ⚠️ 紧急 Bug 修复（无需完整流程）
 - ⚠️ 个人小项目（流程可能过重）
 
+**规划轨道选择指南：**
+
+| 你的场景 | 推荐轨道 | 理由 |
+|----------|----------|------|
+| Bug 修复、小功能 | Quick Flow | 仅需技术规格，跳过冗长文档 |
+| 新产品、平台功能 | BMad Method | PRD+ 架构确保一致性 |
+| 企业系统、合规需求 | Enterprise | 安全、DevOps、审计必备 |
+
 ---
 
 ## 2. 核心概念
 
 ### 2.0 C.O.R.E. 引擎（底层运行时）
 
+> **来源说明**：C.O.R.E.的详细机制主要来自社区逆向分析（GitHub 源码 + 本地系统分析），非官方公开文档。官方文档仅简略提及 Skills 和配置系统。
+
 **概念定义：**
 
-**C.O.R.E.**（Collaboration Optimized Reflection Engine）是 BMAD 的底层运行时环境，但其实质不是后台常驻服务，而是**基于文件系统的依赖注入和上下文管理规范**。
+**C.O.R.E.**（Collaboration Optimized Reflection Engine，协作优化反射引擎）是 BMAD 的底层运行时环境，但其实质不是后台常驻服务，而是**基于文件系统的依赖注入和上下文管理规范**。
+
+> **官方定义（docs.bmad-method.org）**：  
+> "Skills are pre-built prompts that load agents, run workflows, or execute tasks inside your IDE."
 
 **工作原理：**
 
 ```
-用户激活 Agent → bmad-init 加载配置 → Persona + Memory + Toolbelt → LLM 上下文窗口 → Agent 执行
+用户激活 Agent → IDE 加载 Skill 文件 → 读取配置/记忆/上下文 → LLM 上下文窗口 → Agent 执行
 ```
 
 **核心机制：**
 
-| 组件 | 实现方式 | 文件位置 |
-|------|---------|---------|
-| **配置注入** | `bmad_init.py` 脚本加载 YAML | `_bmad/{module}/config.yaml` |
-| **记忆持久化** | Sidecar 模式（独立目录） | `_bmad/memory/{skillName}-sidecar/` |
-| **能力注册** | CSV 注册表 | `_bmad/_config/bmad-help.csv` |
-| **上下文传递** | 文件路径引用 | `project-context.md` |
+| 组件 | 实现方式 | 文件位置 | 验证状态 |
+|------|---------|---------|---------|
+| **配置注入** | Skill 指令读取 YAML | `_bmad/{module}/config.yaml` | ⚠️ 社区分析 |
+| **记忆持久化** | Sidecar 模式（独立目录） | `_bmad/memory/{skillName}-sidecar/` | ⚠️ 社区分析 |
+| **能力注册** | CSV 注册表 | `_bmad/_config/bmad-help.csv` | ✅ 官方确认 |
+| **上下文传递** | 文件路径引用 | `project-context.md` | ✅ 官方确认 |
 
 **为什么这样设计：**
 
@@ -136,6 +299,82 @@ communication_language: 中文
 # {module}/config.yaml → 继承 core 并扩展
 # 自动包含所有 core 配置项 + 模块特定变量
 ```
+
+---
+
+### 2.0.1 上下文注入机制（技术深潜）
+
+> **来源**：基于 Claude Code Skill 系统工作原理分析
+
+**Prompt 组装层次：**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  SYSTEM PROMPT（系统提示词）                                 │
+│  ─────────────────────────────────────────────────────────  │
+│  来源：                                                      │
+│  - CLAUDE.md（项目级配置）                                  │
+│  - Skill 文件内容（SKILL.md 完整内容）                       │
+│  - 内置系统指令（安全规则等）                               │
+│                                                              │
+│  作用：定义 AI 的角色、能力、行为约束                        │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│  USER PROMPT（用户消息）                                     │
+│  ─────────────────────────────────────────────────────────  │
+│  来源：                                                      │
+│  - 用户实际输入                                              │
+│  - 工具执行结果（文件读取/bash 输出）                        │
+│  - 历史对话消息                                              │
+│                                                              │
+│  作用：提供具体数据、文件内容、当前请求                      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**C.O.R.E.各组件注入位置：**
+
+| 组件 | 注入位置 | 时机 |
+|------|---------|------|
+| SKILL.md (Persona) | System | Skill 触发时 |
+| config.yaml (配置) | User | Skill 指令要求读取 |
+| module-help.csv | User | 需要显示能力列表 |
+| Memory Sidecar | User | Skill 指令要求读取 |
+| project-context.md | User | 需要项目上下文时 |
+| CLAUDE.md | System | 会话启动时 |
+
+**完整注入流程示例（/bmad-create-prd）：**
+
+```
+1. 用户输入：/bmad-create-prd
+         ↓
+2. Claude Code 加载 SKILL.md 内容到 System Prompt
+         ↓
+3. SKILL.md 指令："Read _bmad/bmm/config.yaml"
+         ↓
+4. Claude Code 执行读取，将 YAML 内容追加到 User Prompt
+         ↓
+5. LLM 接收完整上下文并生成响应
+
+最终 API 请求体：
+{
+  "system": "[CLAUDE.md + SKILL.md 内容]",
+  "messages": [
+    {"role": "user", "content": "/bmad-create-prd"},
+    {"role": "assistant", "content": "我读取到配置：..."},
+    {"role": "user", "content": "我想做一个任务管理应用"}
+  ]
+}
+```
+
+**关键理解：**
+
+| 误解 | 正确理解 |
+|------|---------|
+| 「py 脚本在运行时执行」 | bmad_init.py 仅安装时运行 |
+| 「提取关键词注入」 | 完整文件内容注入，LLM 自己理解语义 |
+| 「有后台引擎」 | 无后台进程，引擎=IDE+ 文件读取指令 |
+| 「C.O.R.E.是运行时服务」 | C.O.R.E.是文件系统约定 +Skill 指令规范 |
 
 ---
 

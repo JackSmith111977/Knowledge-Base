@@ -1,0 +1,836 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - note "AI documentation notice" [ref=e5]:
+        - generic [ref=e6]:
+          - text: "🤖 Consolidated, AI-optimized BMAD docs:"
+          - link "llms-full.txt" [ref=e7] [cursor=pointer]:
+            - /url: https://docs.bmad-method.org//llms-full.txt
+          - text: . Fetch this plain text file for complete context.
+      - generic [ref=e8]:
+        - link "BMAD Method" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e11]: BMAD Method
+        - button "Search" [ref=e14] [cursor=pointer]:
+          - img [ref=e15]
+          - generic [ref=e17]: Search
+          - generic [ref=e18]:
+            - generic [ref=e19]: Ctrl
+            - generic [ref=e20]: K
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - link "Discord" [ref=e23] [cursor=pointer]:
+              - /url: https://discord.gg/gk8jAdXWmj
+              - generic [ref=e24]: Discord
+              - img [ref=e25]
+            - link "GitHub" [ref=e27] [cursor=pointer]:
+              - /url: https://github.com/bmad-code-org/BMAD-METHOD
+              - generic [ref=e28]: GitHub
+              - img [ref=e29]
+            - link "YouTube" [ref=e31] [cursor=pointer]:
+              - /url: https://www.youtube.com/@BMadCode
+              - generic [ref=e32]: YouTube
+              - img [ref=e33]
+          - generic [ref=e36]:
+            - generic [ref=e37]: Select theme
+            - img
+            - combobox "Select theme" [ref=e38] [cursor=pointer]:
+              - option "Dark"
+              - option "Light"
+              - option "Auto" [selected]
+            - img
+          - generic [ref=e40]:
+            - generic [ref=e41]: Select language
+            - img
+            - combobox "Select language" [ref=e42] [cursor=pointer]:
+              - option "English" [selected]
+              - option "Tiếng Việt"
+              - option "简体中文"
+              - option "Français"
+            - img
+    - navigation "Main":
+      - list [ref=e46]:
+        - listitem [ref=e47]:
+          - link "Welcome" [ref=e48] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e49]:
+          - link "Roadmap" [ref=e50] [cursor=pointer]:
+            - /url: /roadmap/
+        - listitem [ref=e51]:
+          - group [ref=e52]:
+            - generic "Tutorials" [ref=e53] [cursor=pointer]:
+              - generic [ref=e54]: Tutorials
+              - img [ref=e55]
+            - list [ref=e57]:
+              - listitem [ref=e58]:
+                - link "Getting Started" [ref=e59] [cursor=pointer]:
+                  - /url: /tutorials/getting-started/
+        - listitem [ref=e60]:
+          - group [ref=e61]:
+            - generic "How-To Guides" [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]: How-To Guides
+              - img [ref=e64]
+        - listitem [ref=e66]:
+          - group [ref=e67]:
+            - generic "Explanation" [ref=e68] [cursor=pointer]:
+              - generic [ref=e69]: Explanation
+              - img [ref=e70]
+        - listitem [ref=e72]:
+          - group [ref=e73]:
+            - generic "Reference" [ref=e74] [cursor=pointer]:
+              - generic [ref=e75]: Reference
+              - img [ref=e76]
+    - generic [ref=e79]:
+      - complementary [ref=e80]:
+        - navigation "On this page" [ref=e85]:
+          - heading "On this page" [level=2] [ref=e86]
+          - list [ref=e87]:
+            - listitem [ref=e88]:
+              - link "Overview" [ref=e89] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=e90]:
+              - link "What You’ll Learn" [ref=e91] [cursor=pointer]:
+                - /url: "#what-youll-learn"
+            - listitem [ref=e92]:
+              - 'link "Meet BMad-Help: Your Intelligent Guide" [ref=e93] [cursor=pointer]':
+                - /url: "#meet-bmad-help-your-intelligent-guide"
+              - list [ref=e94]:
+                - listitem [ref=e95]:
+                  - link "How to Use BMad-Help" [ref=e96] [cursor=pointer]:
+                    - /url: "#how-to-use-bmad-help"
+                - listitem [ref=e97]:
+                  - link "It Powers Workflows Too" [ref=e98] [cursor=pointer]:
+                    - /url: "#it-powers-workflows-too"
+            - listitem [ref=e99]:
+              - link "Understanding BMad" [ref=e100] [cursor=pointer]:
+                - /url: "#understanding-bmad"
+            - listitem [ref=e101]:
+              - link "Installation" [ref=e102] [cursor=pointer]:
+                - /url: "#installation"
+            - listitem [ref=e103]:
+              - 'link "Step 1: Create Your Plan" [ref=e104] [cursor=pointer]':
+                - /url: "#step-1-create-your-plan"
+              - list [ref=e105]:
+                - listitem [ref=e106]:
+                  - 'link "Phase 1: Analysis (Optional)" [ref=e107] [cursor=pointer]':
+                    - /url: "#phase-1-analysis-optional"
+                - listitem [ref=e108]:
+                  - 'link "Phase 2: Planning (Required)" [ref=e109] [cursor=pointer]':
+                    - /url: "#phase-2-planning-required"
+                - listitem [ref=e110]:
+                  - 'link "Phase 3: Solutioning (BMad Method/Enterprise)" [ref=e111] [cursor=pointer]':
+                    - /url: "#phase-3-solutioning-bmad-methodenterprise"
+            - listitem [ref=e112]:
+              - 'link "Step 2: Build Your Project" [ref=e113] [cursor=pointer]':
+                - /url: "#step-2-build-your-project"
+              - list [ref=e114]:
+                - listitem [ref=e115]:
+                  - link "Initialize Sprint Planning" [ref=e116] [cursor=pointer]:
+                    - /url: "#initialize-sprint-planning"
+                - listitem [ref=e117]:
+                  - link "The Build Cycle" [ref=e118] [cursor=pointer]:
+                    - /url: "#the-build-cycle"
+            - listitem [ref=e119]:
+              - link "What You’ve Accomplished" [ref=e120] [cursor=pointer]:
+                - /url: "#what-youve-accomplished"
+            - listitem [ref=e121]:
+              - link "Quick Reference" [ref=e122] [cursor=pointer]:
+                - /url: "#quick-reference"
+            - listitem [ref=e123]:
+              - link "Common Questions" [ref=e124] [cursor=pointer]:
+                - /url: "#common-questions"
+            - listitem [ref=e125]:
+              - link "Getting Help" [ref=e126] [cursor=pointer]:
+                - /url: "#getting-help"
+            - listitem [ref=e127]:
+              - link "Key Takeaways" [ref=e128] [cursor=pointer]:
+                - /url: "#key-takeaways"
+      - main [ref=e130]:
+        - heading "Getting Started" [level=1] [ref=e133]
+        - generic [ref=e136]:
+          - paragraph [ref=e137]: Build software faster using AI-powered workflows with specialized agents that guide you through planning, architecture, and implementation.
+          - generic [ref=e138]:
+            - heading "What You’ll Learn" [level=2] [ref=e139]
+            - link "Section titled “What You’ll Learn”" [ref=e140] [cursor=pointer]:
+              - /url: "#what-youll-learn"
+              - img [ref=e142]
+              - generic [ref=e144]: Section titled “What You’ll Learn”
+          - list [ref=e145]:
+            - listitem [ref=e146]: Install and initialize BMad Method for a new project
+            - listitem [ref=e147]:
+              - text: Use
+              - strong [ref=e148]: BMad-Help
+              - text: — your intelligent guide that knows what to do next
+            - listitem [ref=e149]: Choose the right planning track for your project size
+            - listitem [ref=e150]: Progress through phases from requirements to working code
+            - listitem [ref=e151]: Use agents and workflows effectively
+          - complementary "Prerequisites" [ref=e152]:
+            - paragraph [ref=e153]:
+              - img [ref=e154]
+              - text: Prerequisites
+            - list [ref=e157]:
+              - listitem [ref=e158]:
+                - strong [ref=e159]: Node.js 20+
+                - text: — Required for the installer
+              - listitem [ref=e160]:
+                - strong [ref=e161]: Git
+                - text: — Recommended for version control
+              - listitem [ref=e162]:
+                - strong [ref=e163]: AI-powered IDE
+                - text: — Claude Code, Cursor, or similar
+              - listitem [ref=e164]:
+                - strong [ref=e165]: A project idea
+                - text: — Even a simple one works for learning
+          - complementary "The Easiest Path" [ref=e166]:
+            - paragraph [ref=e167]:
+              - img [ref=e168]
+              - text: The Easiest Path
+            - paragraph [ref=e172]:
+              - strong [ref=e173]: Install
+              - text: →
+              - code [ref=e174]: npx bmad-method install
+              - strong [ref=e175]: Ask
+              - text: →
+              - code [ref=e176]: bmad-help what should I do first?
+              - strong [ref=e177]: Build
+              - text: → Let BMad-Help guide you workflow by workflow
+          - generic [ref=e178]:
+            - 'heading "Meet BMad-Help: Your Intelligent Guide" [level=2] [ref=e179]'
+            - 'link "Section titled “Meet BMad-Help: Your Intelligent Guide”" [ref=e180] [cursor=pointer]':
+              - /url: "#meet-bmad-help-your-intelligent-guide"
+              - img [ref=e182]
+              - generic [ref=e184]: "Section titled “Meet BMad-Help: Your Intelligent Guide”"
+          - paragraph [ref=e185]:
+            - strong [ref=e186]: BMad-Help is the fastest way to get started with BMad.
+            - text: "You don’t need to memorize workflows or phases — just ask, and BMad-Help will:"
+          - list [ref=e187]:
+            - listitem [ref=e188]:
+              - strong [ref=e189]: Inspect your project
+              - text: to see what’s already been done
+            - listitem [ref=e190]:
+              - strong [ref=e191]: Show your options
+              - text: based on which modules you have installed
+            - listitem [ref=e192]:
+              - strong [ref=e193]: Recommend what’s next
+              - text: — including the first required task
+            - listitem [ref=e194]:
+              - strong [ref=e195]: Answer questions
+              - text: like “I have a SaaS idea, where do I start?”
+          - generic [ref=e196]:
+            - heading "How to Use BMad-Help" [level=3] [ref=e197]
+            - link "Section titled “How to Use BMad-Help”" [ref=e198] [cursor=pointer]:
+              - /url: "#how-to-use-bmad-help"
+              - img [ref=e200]
+              - generic [ref=e202]: Section titled “How to Use BMad-Help”
+          - paragraph [ref=e203]: "Run it in your AI IDE by invoking the skill:"
+          - figure [ref=e205]:
+            - code [ref=e207]:
+              - generic [ref=e209]: bmad-help
+            - button "Copy to clipboard" [ref=e211] [cursor=pointer]
+          - paragraph [ref=e213]: "Or combine it with a question for context-aware guidance:"
+          - figure [ref=e215]:
+            - code [ref=e217]:
+              - generic [ref=e219]: bmad-help I have an idea for a SaaS product, I already know all the features I want. where do I get started?
+            - button "Copy to clipboard" [ref=e221] [cursor=pointer]
+          - paragraph [ref=e223]: "BMad-Help will respond with:"
+          - list [ref=e224]:
+            - listitem [ref=e225]: What’s recommended for your situation
+            - listitem [ref=e226]: What the first required task is
+            - listitem [ref=e227]: What the rest of the process looks like
+          - generic [ref=e228]:
+            - heading "It Powers Workflows Too" [level=3] [ref=e229]
+            - link "Section titled “It Powers Workflows Too”" [ref=e230] [cursor=pointer]:
+              - /url: "#it-powers-workflows-too"
+              - img [ref=e232]
+              - generic [ref=e234]: Section titled “It Powers Workflows Too”
+          - paragraph [ref=e235]:
+            - text: BMad-Help doesn’t just answer questions —
+            - strong [ref=e236]: it automatically runs at the end of every workflow
+            - text: to tell you exactly what to do next. No guessing, no searching docs — just clear guidance on the next required workflow.
+          - complementary "Start Here" [ref=e237]:
+            - paragraph [ref=e238]:
+              - img [ref=e239]
+              - text: Start Here
+            - paragraph [ref=e243]:
+              - text: After installing BMad, invoke the
+              - code [ref=e244]: bmad-help
+              - text: skill immediately. It will detect what modules you have installed and guide you to the right starting point for your project.
+          - generic [ref=e245]:
+            - heading "Understanding BMad" [level=2] [ref=e246]
+            - link "Section titled “Understanding BMad”" [ref=e247] [cursor=pointer]:
+              - /url: "#understanding-bmad"
+              - img [ref=e249]
+              - generic [ref=e251]: Section titled “Understanding BMad”
+          - paragraph [ref=e252]: "BMad helps you build software through guided workflows with specialized AI agents. The process follows four phases:"
+          - table [ref=e253]:
+            - rowgroup [ref=e254]:
+              - row "Phase Name What Happens" [ref=e255]:
+                - columnheader "Phase" [ref=e256]
+                - columnheader "Name" [ref=e257]
+                - columnheader "What Happens" [ref=e258]
+            - rowgroup [ref=e259]:
+              - row "1 Analysis Brainstorming, research, product brief or PRFAQ (optional)" [ref=e260]:
+                - cell "1" [ref=e261]
+                - cell "Analysis" [ref=e262]
+                - cell "Brainstorming, research, product brief or PRFAQ (optional)" [ref=e263]:
+                  - text: Brainstorming, research, product brief or PRFAQ
+                  - emphasis [ref=e264]: (optional)
+              - row "2 Planning Create requirements (PRD or spec)" [ref=e265]:
+                - cell "2" [ref=e266]
+                - cell "Planning" [ref=e267]
+                - cell "Create requirements (PRD or spec)" [ref=e268]
+              - row "3 Solutioning Design architecture (BMad Method/Enterprise only)" [ref=e269]:
+                - cell "3" [ref=e270]
+                - cell "Solutioning" [ref=e271]
+                - cell "Design architecture (BMad Method/Enterprise only)" [ref=e272]:
+                  - text: Design architecture
+                  - emphasis [ref=e273]: (BMad Method/Enterprise only)
+              - row "4 Implementation Build epic by epic, story by story" [ref=e274]:
+                - cell "4" [ref=e275]
+                - cell "Implementation" [ref=e276]
+                - cell "Build epic by epic, story by story" [ref=e277]
+          - paragraph [ref=e278]:
+            - strong [ref=e279]:
+              - link "Open the Workflow Map" [ref=e280] [cursor=pointer]:
+                - /url: /reference/workflow-map/
+            - text: to explore phases, workflows, and context management.
+          - paragraph [ref=e281]: "Based on your project’s complexity, BMad offers three planning tracks:"
+          - table [ref=e282]:
+            - rowgroup [ref=e283]:
+              - row "Track Best For Documents Created" [ref=e284]:
+                - columnheader "Track" [ref=e285]
+                - columnheader "Best For" [ref=e286]
+                - columnheader "Documents Created" [ref=e287]
+            - rowgroup [ref=e288]:
+              - row "Quick Flow Bug fixes, simple features, clear scope (1-15 stories) Tech-spec only" [ref=e289]:
+                - cell "Quick Flow" [ref=e290]:
+                  - strong [ref=e291]: Quick Flow
+                - cell "Bug fixes, simple features, clear scope (1-15 stories)" [ref=e292]
+                - cell "Tech-spec only" [ref=e293]
+              - row "BMad Method Products, platforms, complex features (10-50+ stories) PRD + Architecture + UX" [ref=e294]:
+                - cell "BMad Method" [ref=e295]:
+                  - strong [ref=e296]: BMad Method
+                - cell "Products, platforms, complex features (10-50+ stories)" [ref=e297]
+                - cell "PRD + Architecture + UX" [ref=e298]
+              - row "Enterprise Compliance, multi-tenant systems (30+ stories) PRD + Architecture + Security + DevOps" [ref=e299]:
+                - cell "Enterprise" [ref=e300]:
+                  - strong [ref=e301]: Enterprise
+                - cell "Compliance, multi-tenant systems (30+ stories)" [ref=e302]
+                - cell "PRD + Architecture + Security + DevOps" [ref=e303]
+          - complementary "Note" [ref=e304]:
+            - paragraph [ref=e305]:
+              - img [ref=e306]
+              - text: Note
+            - paragraph [ref=e309]: Story counts are guidance, not definitions. Choose your track based on planning needs, not story math.
+          - generic [ref=e310]:
+            - heading "Installation" [level=2] [ref=e311]
+            - link "Section titled “Installation”" [ref=e312] [cursor=pointer]:
+              - /url: "#installation"
+              - img [ref=e314]
+              - generic [ref=e316]: Section titled “Installation”
+          - paragraph [ref=e317]: "Open a terminal in your project directory and run:"
+          - figure "Terminal window" [ref=e319]:
+            - generic [ref=e322]: Terminal window
+            - code [ref=e324]:
+              - generic [ref=e326]: npx bmad-method install
+            - button "Copy to clipboard" [ref=e328] [cursor=pointer]
+          - paragraph [ref=e330]:
+            - text: If you want the newest prerelease build instead of the default release channel, use
+            - code [ref=e331]: npx bmad-method@next install
+            - text: .
+          - paragraph [ref=e332]:
+            - text: When prompted to select modules, choose
+            - strong [ref=e333]: BMad Method
+            - text: .
+          - paragraph [ref=e334]: "The installer creates two folders:"
+          - list [ref=e335]:
+            - listitem [ref=e336]:
+              - code [ref=e337]: _bmad/
+              - text: — agents, workflows, tasks, and configuration
+            - listitem [ref=e338]:
+              - code [ref=e339]: _bmad-output/
+              - text: — empty for now, but this is where your artifacts will be saved
+          - complementary "Your Next Step" [ref=e340]:
+            - paragraph [ref=e341]:
+              - img [ref=e342]
+              - text: Your Next Step
+            - generic [ref=e345]:
+              - paragraph [ref=e346]: "Open your AI IDE in the project folder and run:"
+              - figure [ref=e348]:
+                - code [ref=e350]:
+                  - generic [ref=e352]: bmad-help
+                - button "Copy to clipboard" [ref=e354] [cursor=pointer]
+              - paragraph [ref=e356]: BMad-Help will detect what you’ve completed and recommend exactly what to do next. You can also ask it questions like “What are my options?” or “I have a SaaS idea, where should I start?”
+          - complementary "How to Load Agents and Run Workflows" [ref=e357]:
+            - paragraph [ref=e358]:
+              - img [ref=e359]
+              - text: How to Load Agents and Run Workflows
+            - paragraph [ref=e362]:
+              - text: Each workflow has a
+              - strong [ref=e363]: skill
+              - text: you invoke by name in your IDE (e.g.,
+              - code [ref=e364]: bmad-create-prd
+              - text: ). Your AI tool will recognize the
+              - code [ref=e365]: bmad-*
+              - text: name and run it — you don’t need to load agents separately. You can also invoke an agent skill directly for general conversation (e.g.,
+              - code [ref=e366]: bmad-agent-pm
+              - text: for the PM agent).
+          - complementary "Fresh Chats" [ref=e367]:
+            - paragraph [ref=e368]:
+              - img [ref=e369]
+              - text: Fresh Chats
+            - paragraph [ref=e372]: Always start a fresh chat for each workflow. This prevents context limitations from causing issues.
+          - generic [ref=e373]:
+            - 'heading "Step 1: Create Your Plan" [level=2] [ref=e374]'
+            - 'link "Section titled “Step 1: Create Your Plan”" [ref=e375] [cursor=pointer]':
+              - /url: "#step-1-create-your-plan"
+              - img [ref=e377]
+              - generic [ref=e379]: "Section titled “Step 1: Create Your Plan”"
+          - paragraph [ref=e380]:
+            - text: Work through phases 1-3.
+            - strong [ref=e381]: Use fresh chats for each workflow.
+          - complementary "Project Context (Optional)" [ref=e382]:
+            - paragraph [ref=e383]:
+              - img [ref=e384]
+              - text: Project Context (Optional)
+            - generic [ref=e387]:
+              - paragraph [ref=e388]:
+                - text: Before starting, consider creating
+                - code [ref=e389]: project-context.md
+                - text: to document your technical preferences and implementation rules. This ensures all AI agents follow your conventions throughout the project.
+              - paragraph [ref=e390]:
+                - text: Create it manually at
+                - code [ref=e391]: _bmad-output/project-context.md
+                - text: or generate it after architecture using
+                - code [ref=e392]: bmad-generate-project-context
+                - text: .
+                - link "Learn more" [ref=e393] [cursor=pointer]:
+                  - /url: /explanation/project-context/
+                - text: .
+          - generic [ref=e394]:
+            - 'heading "Phase 1: Analysis (Optional)" [level=3] [ref=e395]'
+            - 'link "Section titled “Phase 1: Analysis (Optional)”" [ref=e396] [cursor=pointer]':
+              - /url: "#phase-1-analysis-optional"
+              - img [ref=e398]
+              - generic [ref=e400]: "Section titled “Phase 1: Analysis (Optional)”"
+          - paragraph [ref=e401]:
+            - text: All workflows in this phase are optional.
+            - link "Not sure which to use?" [ref=e402] [cursor=pointer]:
+              - /url: /explanation/analysis-phase/
+              - strong [ref=e403]: Not sure which to use?
+          - list [ref=e404]:
+            - listitem [ref=e405]:
+              - strong [ref=e406]: brainstorming
+              - text: (
+              - code [ref=e407]: bmad-brainstorming
+              - text: ) — Guided ideation
+            - listitem [ref=e408]:
+              - strong [ref=e409]: research
+              - text: (
+              - code [ref=e410]: bmad-market-research
+              - text: /
+              - code [ref=e411]: bmad-domain-research
+              - text: /
+              - code [ref=e412]: bmad-technical-research
+              - text: ) — Market, domain, and technical research
+            - listitem [ref=e413]:
+              - strong [ref=e414]: product-brief
+              - text: (
+              - code [ref=e415]: bmad-product-brief
+              - text: ) — Recommended foundation document when your concept is clear
+            - listitem [ref=e416]:
+              - strong [ref=e417]: prfaq
+              - text: (
+              - code [ref=e418]: bmad-prfaq
+              - text: ) — Working Backwards challenge to stress-test and forge your product concept
+          - generic [ref=e419]:
+            - 'heading "Phase 2: Planning (Required)" [level=3] [ref=e420]'
+            - 'link "Section titled “Phase 2: Planning (Required)”" [ref=e421] [cursor=pointer]':
+              - /url: "#phase-2-planning-required"
+              - img [ref=e423]
+              - generic [ref=e425]: "Section titled “Phase 2: Planning (Required)”"
+          - paragraph [ref=e426]:
+            - strong [ref=e427]: "For BMad Method and Enterprise tracks:"
+          - list [ref=e428]:
+            - listitem [ref=e429]:
+              - text: Invoke the
+              - strong [ref=e430]: PM agent
+              - text: (
+              - code [ref=e431]: bmad-agent-pm
+              - text: ) in a new chat
+            - listitem [ref=e432]:
+              - text: Run the
+              - code [ref=e433]: bmad-create-prd
+              - text: workflow (
+              - code [ref=e434]: bmad-create-prd
+              - text: )
+            - listitem [ref=e435]:
+              - text: "Output:"
+              - code [ref=e436]: PRD.md
+          - paragraph [ref=e437]:
+            - strong [ref=e438]: "For Quick Flow track:"
+          - list [ref=e439]:
+            - listitem [ref=e440]:
+              - text: Run
+              - code [ref=e441]: bmad-quick-dev
+              - text: — it handles planning and implementation in a single workflow, skip to implementation
+          - complementary "UX Design (Optional)" [ref=e442]:
+            - paragraph [ref=e443]:
+              - img [ref=e444]
+              - text: UX Design (Optional)
+            - paragraph [ref=e447]:
+              - text: If your project has a user interface, invoke the
+              - strong [ref=e448]: UX-Designer agent
+              - text: (
+              - code [ref=e449]: bmad-agent-ux-designer
+              - text: ) and run the UX design workflow (
+              - code [ref=e450]: bmad-create-ux-design
+              - text: ) after creating your PRD.
+          - generic [ref=e451]:
+            - 'heading "Phase 3: Solutioning (BMad Method/Enterprise)" [level=3] [ref=e452]'
+            - 'link "Section titled “Phase 3: Solutioning (BMad Method/Enterprise)”" [ref=e453] [cursor=pointer]':
+              - /url: "#phase-3-solutioning-bmad-methodenterprise"
+              - img [ref=e455]
+              - generic [ref=e457]: "Section titled “Phase 3: Solutioning (BMad Method/Enterprise)”"
+          - paragraph [ref=e458]:
+            - strong [ref=e459]: Create Architecture
+          - list [ref=e460]:
+            - listitem [ref=e461]:
+              - text: Invoke the
+              - strong [ref=e462]: Architect agent
+              - text: (
+              - code [ref=e463]: bmad-agent-architect
+              - text: ) in a new chat
+            - listitem [ref=e464]:
+              - text: Run
+              - code [ref=e465]: bmad-create-architecture
+              - text: (
+              - code [ref=e466]: bmad-create-architecture
+              - text: )
+            - listitem [ref=e467]: "Output: Architecture document with technical decisions"
+          - paragraph [ref=e468]:
+            - strong [ref=e469]: Create Epics and Stories
+          - complementary "V6 Improvement" [ref=e470]:
+            - paragraph [ref=e471]:
+              - img [ref=e472]
+              - text: V6 Improvement
+            - paragraph [ref=e476]:
+              - text: Epics and stories are now created
+              - emphasis [ref=e477]: after
+              - text: architecture. This produces better quality stories because architecture decisions (database, API patterns, tech stack) directly affect how work should be broken down.
+          - list [ref=e478]:
+            - listitem [ref=e479]:
+              - text: Invoke the
+              - strong [ref=e480]: PM agent
+              - text: (
+              - code [ref=e481]: bmad-agent-pm
+              - text: ) in a new chat
+            - listitem [ref=e482]:
+              - text: Run
+              - code [ref=e483]: bmad-create-epics-and-stories
+              - text: (
+              - code [ref=e484]: bmad-create-epics-and-stories
+              - text: )
+            - listitem [ref=e485]: The workflow uses both PRD and Architecture to create technically-informed stories
+          - paragraph [ref=e486]:
+            - strong [ref=e487]: Implementation Readiness Check
+            - emphasis [ref=e488]: (Highly Recommended)
+          - list [ref=e489]:
+            - listitem [ref=e490]:
+              - text: Invoke the
+              - strong [ref=e491]: Architect agent
+              - text: (
+              - code [ref=e492]: bmad-agent-architect
+              - text: ) in a new chat
+            - listitem [ref=e493]:
+              - text: Run
+              - code [ref=e494]: bmad-check-implementation-readiness
+              - text: (
+              - code [ref=e495]: bmad-check-implementation-readiness
+              - text: )
+            - listitem [ref=e496]: Validates cohesion across all planning documents
+          - generic [ref=e497]:
+            - 'heading "Step 2: Build Your Project" [level=2] [ref=e498]'
+            - 'link "Section titled “Step 2: Build Your Project”" [ref=e499] [cursor=pointer]':
+              - /url: "#step-2-build-your-project"
+              - img [ref=e501]
+              - generic [ref=e503]: "Section titled “Step 2: Build Your Project”"
+          - paragraph [ref=e504]:
+            - text: Once planning is complete, move to implementation.
+            - strong [ref=e505]: Each workflow should run in a fresh chat.
+          - generic [ref=e506]:
+            - heading "Initialize Sprint Planning" [level=3] [ref=e507]
+            - link "Section titled “Initialize Sprint Planning”" [ref=e508] [cursor=pointer]:
+              - /url: "#initialize-sprint-planning"
+              - img [ref=e510]
+              - generic [ref=e512]: Section titled “Initialize Sprint Planning”
+          - paragraph [ref=e513]:
+            - text: Invoke the
+            - strong [ref=e514]: Developer agent
+            - text: (
+            - code [ref=e515]: bmad-agent-dev
+            - text: ) and run
+            - code [ref=e516]: bmad-sprint-planning
+            - text: (
+            - code [ref=e517]: bmad-sprint-planning
+            - text: ). This creates
+            - code [ref=e518]: sprint-status.yaml
+            - text: to track all epics and stories.
+          - generic [ref=e519]:
+            - heading "The Build Cycle" [level=3] [ref=e520]
+            - link "Section titled “The Build Cycle”" [ref=e521] [cursor=pointer]:
+              - /url: "#the-build-cycle"
+              - img [ref=e523]
+              - generic [ref=e525]: Section titled “The Build Cycle”
+          - paragraph [ref=e526]: "For each story, repeat this cycle with fresh chats:"
+          - table [ref=e527]:
+            - rowgroup [ref=e528]:
+              - row "Step Agent Workflow Command Purpose" [ref=e529]:
+                - columnheader "Step" [ref=e530]
+                - columnheader "Agent" [ref=e531]
+                - columnheader "Workflow" [ref=e532]
+                - columnheader "Command" [ref=e533]
+                - columnheader "Purpose" [ref=e534]
+            - rowgroup [ref=e535]:
+              - row "1 DEV bmad-create-story bmad-create-story Create story file from epic" [ref=e536]:
+                - cell "1" [ref=e537]
+                - cell "DEV" [ref=e538]
+                - cell "bmad-create-story" [ref=e539]:
+                  - code [ref=e540]: bmad-create-story
+                - cell "bmad-create-story" [ref=e541]:
+                  - code [ref=e542]: bmad-create-story
+                - cell "Create story file from epic" [ref=e543]
+              - row "2 DEV bmad-dev-story bmad-dev-story Implement the story" [ref=e544]:
+                - cell "2" [ref=e545]
+                - cell "DEV" [ref=e546]
+                - cell "bmad-dev-story" [ref=e547]:
+                  - code [ref=e548]: bmad-dev-story
+                - cell "bmad-dev-story" [ref=e549]:
+                  - code [ref=e550]: bmad-dev-story
+                - cell "Implement the story" [ref=e551]
+              - row "3 DEV bmad-code-review bmad-code-review Quality validation (recommended)" [ref=e552]:
+                - cell "3" [ref=e553]
+                - cell "DEV" [ref=e554]
+                - cell "bmad-code-review" [ref=e555]:
+                  - code [ref=e556]: bmad-code-review
+                - cell "bmad-code-review" [ref=e557]:
+                  - code [ref=e558]: bmad-code-review
+                - cell "Quality validation (recommended)" [ref=e559]:
+                  - text: Quality validation
+                  - emphasis [ref=e560]: (recommended)
+          - paragraph [ref=e561]:
+            - text: After completing all stories in an epic, invoke the
+            - strong [ref=e562]: Developer agent
+            - text: (
+            - code [ref=e563]: bmad-agent-dev
+            - text: ) and run
+            - code [ref=e564]: bmad-retrospective
+            - text: (
+            - code [ref=e565]: bmad-retrospective
+            - text: ).
+          - generic [ref=e566]:
+            - heading "What You’ve Accomplished" [level=2] [ref=e567]
+            - link "Section titled “What You’ve Accomplished”" [ref=e568] [cursor=pointer]:
+              - /url: "#what-youve-accomplished"
+              - img [ref=e570]
+              - generic [ref=e572]: Section titled “What You’ve Accomplished”
+          - paragraph [ref=e573]: "You’ve learned the foundation of building with BMad:"
+          - list [ref=e574]:
+            - listitem [ref=e575]: Installed BMad and configured it for your IDE
+            - listitem [ref=e576]: Initialized a project with your chosen planning track
+            - listitem [ref=e577]: Created planning documents (PRD, Architecture, Epics & Stories)
+            - listitem [ref=e578]: Understood the build cycle for implementation
+          - paragraph [ref=e579]: "Your project now has:"
+          - figure [ref=e581]:
+            - code [ref=e583]:
+              - generic [ref=e585]: your-project/
+              - generic [ref=e587]: "├── _bmad/ # BMad configuration"
+              - generic [ref=e589]: ├── _bmad-output/
+              - generic [ref=e591]: │ ├── planning-artifacts/
+              - generic [ref=e593]: "│ │ ├── PRD.md # Your requirements document"
+              - generic [ref=e595]: "│ │ ├── architecture.md # Technical decisions"
+              - generic [ref=e597]: "│ │ └── epics/ # Epic and story files"
+              - generic [ref=e599]: │ ├── implementation-artifacts/
+              - generic [ref=e601]: "│ │ └── sprint-status.yaml # Sprint tracking"
+              - generic [ref=e603]: "│ └── project-context.md # Implementation rules (optional)"
+              - generic [ref=e605]: └── ...
+            - button "Copy to clipboard" [ref=e607] [cursor=pointer]
+          - generic [ref=e609]:
+            - heading "Quick Reference" [level=2] [ref=e610]
+            - link "Section titled “Quick Reference”" [ref=e611] [cursor=pointer]:
+              - /url: "#quick-reference"
+              - img [ref=e613]
+              - generic [ref=e615]: Section titled “Quick Reference”
+          - table [ref=e616]:
+            - rowgroup [ref=e617]:
+              - row "Workflow Command Agent Purpose" [ref=e618]:
+                - columnheader "Workflow" [ref=e619]
+                - columnheader "Command" [ref=e620]
+                - columnheader "Agent" [ref=e621]
+                - columnheader "Purpose" [ref=e622]
+            - rowgroup [ref=e623]:
+              - row "bmad-help ⭐ bmad-help Any Your intelligent guide — ask anything!" [ref=e624]:
+                - cell "bmad-help ⭐" [ref=e625]:
+                  - strong [ref=e626]:
+                    - code [ref=e627]: bmad-help
+                  - text: ⭐
+                - cell "bmad-help" [ref=e628]:
+                  - code [ref=e629]: bmad-help
+                - cell "Any" [ref=e630]
+                - cell "Your intelligent guide — ask anything!" [ref=e631]:
+                  - strong [ref=e632]: Your intelligent guide — ask anything!
+              - row "bmad-create-prd bmad-create-prd PM Create Product Requirements Document" [ref=e633]:
+                - cell "bmad-create-prd" [ref=e634]:
+                  - code [ref=e635]: bmad-create-prd
+                - cell "bmad-create-prd" [ref=e636]:
+                  - code [ref=e637]: bmad-create-prd
+                - cell "PM" [ref=e638]
+                - cell "Create Product Requirements Document" [ref=e639]
+              - row "bmad-create-architecture bmad-create-architecture Architect Create architecture document" [ref=e640]:
+                - cell "bmad-create-architecture" [ref=e641]:
+                  - code [ref=e642]: bmad-create-architecture
+                - cell "bmad-create-architecture" [ref=e643]:
+                  - code [ref=e644]: bmad-create-architecture
+                - cell "Architect" [ref=e645]
+                - cell "Create architecture document" [ref=e646]
+              - row "bmad-generate-project-context bmad-generate-project-context Analyst Create project context file" [ref=e647]:
+                - cell "bmad-generate-project-context" [ref=e648]:
+                  - code [ref=e649]: bmad-generate-project-context
+                - cell "bmad-generate-project-context" [ref=e650]:
+                  - code [ref=e651]: bmad-generate-project-context
+                - cell "Analyst" [ref=e652]
+                - cell "Create project context file" [ref=e653]
+              - row "bmad-create-epics-and-stories bmad-create-epics-and-stories PM Break down PRD into epics" [ref=e654]:
+                - cell "bmad-create-epics-and-stories" [ref=e655]:
+                  - code [ref=e656]: bmad-create-epics-and-stories
+                - cell "bmad-create-epics-and-stories" [ref=e657]:
+                  - code [ref=e658]: bmad-create-epics-and-stories
+                - cell "PM" [ref=e659]
+                - cell "Break down PRD into epics" [ref=e660]
+              - row "bmad-check-implementation-readiness bmad-check-implementation-readiness Architect Validate planning cohesion" [ref=e661]:
+                - cell "bmad-check-implementation-readiness" [ref=e662]:
+                  - code [ref=e663]: bmad-check-implementation-readiness
+                - cell "bmad-check-implementation-readiness" [ref=e664]:
+                  - code [ref=e665]: bmad-check-implementation-readiness
+                - cell "Architect" [ref=e666]
+                - cell "Validate planning cohesion" [ref=e667]
+              - row "bmad-sprint-planning bmad-sprint-planning DEV Initialize sprint tracking" [ref=e668]:
+                - cell "bmad-sprint-planning" [ref=e669]:
+                  - code [ref=e670]: bmad-sprint-planning
+                - cell "bmad-sprint-planning" [ref=e671]:
+                  - code [ref=e672]: bmad-sprint-planning
+                - cell "DEV" [ref=e673]
+                - cell "Initialize sprint tracking" [ref=e674]
+              - row "bmad-create-story bmad-create-story DEV Create a story file" [ref=e675]:
+                - cell "bmad-create-story" [ref=e676]:
+                  - code [ref=e677]: bmad-create-story
+                - cell "bmad-create-story" [ref=e678]:
+                  - code [ref=e679]: bmad-create-story
+                - cell "DEV" [ref=e680]
+                - cell "Create a story file" [ref=e681]
+              - row "bmad-dev-story bmad-dev-story DEV Implement a story" [ref=e682]:
+                - cell "bmad-dev-story" [ref=e683]:
+                  - code [ref=e684]: bmad-dev-story
+                - cell "bmad-dev-story" [ref=e685]:
+                  - code [ref=e686]: bmad-dev-story
+                - cell "DEV" [ref=e687]
+                - cell "Implement a story" [ref=e688]
+              - row "bmad-code-review bmad-code-review DEV Review implemented code" [ref=e689]:
+                - cell "bmad-code-review" [ref=e690]:
+                  - code [ref=e691]: bmad-code-review
+                - cell "bmad-code-review" [ref=e692]:
+                  - code [ref=e693]: bmad-code-review
+                - cell "DEV" [ref=e694]
+                - cell "Review implemented code" [ref=e695]
+          - generic [ref=e696]:
+            - heading "Common Questions" [level=2] [ref=e697]
+            - link "Section titled “Common Questions”" [ref=e698] [cursor=pointer]:
+              - /url: "#common-questions"
+              - img [ref=e700]
+              - generic [ref=e702]: Section titled “Common Questions”
+          - paragraph [ref=e703]:
+            - strong [ref=e704]: Do I always need architecture?
+            - text: Only for BMad Method and Enterprise tracks. Quick Flow skips from spec to implementation.
+          - paragraph [ref=e705]:
+            - strong [ref=e706]: Can I change my plan later?
+            - text: Yes. The
+            - code [ref=e707]: bmad-correct-course
+            - text: workflow handles scope changes mid-implementation.
+          - paragraph [ref=e708]:
+            - strong [ref=e709]: What if I want to brainstorm first?
+            - text: Invoke the Analyst agent (
+            - code [ref=e710]: bmad-agent-analyst
+            - text: ) and run
+            - code [ref=e711]: bmad-brainstorming
+            - text: (
+            - code [ref=e712]: bmad-brainstorming
+            - text: ) before starting your PRD.
+          - paragraph [ref=e713]:
+            - strong [ref=e714]: Do I need to follow a strict order?
+            - text: Not strictly. Once you learn the flow, you can run workflows directly using the Quick Reference above.
+          - generic [ref=e715]:
+            - heading "Getting Help" [level=2] [ref=e716]
+            - link "Section titled “Getting Help”" [ref=e717] [cursor=pointer]:
+              - /url: "#getting-help"
+              - img [ref=e719]
+              - generic [ref=e721]: Section titled “Getting Help”
+          - 'complementary "First Stop: BMad-Help" [ref=e722]':
+            - paragraph [ref=e723]:
+              - img [ref=e724]
+              - text: "First Stop: BMad-Help"
+            - generic [ref=e727]:
+              - paragraph [ref=e728]:
+                - strong [ref=e729]:
+                  - text: Invoke
+                  - code [ref=e730]: bmad-help
+                  - text: anytime
+                - text: "— it’s the fastest way to get unstuck. Ask it anything:"
+              - list [ref=e731]:
+                - listitem [ref=e732]: “What should I do after installing?”
+                - listitem [ref=e733]: “I’m stuck on workflow X”
+                - listitem [ref=e734]: “What are my options for Y?”
+                - listitem [ref=e735]: “Show me what’s been done so far”
+              - paragraph [ref=e736]: BMad-Help inspects your project, detects what you’ve completed, and tells you exactly what to do next.
+          - list [ref=e737]:
+            - listitem [ref=e738]:
+              - strong [ref=e739]: During workflows
+              - text: — Agents guide you with questions and explanations
+            - listitem [ref=e740]:
+              - strong [ref=e741]: Community
+              - text: —
+              - link "Discord" [ref=e742] [cursor=pointer]:
+                - /url: https://discord.gg/gk8jAdXWmj
+              - text: "(#bmad-method-help, #report-bugs-and-issues)"
+          - generic [ref=e743]:
+            - heading "Key Takeaways" [level=2] [ref=e744]
+            - link "Section titled “Key Takeaways”" [ref=e745] [cursor=pointer]:
+              - /url: "#key-takeaways"
+              - img [ref=e747]
+              - generic [ref=e749]: Section titled “Key Takeaways”
+          - complementary "Remember These" [ref=e750]:
+            - paragraph [ref=e751]:
+              - img [ref=e752]
+              - text: Remember These
+            - list [ref=e756]:
+              - listitem [ref=e757]:
+                - strong [ref=e758]:
+                  - text: Start with
+                  - code [ref=e759]: bmad-help
+                - text: — Your intelligent guide that knows your project and options
+              - listitem [ref=e760]:
+                - strong [ref=e761]: Always use fresh chats
+                - text: — Start a new chat for each workflow
+              - listitem [ref=e762]:
+                - strong [ref=e763]: Track matters
+                - text: — Quick Flow uses
+                - code [ref=e764]: bmad-quick-dev
+                - text: ; Method/Enterprise need PRD and architecture
+              - listitem [ref=e765]:
+                - strong [ref=e766]: BMad-Help runs automatically
+                - text: — Every workflow ends with guidance on what’s next
+          - paragraph [ref=e767]:
+            - text: Ready to start? Install BMad, invoke
+            - code [ref=e768]: bmad-help
+            - text: ", and let your intelligent guide lead the way."
