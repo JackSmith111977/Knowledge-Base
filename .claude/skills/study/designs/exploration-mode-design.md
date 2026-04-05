@@ -1,7 +1,7 @@
-# Study Skill 探索模式设计方案
+# Study Skill 探索模式设计方案（支持 Mermaid 图表）
 
 > **设计日期：** 2026-04-02
-> **版本：** 4.0.0
+> **版本：** 4.1.0
 > **设计模式：** Pipeline + Inversion + Tool Wrapper
 
 ---
@@ -14,6 +14,7 @@
 - **深度问答**：用户基于章节内容提问，Agent 解答
 - **联网验证**：Agent 不确定时自动搜索官方来源
 - **知识共建**：有价值的内容经用户确认后补充到文档
+- **图表辅助**：涉及流程/架构/状态/交互时自动使用 Mermaid 绘制图表
 
 ### 1.2 与现有模式对比
 
@@ -21,7 +22,7 @@
 |------|------|----------|----------|----------|
 | **标准模式** | 7 步深度学习 | Agent 主导流程 | 首次学习复杂概念 | 30-40 分钟 |
 | **快速模式** | 5 步精简 | Agent 主导流程 | 复习/简单概念 | 15-20 分钟 |
-| **探索模式** | 问答驱动 | 用户主导提问 | 深度研究/文档共建 | 灵活 |
+| **探索模式** | 问答驱动 + 图表 | 用户主导提问 | 深度研究/文档共建 | 灵活 |
 
 ### 1.3 设计模式选择
 
@@ -31,7 +32,60 @@
 |------|--------|
 | **Pipeline** | 固定流程：展示→提问→解答→搜索→补充 |
 | **Inversion** | Agent 主动询问用户是否确认补充文档 |
-| **Tool Wrapper** | 按需加载 web-access 技能进行联网搜索 |
+| **Tool Wrapper** | 按需加载 web-access 技能进行联网搜索，按需使用 Mermaid 绘制图表 |
+
+### 1.4 Mermaid 图表使用规范（与 research skill 保持一致）
+
+**参考规范：** `../../research/references/mermaid-guide.md`
+
+**图表类型选择决策树：****
+
+```
+需要画什么类型的图？
+│
+├── 流程/步骤/顺序 → flowchart LR（从左到右）或 flowchart TD（从上到下）
+│
+├── 系统架构/分层 → flowchart TB + subgraph 分组
+│
+├── 状态变化/状态机 → stateDiagram-v2
+│
+├── 组件交互/时序 → sequenceDiagram
+│
+├── 数据结构/链表树 → flowchart LR + subgraph
+│
+├── 概念分层/思维导图 → mindmap
+│
+└── 项目计划/时间线 → gantt
+```
+
+**图表使用场景：**
+
+| 场景类型 | 图表类型 | 示例 |
+|----------|----------|------|
+| **流程步骤** | flowchart LR/TD | 置信度评估流程、搜索决策流程 |
+| **系统架构** | flowchart TB + subgraph | 分层架构、模块关系 |
+| **状态变化** | stateDiagram-v2 | 生命周期、状态机 |
+| **组件交互** | sequenceDiagram | API 调用、用户操作响应 |
+| **数据结构** | flowchart LR | 链表、树、Fiber 结构 |
+
+**图表绘制规范（与 research skill 保持一致）：**
+- ✅ 必须使用 Mermaid，禁止 ASCII 字符画图
+- ✅ 参考规范：`../../research/references/mermaid-guide.md`
+- ✅ 节点数控制在 5-15 个，超过则拆分或使用 subgraph 分组
+- ✅ 使用有意义的节点命名，避免 A/B/C 等无意义标签
+- ✅ 连接线标注简洁，复杂说明使用 note 注释
+- ✅ 图表自动布局，永不错位
+- ✅ 图表类型选择遵循决策树（流程→flowchart、状态→stateDiagram-v2、时序→sequenceDiagram）
+
+**图表模板参考：**
+
+| 图表类型 | 适用场景 | 模板参考 |
+|----------|----------|----------|
+| flowchart LR/TD | 流程步骤、决策树 | mermaid-guide.md#3.1 |
+| flowchart TB + subgraph | 系统架构、分层 | mermaid-guide.md#3.3 |
+| stateDiagram-v2 | 状态变化、生命周期 | mermaid-guide.md#3.4 |
+| sequenceDiagram | 组件交互、API 调用 | mermaid-guide.md#3.5 |
+| flowchart LR + subgraph | 数据结构、链表树 | mermaid-guide.md#3.6 |
 
 ---
 

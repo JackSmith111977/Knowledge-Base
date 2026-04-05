@@ -15,39 +15,66 @@ Step 4：总结评分 → Step 5：复习计划
 
 ---
 
-## Step 1：概念学习（完整内容展示 + 知识点范围）
+## Step 1：概念学习（智能展示 + 知识点范围）
+
+**展示策略：** 详见 `references/smart-chapter-display.md`
+
+**核心逻辑：**
+```javascript
+// 1. 加载章节后评估行数
+const totalLines = chapterContent.split('\n').length;
+
+// 2. 根据行数选择展示策略
+if (totalLines < 150) {
+  // 展示整章
+  display = chapterContent;
+} else if (totalLines < 400) {
+  // 展示一个小节
+  display = extractFirstSection(chapterContent);
+} else {
+  // 展示小节的前 65%
+  display = truncateSection(extractFirstSection(chapterContent), 0.65);
+}
+```
 
 ```markdown
 ## Step 1：明确学习目标
 
 **章节：** [章节名称]
-**小节：** [小节列表]
+**展示策略：** [整章展示 / 单小节展示 / 部分展示]
 
 ---
 
-### 📖 完整内容展示
+### 📖 内容展示
 
-**⚠️ 必须展示完整章节内容，而非摘要！**
+[根据智能展示策略展示内容 - 必须是文档原文]
 
-[读取并展示知识库中该章节的完整内容，必须包括：]
-- ✅ 所有概念定义
-- ✅ 所有工作原理说明
-- ✅ 所有代码示例
-- ✅ 所有注意事项/最佳实践
+> **注意：** [根据策略显示相应提示，如"本章共 X 行，当前展示第一小节"]
 
 ---
 
 ### 🎯 知识点清单（出题范围边界）
 
-根据上述内容，本章可出题的知识点包括：
+**⚠️ 重要：** 知识点清单仅基于**当前已展示**的内容！
+
+根据上述内容，当前可出题的知识点包括：
 
 | 编号 | 知识点 | 所属小节 | 题型建议 |
 |------|--------|----------|----------|
 | 1 | [知识点 1] | [小节名] | [基础/应用] |
-| 2 | [知识点 2] | [小节名] | [基础/应用] |
-| 3 | [知识点 3] | [小节名] | [基础/应用] |
 
-**⚠️ 重要：** 后续所有测验题目必须严格限制在上述知识点范围内！
+**后续题目严格限制在上述知识点范围内！**
+
+---
+
+### 📋 本章/本小节剩余内容
+
+[根据展示策略显示剩余内容预览]
+
+| 部分 | 行数 | 状态 |
+|------|------|------|
+| [当前部分] | X 行 | ✅ 学习中 |
+| [剩余部分] | X 行 | ⏳ 待学习 |
 
 ---
 
@@ -56,22 +83,30 @@ Step 4：总结评分 → Step 5：复习计划
 阅读完成后回复「完成」，直接进入讲解环节。
 ```
 
-**AI 内部状态追踪（执行 Step 1 时必须维护）：**
+**AI 内部状态追踪：**
 
 ```javascript
-// 内部状态变量 - AI 必须维护
 state = {
-  currentChapter: "当前章节名称",
-  currentChapterKnowledgePoints: [  // Step 1 生成的知识点清单
-    { id: 1, name: "知识点 1", section: "小节名", covered: false },
-    { id: 2, name: "知识点 2", section: "小节名", covered: false },
-    // ...
+  displayStrategy: 'single-section', // 'full-chapter' | 'single-section' | 'partial-section'
+  currentChapter: {
+    name: "章节名称",
+    totalLines: 280,
+    totalSections: 3
+  },
+  currentSection: {
+    name: "小节名称",
+    index: 0,
+    displayedLines: 95,
+    isPartial: false
+  },
+  currentChapterKnowledgePoints: [
+    { id: 1, name: "知识点 1", section: "小节名", covered: false }
   ],
-  learnedChapters: [],      // 已学章节
-  skippedChapters: [],      // 已跳过章节
-  remainingChapters: [],    // 剩余章节
-  questionHistory: [],      // 已出题目，避免重复
-  chapterScores: {}         // 章节评分记录
+  learnedChapters: [],
+  skippedChapters: [],
+  remainingChapters: [],
+  questionHistory: [],
+  chapterScores: {}
 }
 ```
 
@@ -113,6 +148,24 @@ state = {
 ---
 
 ## Step 3：逐题测验（核心环节）
+
+### 测验前回顾
+
+**核心要求：** 每次测验前必须重新展示相关原文，不准简略展示。
+
+```markdown
+## 📖 测验前回顾
+
+在开始测验前，请快速回顾以下内容：
+
+---
+
+[重新展示当前学习的小节内容 - 与 Step 1 展示的完全相同]
+
+---
+
+准备好后，开始测验。
+```
 
 ### 测验说明
 

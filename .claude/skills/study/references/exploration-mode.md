@@ -31,7 +31,7 @@
 ```
 阶段 0：模式选择与章节加载
        ↓
-阶段 1：展示完整章节内容（大纲 + 详情 + 知识点清单）
+阶段 1：展示章节内容（智能长度控制 + 知识点清单）
        ↓
 阶段 2：用户提问 → 置信度评估 → 解答（±搜索）→ 信息来源标注
        ↓
@@ -39,6 +39,8 @@
        ↓
 阶段 4：继续提问或结束
 ```
+
+**智能展示策略：** 详见 `references/smart-chapter-display.md`
 
 ---
 
@@ -125,38 +127,63 @@ async function loadChapter(chapterName) {
 
 ---
 
-## 阶段 1：展示完整章节内容
+## 阶段 1：展示章节内容（智能长度控制）
+
+**展示策略：** 详见 `references/smart-chapter-display.md`
+
+**核心逻辑：**
+```javascript
+// 1. 加载章节后评估行数
+const totalLines = chapterContent.split('\n').length;
+
+// 2. 根据行数选择展示策略
+if (totalLines < 150) {
+  display = chapterContent;  // 展示整章
+} else if (totalLines < 400) {
+  display = extractFirstSection(chapterContent);  // 展示一个小节
+} else {
+  display = truncateSection(extractFirstSection(chapterContent), 0.65);  // 展示小节的前 65%
+}
+```
 
 ### 步骤 1.1：章节内容展示格式
 
 ```markdown
 ## 📖 章节内容：[章节名称]
 
-### 章节大纲
-
-[展示章节的完整大纲结构，包括所有小节]
+**展示策略：** [整章展示 / 单小节展示 / 部分展示]
 
 ---
 
-### 完整内容
+### 当前学习内容
 
-[读取并展示完整内容，必须包括：]
-- ✅ 所有概念定义
-- ✅ 所有工作原理说明
-- ✅ 所有代码示例
-- ✅ 所有注意事项/最佳实践
-- ✅ 所有常见误区
+[根据智能展示策略展示内容 - 必须是文档原文]
+
+> **注意：** [根据策略显示相应提示]
+> - 整章展示："本章共 X 行，完整展示"
+> - 单小节展示："本章共 X 行，当前展示第一小节：[小节名]（Y 行）"
+> - 部分展示："本章共 X 行，当前展示 [小节名] 的前 65%（Y 行）"
 
 ---
 
 ### 🎯 知识点清单
 
+**⚠️ 注意：** 知识点清单仅基于**当前已展示**的内容！
+
 | 编号 | 知识点 | 所属小节 | 事实来源 |
 |------|--------|----------|----------|
 | 1 | [知识点 1] | [小节名] | [官方文档链接] |
-| 2 | [知识点 2] | [小节名] | [官方文档链接] |
 
-> ⚠️ **注意：** 本章共有 **X** 个知识点，后续问题将基于这些知识点展开
+---
+
+### 📋 本章/本小节剩余内容
+
+[根据展示策略显示剩余内容预览]
+
+| 部分 | 行数 | 状态 |
+|------|------|------|
+| [当前部分] | X 行 | ✅ 学习中 |
+| [剩余部分] | X 行 | ⏳ 待学习 |
 
 ---
 
@@ -174,18 +201,34 @@ async function loadChapter(chapterName) {
 💡 **提示：** Agent 不确定时会自动搜索官方来源
 ```
 
-### 步骤 1.2：知识点提取逻辑
+**AI 内部状态追踪：**
 
 ```javascript
-function extractKnowledgePoints(content) {
-  return content.sections.map((section, index) => ({
-    id: index + 1,
-    name: section.title || section.heading,
-    section: section.name,
-    source: section.references?.[0] || null,  // 记录事实来源
-    covered: false,
-    confidence: 1.0  // 文档内知识点，初始置信度高
-  }));
+state = {
+  mode: "exploration",
+  displayStrategy: 'single-section', // 'full-chapter' | 'single-section' | 'partial-section'
+  currentChapter: {
+    name: "章节名称",
+    totalLines: 280,
+    totalSections: 3
+  },
+  currentSection: {
+    name: "小节名称",
+    index: 0,
+    displayedLines: 95,
+    isPartial: false
+  },
+  currentChapterContent: null,    // 当前学习的完整内容（可能是节选）
+  currentChapterKnowledgePoints: [], // 知识点清单（仅基于已展示内容）
+  questions: [],
+  newKnowledge: [],
+  searchHistory: [],
+  confirmedAdditions: [],
+  modeSwitchContext: {
+    learnedChapters: [],
+    skippedChapters: [],
+    chapterScores: {}
+  }
 }
 ```
 
@@ -193,7 +236,37 @@ function extractKnowledgePoints(content) {
 
 ## 阶段 2：用户提问与解答
 
-### 步骤 2.1：问题接收与分类
+### 步骤 2.1：提问前回顾
+
+**核心要求：** 用户每次提问前，必须重新展示相关原文，不准简略展示。
+
+```markdown
+## ❓ 基于当前内容的思考
+
+在提问之前，让我们先回顾一下刚学的内容：
+
+---
+
+### 📖 内容回顾：[章节名称] > [小节名称]
+
+[重新展示当前学习的小节内容 - 与阶段 1 展示的完全相同]
+
+---
+
+### 💭 探索性问题
+
+基于上述内容，你可以思考：
+1. [引导性问题 1]
+2. [引导性问题 2]
+
+或者直接提出你的问题：
+- 概念不理解 → 「什么是 XXX？」
+- 需要深入 → 「XXX 的原理是什么？」
+- 对比差异 → 「XXX 和 YYY 有什么区别？」
+- 查官方确认 → 「请查官方文档确认 XXX」
+```
+
+### 步骤 2.2：问题接收与分类
 
 ```markdown
 ## ❓ 问题：[用户问题]

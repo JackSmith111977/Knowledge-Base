@@ -323,6 +323,8 @@ state = {
 | **超纲出题** | 出后续章节的内容 | 题目严格限制在 Step 1 知识点清单内 |
 | **展示不完整** | Step 1 只展示摘要 | Step 1 必须展示完整章节内容 |
 | **错题不记录** | 不做错题记录 | 维护 errorBook，复习时优先重做 |
+| **简略展示** | 展示 AI 概括的内容 | 必须展示文档原文，不准简略 |
+| **不看长度** | 总是展示整章 | 根据内容长度选择展示整章/小节/小节部分 |
 
 ---
 
@@ -336,17 +338,20 @@ state = {
 | 探索报告模板 | `references/exploration-report-template.md` | 探索模式学习报告格式 |
 | 总结模板 | `references/study-summary-template.md` | 学习报告格式 |
 | 评分标准 | `references/scoring-rubric.md` | 评分规则详解 |
+| **智能展示机制** | `references/smart-chapter-display.md` | 根据内容长度动态调整展示范围 |
 | 设计文档 | `designs/exploration-mode-design.md` | 探索模式设计方案 |
 
 ---
 
-*Skill 版本：4.0.0 | 作者：Kei | 更新：2026-04-02*
+*Skill 版本：5.0.0 | 作者：Kei | 更新：2026-04-05*
 *更新说明：
-- 新增：探索模式（v4.0.0），问答驱动学习，支持深度研究和文档共建
-- 新增：置信度评估机制，Agent 不确定时自动搜索官方来源
-- 新增：文档共建功能，有价值内容经用户确认后写入文档
-- 新增：web-access 集成，CDP 模式联网搜索
-- 更新：metadata.pattern 添加 [pipeline, inversion, tool-wrapper]
-- 更新：triggers 添加「探索，深入研究」
-- 更新：模式选择添加探索模式选项
+- 新增：智能章节展示机制（v5.0.0），根据内容长度动态调整展示范围
+- 新增：展示策略阈值（<150 行整章 / 150-400 行单小节 / >400 行小节部分）
+- 新增：测验/提问前回顾环节，必须重新展示原文，不准简略展示
+- 新增：知识点清单仅基于已展示内容，防止超纲出题
+- 新增：小节/部分切换机制，支持渐进式学习
+- 更新：metadata.pattern 添加 tool-wrapper（按需加载章节内容）
+- 更新：triggers 保持不变
+- 更新：standard-mode.md、quick-mode.md、exploration-mode.md 同步智能展示逻辑
+- 新增文件：references/smart-chapter-display.md（智能展示机制详解）
 *
