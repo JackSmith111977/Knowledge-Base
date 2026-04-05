@@ -1,0 +1,23 @@
+# 浏览器核心知识体系 - 进度追踪
+
+## 完成情况
+
+- [x] 第 1 章：浏览器基础认知（架构/进程/沙箱）
+- [x] 第 2 章：渲染流水线（DOM/CSSOM/Layout/Paint）
+- [x] 第 3 章：JavaScript 引擎原理（V8/JIT/垃圾回收）
+- [x] 第 4 章：事件循环与任务调度（Event Loop/宏微任务）
+- [x] 第 5 章：网络栈与缓存机制（HTTP/缓存/Service Worker）
+- [x] 第 6 章：浏览器存储（Cookie/LocalStorage/IndexedDB）
+- [x] 第 7 章：浏览器安全模型（同源/CSP/XSS 防护）
+- [x] 第 8 章：性能优化实战（关键渲染路径/Core Web Vitals）
+
+## 文档统计
+
+- 总章节：8 章
+- 估计行数：约 1100+ 行
+- 创建日期：2026-04-05
+
+## 下一步
+
+- 更新 KB-INDEX.md 索引
+- 提交 Git 仓库

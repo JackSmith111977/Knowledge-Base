@@ -85,7 +85,7 @@ Knowledge Base/
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
-| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md、RESTful API 设计规范.md、GraphQL 核心知识体系.md |
+| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md、RESTful API 设计规范.md、GraphQL 核心知识体系.md、浏览器核心知识体系.md |
 | MCP | Tech/Fundamentals/MCP/ | MCP 核心知识体系.md |
 | Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
@@ -390,11 +390,23 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.10.0 | 最后扫描：2026-04-05 | 整理完成*
+*KB-INDEX 版本：1.11.0 | 最后扫描：2026-04-05 | 整理完成*
 
 ---
 
 ## 整理记录
+
+### 2026-04-05 整理（浏览器核心知识体系）
+
+**执行的操作：**
+1. ✅ 创建《浏览器核心知识体系.md》文档（约 1100+ 行）
+2. ✅ 注册文档到 KB-INDEX
+3. ✅ 更新 KB-INDEX 版本至 1.11.0
+
+**整理后效果：**
+- 浏览器底层原理文档收录到 `Tech/Fundamentals/Network/` 目录
+- 8 章涵盖：基础认知、渲染流水线、V8 引擎原理、事件循环、网络栈与缓存、浏览器存储、安全模型、性能优化实战
+- 包含 Mermaid 架构图、代码示例、最佳实践
 
 ### 2026-04-05 整理（P0 调研完成）
 
