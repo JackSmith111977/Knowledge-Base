@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-01 (v1.3.0)
+**最后更新：** 2026-04-06 (v1.13.0)
 
 ---
 
@@ -28,6 +28,7 @@ Knowledge Base/
 │   │   ├── Vite/
 │   │   └── webpack/
 │   ├── Business/               # 业务/性能优化
+│   │   ├── Agile/              # 敏捷开发
 │   │   ├── DevOps/
 │   │   ├── LazyLoading/
 │   │   └── VirtualList/
@@ -67,12 +68,13 @@ Knowledge Base/
 | BMAD-METHOD | Tech/AI/BMAD/ | BMAD-METHOD 核心知识体系.md |
 | Claude Code | Tech/AI/ClaudeCode/ | Claude Code Skills 完全指南.md、Claude Code SubAgent 模式.md、Claude Code 完全指南.md、Claude Code 减少询问配置指南.md、Claude Code Hooks 自动化核心知识体系.md、Claude Code Playwright E2E 测试核心知识体系.md、路由系统可行性研究报告.md |
 | Context Engineering | Tech/AI/ContextEngineering/ | 上下文工程核心知识体系.md |
-| Document First | Tech/AI/DocumentFirst/ | 文档优先开发范式核心知识体系.md |
+| Document First | Tech/AI/DocumentFirst/ | 文档优先开发范式核心知识体系.md、Spec-First 核心知识体系.md |
 | Prompt Engineering | Tech/AI/Prompt Engineering/ | 提示词工程核心知识体系.md |
 | SKILL | Tech/AI/SKILL/ | SKILL 核心知识体系.md、Google 5 种设计模式核心知识体系.md |
 | Vite | Tech/BuildTools/Vite/ | Vite 核心知识体系.md |
 | webpack | Tech/BuildTools/webpack/ | webpack 核心知识体系.md |
 | DevOps | Tech/Business/DevOps/ | DevOps 核心知识体系.md |
+| Agile | Tech/Business/Agile/ | Epic 用户史诗核心知识体系.md |
 | Lazy Loading | Tech/Business/LazyLoading/ | 懒加载核心知识体系.md |
 | Virtual List | Tech/Business/VirtualList/ | 虚拟列表核心知识体系.md |
 | Next.js | Tech/Frameworks/Next.js/ | Next.js 核心知识体系.md、Next.js 全栈应用测试全流程.md、Next.js E2E 测试核心知识体系.md |
@@ -90,7 +92,7 @@ Knowledge Base/
 | Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
 | Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md |
-| Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md |
+| Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md、OAuth 2.1 核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
@@ -162,6 +164,7 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | 文档优先开发范式核心知识体系.md | Document-First Development | 2026-04-01 |
+| SpecFirst/Spec-First 核心知识体系.md | Spec-Driven Development | 2026-04-06 |
 
 ### Tech/AI/Prompt Engineering/
 
@@ -193,6 +196,12 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | DevOps 核心知识体系.md | DevOps | 2026-03-28 |
+
+### Tech/Business/Agile/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Epic 用户史诗核心知识体系.md | 敏捷需求管理 | 2026-04-06 |
 
 ### Tech/Business/LazyLoading/
 
@@ -290,6 +299,7 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | Web 安全核心知识体系.md | Web 安全 | 2026-04-05 |
+| OAuth 2.1 核心知识体系.md | OAuth 2.1 授权协议 | 2026-04-06 |
 
 ### Tech/Fundamentals/Network/
 
@@ -390,7 +400,7 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.11.0 | 最后扫描：2026-04-05 | 整理完成*
+*KB-INDEX 版本：1.14.0 | 最后扫描：2026-04-06 | 整理完成*
 
 ---
 
@@ -428,6 +438,45 @@ Knowledge Base/
 - 新增 3 个分类目录：TailwindCSS、Testing、Security
 - 知识库新增约 5500+ 行高质量技术文档
 - 文档涵盖：测试框架、E2E 测试、CSS 框架、API 设计、GraphQL、Web 安全
+
+### 2026-04-06 整理 (OAuth 2.1)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Fundamentals/Security/OAuth/` 目录
+2. ✅ 创建《OAuth 2.1 核心知识体系.md》文档 (8 章，约 26000+ 行)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.12.0
+
+**整理后效果:**
+- OAuth 2.1 授权协议文档收录到 `Tech/Fundamentals/Security/` 目录
+- 8 章涵盖：基础认知、核心角色与信任模型、授权模式详解、令牌机制与安全、OAuth 2.1 安全最佳实践、OAuth 与 OIDC、实战应用、常见误区与面试问题
+- 包含 Mermaid 流程图、代码示例、RFC 规范引用
+
+### 2026-04-06 整理 (Epic 用户史诗)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Business/Agile/` 目录
+2. ✅ 创建《Epic 用户史诗核心知识体系.md》文档 (8 章，约 38000 行)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.13.0
+
+**整理后效果:**
+- 敏捷需求管理文档收录到 `Tech/Business/Agile/` 目录
+- 8 章涵盖：基础认知、Epic 战略定义、Feature 产品分解、User Story 交付细化、Epic 拆分方法论、用户故事地图、Sprint 管理、实战案例与误区
+- 包含 Mermaid 流程图、大量实战案例、检查清单和模板
+
+### 2026-04-06 整理 (Spec-First)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/AI/DocumentFirst/SpecFirst/` 目录
+2. ✅ 创建《Spec-First 核心知识体系.md》文档 (8 章，约 40,000+ 行)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.14.0
+
+**整理后效果:**
+- Spec-Driven Development 方法论文档收录到 `Tech/AI/DocumentFirst/SpecFirst/` 目录
+- 8 章涵盖：概述、核心概念、理论基础、SDD 全流程、载体与工具、AI 时代实践、实战案例、未来演进
+- 包含 Mermaid 流程图、大量实战案例、检查清单和模板
 
 ### 2026-04-04 整理（Hermes Agent）
 
