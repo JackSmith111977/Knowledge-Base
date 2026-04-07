@@ -92,7 +92,7 @@ Knowledge Base/
 | Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
 | Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md |
-| Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md、OAuth 2.1 核心知识体系.md |
+| Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md、OAuth 2.1 核心知识体系.md、JWT 核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
@@ -300,6 +300,7 @@ Knowledge Base/
 |--------|------|----------|
 | Web 安全核心知识体系.md | Web 安全 | 2026-04-05 |
 | OAuth 2.1 核心知识体系.md | OAuth 2.1 授权协议 | 2026-04-06 |
+| JWT 核心知识体系.md | JWT 认证令牌 | 2026-04-07 |
 
 ### Tech/Fundamentals/Network/
 
@@ -400,7 +401,7 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.14.0 | 最后扫描：2026-04-06 | 整理完成*
+*KB-INDEX 版本：1.15.0 | 最后扫描：2026-04-07 | 整理完成*
 
 ---
 
@@ -477,6 +478,19 @@ Knowledge Base/
 - Spec-Driven Development 方法论文档收录到 `Tech/AI/DocumentFirst/SpecFirst/` 目录
 - 8 章涵盖：概述、核心概念、理论基础、SDD 全流程、载体与工具、AI 时代实践、实战案例、未来演进
 - 包含 Mermaid 流程图、大量实战案例、检查清单和模板
+
+### 2026-04-07 整理 (JWT)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Fundamentals/Security/JWT/` 目录
+2. ✅ 创建《JWT 核心知识体系.md》文档 (8 章，约 50,000+ 行)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.15.0
+
+**整理后效果:**
+- JWT 认证令牌技术文档收录到 `Tech/Fundamentals/Security/` 目录
+- 8 章涵盖：基础认知、结构解析、工作流程、签名算法、安全最佳实践、实战应用、常见误区与面试问题、实战案例与检查清单
+- 包含 Mermaid 流程图、多语言代码示例、RFC 规范引用、15 道面试高频题
 
 ### 2026-04-04 整理（Hermes Agent）
 
