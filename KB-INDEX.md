@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-06 (v1.13.0)
+**最后更新：** 2026-04-07 (v1.17.0)
 
 ---
 
@@ -37,7 +37,10 @@ Knowledge Base/
 │   │   ├── React/
 │   │   ├── Supabase/
 │   │   ├── TailwindCSS/
-│   │   └── Taro/
+│   │   ├── Taro/
+│   │   ├── Vercel/
+│   │   └── UI/                 # UI 组件库
+│   │       └── shadcn/         # shadcn/ui
 │   └── Fundamentals/           # 基础知识
 │       ├── Algorithms/
 │       ├── CSS/
@@ -83,6 +86,8 @@ Knowledge Base/
 | Supabase | Tech/Frameworks/Supabase/ | Supabase 核心知识体系.md |
 | Tailwind CSS | Tech/Frameworks/TailwindCSS/ | Tailwind CSS 核心知识体系.md |
 | Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
+| Vercel | Tech/Frameworks/Vercel/ | Vercel 核心知识体系.md |
+| shadcn/ui | Tech/Frameworks/UI/shadcn/ | shadcn/ui 核心知识体系.md |
 | Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md |
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
@@ -259,6 +264,20 @@ Knowledge Base/
 |--------|------|----------|
 | Taro 跨端框架核心知识体系.md | Taro | 2026-03-28 |
 | outline.md | 大纲 | 2026-03-28 |
+
+### Tech/Frameworks/UI/shadcn/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| shadcn/ui 核心知识体系.md | shadcn/ui 组件库 | 2026-04-07 |
+| progress.txt | 进度追踪 | 2026-04-07 |
+
+### Tech/Frameworks/Vercel/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Vercel 核心知识体系.md | Vercel 部署平台 | 2026-04-07 |
+| progress.txt | 进度追踪 | 2026-04-07 |
 
 ### Tech/Fundamentals/Algorithms/
 
@@ -491,6 +510,32 @@ Knowledge Base/
 - JWT 认证令牌技术文档收录到 `Tech/Fundamentals/Security/` 目录
 - 8 章涵盖：基础认知、结构解析、工作流程、签名算法、安全最佳实践、实战应用、常见误区与面试问题、实战案例与检查清单
 - 包含 Mermaid 流程图、多语言代码示例、RFC 规范引用、15 道面试高频题
+
+### 2026-04-07 整理 (shadcn/ui)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Frameworks/UI/shadcn/` 目录
+2. ✅ 创建《shadcn/ui 核心知识体系.md》文档 (8 章，约 21,500+ 字)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.16.0
+
+**整理后效果:**
+- shadcn/ui 组件库文档收录到 `Tech/Frameworks/UI/` 目录
+- 8 章涵盖：基础认知、架构设计、核心组件、主题定制、可访问性、工程化、实战应用、常见误区与面试问题
+- 包含 Mermaid 流程图、代码示例、50+ 组件列表、面试高频题
+
+### 2026-04-07 整理 (Vercel)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Frameworks/Vercel/` 目录
+2. ✅ 创建《Vercel 核心知识体系.md》文档 (8 章，约 25,000+ 字)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.17.0
+
+**整理后效果:**
+- Vercel 部署平台文档收录到 `Tech/Frameworks/Vercel/` 目录
+- 8 章涵盖：基础认知、部署系统、Serverless Functions、Edge Functions、全球 CDN 与性能优化、AI 生态系统、高级特性与集成、实战案例与常见误区
+- 包含 Mermaid 流程图 15+ 个、代码示例 40+ 个、面试高频题
 
 ### 2026-04-04 整理（Hermes Agent）
 
