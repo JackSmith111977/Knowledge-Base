@@ -1,12 +1,12 @@
 ---
 name: research
-description: 深度调研任意主题并生成结构化知识文档，基于 KB-INDEX 索引快速推荐位置，支持知识库重复检测和 SubAgent 并行模式
+description: 深度调研任意主题并生成结构化知识文档，基于 KB-INDEX 索引快速推荐位置，支持知识库重复检测和 SubAgent 并行模式，集成 web-access 进行智能调研
 aliases: [research, 调研助手，整理文档，研究]
 commands: [/research]
 author: Kei
 triggers: [调研，研究，整理一份，帮我调研，生成文档，深度分析，整理资料，做调研]
-version: 9.0.0
-compatibility: 需要 WebSearch 和 WebFetch 能力，SubAgent 模式需 parallel-task Skill
+version: 10.0.0
+compatibility: 需要 WebSearch、WebFetch 和 web-access Skill，SubAgent 模式需 parallel-task Skill
 metadata:
   category: 调研整理
   type: 9 种类型之调研整理
@@ -28,9 +28,16 @@ metadata:
 4. 索引优先：基于 KB-INDEX 快速推荐存储位置
 5. 图表美观：默认使用 Mermaid，禁止 ASCII 字符画图
 6. 效率优化：大型主题推荐 SubAgent 并行模式
-7. **Fetch 免询问：`skipWebFetchPreflight: true` 已配置，WebFetch 无需确认**
+7. **web-access 集成：调研任务托管给 web-access，由其自主决策使用 WebSearch/WebFetch/CDP**
+8. **Fetch 免询问：`skipWebFetchPreflight: true` 已配置，WebFetch 无需确认**
 
-**搜索规则：** 必须使用 `mcp__WebSearch__bailian_web_search`，禁止原生 WebSearch
+**搜索规则：** 必须使用 `mcp__WebSearch__bailian_web_search` 或 `web-access` Skill
+
+**web-access 集成说明：**
+- 预调研（阶段 2）和分章节调研（阶段 3）均托管给 `web-access` Skill
+- `web-access` 根据目标类型自主决策：WebSearch（发现来源）、WebFetch（提取正文）、CDP（登录态/动态页面）
+- 特殊站点（小红书、微信公众号、微博等）自动使用 CDP 模式
+- 详见 `references/web-access-integration.md`
 
 ---
 
@@ -116,8 +123,25 @@ flowchart TD
 
 **目标：** 执行基础搜索，推荐存储位置，生成调研大纲，**等待用户确认**
 
-**2.1 基础网络搜索** — 使用 MCP WebSearch 执行 2-3 组搜索：
-- 官方文档、核心概念、最新版本
+**2.1 基础网络搜索** — 调用 `web-access` Skill 执行预调研：
+
+```markdown
+@web-access 请执行预调研：
+
+**主题：** [主题名称]
+
+**调研目标：**
+1. 确认 [主题] 的核心定义和范畴
+2. 发现 3-5 个高质量来源（优先官方文档）
+3. 了解 [主题] 的主要知识模块
+
+**输出：** 主题概述 + 核心概念列表 + 来源列表
+```
+
+**web-access 自主决策：**
+- 使用 WebSearch 发现来源
+- 使用 WebFetch 提取文档正文
+- 需要登录态或动态渲染时使用 CDP
 
 **2.2 智能位置推荐** — 优先查询 KB-INDEX，无则分析主题属性
 
@@ -204,7 +228,58 @@ Knowledge Base/Tech/Frameworks/Taro/.work/taro/drafts/
 
 **详见：** `references/subagent-mode.md`
 
-**3.4 执行调研** — WebSearch → WebFetch → 交叉验证 → 撰写 → 保存
+**3.4 执行调研** — 调用 `web-access` Skill 进行章节调研
+
+**标准模式（<6 章）：**
+
+```markdown
+@web-access 请调研以下章节内容：
+
+**章节：** 第 X 章 - [章节标题]
+
+**调研目标：**
+1. [目标 1]
+2. [目标 2]
+
+**深度要求：**
+- 概念定义：准确简洁，引用官方
+- 工作原理：深入底层机制，可绘制 Mermaid 图
+- 代码示例：完整可运行，含注释
+- 常见误区：开发者易错点
+
+**来源要求：**
+- 至少 3-5 个来源交叉验证
+- 优先一手来源（官方文档/源码）
+- 标注每个信息来源的 URL
+
+**输出格式：** Markdown 章节草稿，保存到 .work/[主题]/drafts/chapter-X.md
+```
+
+**SubAgent 模式（≥6 章）：**
+
+```markdown
+@parallel-task 请启动 SubAgent 并行调研：
+
+**任务分组：**
+- 组 A（基础章）：第 1-3 章
+- 组 B（核心章）：第 4-6 章
+- 组 C（收尾章）：第 7-8 章
+
+**每个 SubAgent 的 Prompt：**
+"请加载 web-access Skill，调研 [章节主题]。
+调研要求：概念定义 + 工作原理 + 代码示例 + 常见误区，至少 3-5 个来源"
+
+**协调要求：**
+- 每个 SubAgent 独立使用 web-access 调研
+- 草稿保存到 .work/[主题]/drafts/chapter-X.md
+- 完成后通知主 Agent 整合
+```
+
+**web-access 自主决策：**
+- 公开技术文档 → WebSearch + WebFetch
+- 社交媒体（小红书/公众号等）→ CDP 模式
+- 动态渲染页面（SPA）→ CDP 模式
+- 需要登录态的内容 → CDP 模式
 
 **保存规则（强制）：**
 - 章节草稿 → 必须保存到 `.work/[主题]/drafts/chapter-X.md`
@@ -304,17 +379,13 @@ Knowledge Base/
 | 不更新 | 直接覆盖 | 检测已有 + 添加更新记录 |
 | 重复调研 | 不扫描直接开始 | 先扫描知识库检测重复 |
 | 位置混乱 | 随意存放 | 先查 KB-INDEX，无则创建 |
-| 使用原生 WebSearch | 直接调用 WebSearch | 必须使用 `mcp__WebSearch__bailian_web_search` |
 | SubAgent 滥用 | 小主题也并行 | 按章节数量推荐模式 |
 | **跳过确认** | **预调研后直接开始** | **必须等待用户确认位置和大纲** |
 | **Pipeline 跳步** | **省略检查点** | **严格执行检查点 2（用户确认）** |
 | **过程文件乱放** | **草稿散落在项目各处** | **强制使用 `.work/[主题]/drafts/` 目录** |
-| 重复调研 | 不扫描直接开始 | 先扫描知识库检测重复 |
-| 位置混乱 | 随意存放 | 先查 KB-INDEX，无则创建 |
-| 使用原生 WebSearch | 直接调用 WebSearch | 必须使用 `mcp__WebSearch__bailian_web_search` |
-| SubAgent 滥用 | 小主题也并行 | 按章节数量推荐模式 |
-| **跳过确认** | **预调研后直接开始** | **必须等待用户确认位置和大纲** |
-| **Pipeline 跳步** | **省略检查点** | **严格执行检查点 2（用户确认）** |
+| **web-access 未加载** | **直接执行联网操作** | **调研任务必须先加载 web-access Skill** |
+| **CDP 未检查** | **直接访问需要登录态的站点** | **先执行 `check-deps.mjs` 检查 CDP 可用性** |
+| **工具选择错误** | **对小红书/公众号用 WebFetch** | **反爬严格站点必须用 CDP 模式** |
 
 详见：`references/gotchas.md`
 
@@ -345,6 +416,7 @@ Knowledge Base/
 | Mermaid 图表规范 | `references/mermaid-guide.md` | 图表绘制指南 |
 | **SubAgent 模式** | `references/subagent-mode.md` | **并行调研详解** |
 | **决策流程** | `references/decision-flow.md` | **完整流程图** |
+| **web-access 集成** | `references/web-access-integration.md` | **web-access 调用规范** |
 | KB-INDEX 模板 | `references/kb-index-template.md` | 索引文件模板 |
 | 检查清单 | `checklists/review-checklist.md` | Review 检查 |
 | 踩坑清单 | `references/gotchas.md` | 常见错误 |
@@ -352,5 +424,5 @@ Knowledge Base/
 
 ---
 
-*Skill 版本：8.0.0 | 作者：Kei | 更新：2026-03-31*
-*更新说明：新增 Pipeline + Inversion 组合设计模式，强制执行阶段 2 用户确认检查点，添加硬性门控指令禁止跳步，配置 WebFetch 免询问*
+*Skill 版本：10.0.0 | 作者：Kei | 更新：2026-04-07*
+*更新说明：集成 web-access Skill 进行智能调研，支持 WebSearch/WebFetch/CDP 自主决策，覆盖公开文档、社交媒体（小红书/公众号）、动态渲染页面等场景*
