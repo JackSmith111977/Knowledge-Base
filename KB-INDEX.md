@@ -38,6 +38,7 @@ Knowledge Base/
 │   │   ├── Supabase/
 │   │   ├── TailwindCSS/
 │   │   ├── Taro/
+│   │   ├── Three.js/
 │   │   ├── Vercel/
 │   │   └── UI/                 # UI 组件库
 │   │       └── shadcn/         # shadcn/ui
@@ -87,6 +88,7 @@ Knowledge Base/
 | Supabase | Tech/Frameworks/Supabase/ | Supabase 核心知识体系.md |
 | Tailwind CSS | Tech/Frameworks/TailwindCSS/ | Tailwind CSS 核心知识体系.md |
 | Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
+| Three.js | Tech/Frameworks/Three.js/ | Three.js 核心知识体系.md |
 | Vercel | Tech/Frameworks/Vercel/ | Vercel 核心知识体系.md |
 | shadcn/ui | Tech/Frameworks/UI/shadcn/ | shadcn/ui 核心知识体系.md |
 | Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md |
@@ -273,6 +275,13 @@ Knowledge Base/
 | Taro 跨端框架核心知识体系.md | Taro | 2026-03-28 |
 | outline.md | 大纲 | 2026-03-28 |
 
+### Tech/Frameworks/Three.js/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Three.js 核心知识体系.md | Three.js 3D 图形库 | 2026-04-08 |
+| progress.txt | 进度追踪 | 2026-04-08 |
+
 ### Tech/Frameworks/UI/shadcn/
 
 | 文件名 | 主题 | 创建日期 |
@@ -428,7 +437,7 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.19.0 | 最后扫描：2026-04-08 | 整理完成*
+*KB-INDEX 版本：1.20.0 | 最后扫描：2026-04-08 | 整理完成*
 
 ---
 
