@@ -1,0 +1,79 @@
+# 软件架构调研进度追踪
+
+## 当前状态
+
+**调研主题：** 软件架构 (Software Architecture)
+**开始日期：** 2026-04-08
+**预计完成：** 2026-04-08
+**调研模式：** SubAgent 并行（3 组）
+
+---
+
+## 进度概览
+
+| 阶段 | 状态 | 完成时间 |
+|------|------|----------|
+| 阶段 0: KB-INDEX 检查 | ✅ 完成 | - |
+| 阶段 1: 需求澄清与重复检测 | ✅ 完成 | - |
+| 阶段 2: 预调研与位置推荐 | ✅ 完成 | - |
+| 阶段 3: 分章节调研 | ✅ 完成 | - |
+| 阶段 4: 整合输出与索引更新 | ✅ 完成 | - |
+| 阶段 5: Review 检查 | ✅ 完成 | - |
+
+---
+
+## 章节调研状态
+
+| 章节 | 标题 | 状态 | 负责 Agent |
+|------|------|------|-----------|
+| 第 1 章 | 软件架构概述 | ✅ 完成 | Agent A |
+| 第 2 章 | 核心概念详解 | ✅ 完成 | Agent A |
+| 第 3 章 | 架构风格与模式 | ✅ 完成 | Agent B |
+| 第 4 章 | 架构设计原则 | ✅ 完成 | Agent B |
+| 第 5 章 | 架构文档化 | ✅ 完成 | Agent C |
+| 第 6 章 | 架构评估与演进 | ✅ 完成 | Agent C |
+| 第 7 章 | 常见误区与反模式 | ✅ 完成 | Agent C |
+| 第 8 章 | 最佳实践与工具 | ✅ 完成 | Agent C |
+
+---
+
+## 输出文件
+
+### 最终文档
+- `Tech/Fundamentals/Software Architecture/软件架构核心知识体系.md`
+
+### 索引更新
+- `Knowledge Base/KB-INDEX.md` (已更新)
+
+### 临时草稿（已归档）
+- `.work/software-architecture/drafts/chapter-1.md` ~ `chapter-8.md`
+
+---
+
+## 调研来源
+
+### 核心来源
+1. Wikipedia - Software Architecture
+2. Microsoft Azure Architecture Center
+3. IEEE 1471 / ISO/IEC/IEEE 42010 标准
+4. SEI (Software Engineering Institute)
+5. Martin Fowler - Software Architecture Guide
+6. O'Reilly - Fundamentals of Software Architecture
+
+### 补充来源
+- InfoQ Architecture & Design
+- AWS Architecture Center
+- ArchUnit 官方文档
+- C4 Model 官网
+
+---
+
+## 清理状态
+
+- [x] 草稿已归档（保留 7 天）
+- [x] KB-INDEX 已更新
+- [x] 进度文件已更新
+
+---
+
+*最后更新：2026-04-08*
