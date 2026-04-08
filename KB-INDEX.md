@@ -83,6 +83,7 @@ Knowledge Base/
 | Next.js | Tech/Frameworks/Next.js/ | Next.js 核心知识体系.md、Next.js 全栈应用测试全流程.md、Next.js E2E 测试核心知识体系.md |
 | React | Tech/Frameworks/React/ | React 核心知识体系.md |
 | Zustand | Tech/Frameworks/React/Zustand/ | Zustand 核心知识体系.md |
+| SWR | Tech/Frameworks/React/SWR/ | SWR 核心知识体系.md |
 | Supabase | Tech/Frameworks/Supabase/ | Supabase 核心知识体系.md |
 | Tailwind CSS | Tech/Frameworks/TailwindCSS/ | Tailwind CSS 核心知识体系.md |
 | Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
@@ -243,6 +244,13 @@ Knowledge Base/
 |--------|------|----------|
 | Zustand 核心知识体系.md | Zustand | 2026-03-28 |
 | outline.md | 大纲 | 2026-03-28 |
+
+### Tech/Frameworks/React/SWR/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| SWR 核心知识体系.md | SWR | 2026-04-07 |
+| progress.txt | 进度追踪 | 2026-04-07 |
 
 ### Tech/Frameworks/TailwindCSS/
 
@@ -420,7 +428,7 @@ Knowledge Base/
 
 ---
 
-*KB-INDEX 版本：1.15.0 | 最后扫描：2026-04-07 | 整理完成*
+*KB-INDEX 版本：1.19.0 | 最后扫描：2026-04-08 | 整理完成*
 
 ---
 
@@ -536,6 +544,34 @@ Knowledge Base/
 - Vercel 部署平台文档收录到 `Tech/Frameworks/Vercel/` 目录
 - 8 章涵盖：基础认知、部署系统、Serverless Functions、Edge Functions、全球 CDN 与性能优化、AI 生态系统、高级特性与集成、实战案例与常见误区
 - 包含 Mermaid 流程图 15+ 个、代码示例 40+ 个、面试高频题
+
+### 2026-04-07 整理 (SWR)
+
+**执行的操作:**
+1. ✅ 创建 `Tech/Frameworks/React/SWR/` 目录
+2. ✅ 创建《SWR 核心知识体系.md》文档 (8 章，约 25,000+ 字)
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.18.0
+
+**整理后效果:**
+- SWR 数据请求库文档收录到 `Tech/Frameworks/React/SWR/` 目录
+- 8 章涵盖：基础认知、核心工作原理、快速开始、核心 API 详解、高级特性、性能优化、实战应用场景、常见误区与面试问题
+- 包含 Mermaid 流程图、代码示例、15 道面试高频题
+
+### 2026-04-08 整理（文档内容优化）
+
+**执行的操作：**
+1. ✅ 优化《JavaScript 核心知识体系.md》- 完善作用域、事件循环等核心概念
+2. ✅ 优化《TypeScript 核心知识体系.md》- 调整章节结构，简化高级类型编程内容
+3. ✅ 优化《浏览器核心知识体系.md》- 新增光栅化（Rasterization）详解
+4. ✅ 优化《Supabase 核心知识体系.md》- 新增双 Token 机制详解
+5. ✅ 更新 KB-INDEX 版本至 1.19.0
+
+**整理后效果：**
+- JavaScript：作用域类型、作用域链、执行上下文等核心概念更清晰
+- TypeScript：章节结构更合理，适合循序渐进学习
+- 浏览器：新增光栅化过程详解，完善渲染流水线理解
+- Supabase：双 Token 机制、刷新流程、安全最佳实践更完整
 
 ### 2026-04-04 整理（Hermes Agent）
 

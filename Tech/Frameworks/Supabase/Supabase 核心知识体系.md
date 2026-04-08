@@ -972,6 +972,204 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 ---
 
+### 双 Token 机制详解
+
+#### 为什么需要双 Token？
+
+**问题场景：**
+```
+如果只有 Access Token：
+- Access Token 有效期短（1 小时）→ 用户每小时都要重新登录 ❌
+- Access Token 有效期长（1 年）→ 被盗后一年内都能用 ❌
+
+两难困境：安全性 vs 用户体验
+```
+
+**双 Token 机制的解决方案：**
+
+| Token 类型 | 有效期 | 用途 |
+|------------|--------|------|
+| **Access Token** | 短（1 小时） | 访问 API 资源 |
+| **Refresh Token** | 长（7-30 天） | 仅用于换取新的 Access Token |
+
+#### 双 Token 架构
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    用户登录成功                          │
+└─────────────────────────────────────────────────────────┘
+                            ↓
+        ┌───────────────────┴───────────────────┐
+        ↓                                       ↓
+┌───────────────────┐                 ┌───────────────────┐
+│   Access Token    │                 │   Refresh Token   │
+│   - 有效期 1 小时   │                 │   - 有效期 7 天     │
+│   - 访问 API 资源  │                 │   - 仅用于刷新    │
+│   - 每次请求携带  │                 │   - 安全存储      │
+└───────────────────┘                 └───────────────────┘
+        ↓                                       ↓
+   客户端使用                            客户端存储
+   (请求 Header)                        (Http-only Cookie)
+```
+
+#### 完整工作流程
+
+**阶段 1：用户登录**
+```
+用户输入邮箱/密码
+    ↓
+POST /auth/v1/token { email, password }
+    ↓
+GoTrue 验证成功
+    ↓
+返回双 Token：
+- access_token: "eyJhbG..." (1 小时)
+- refresh_token: "v1_abc..." (7 天)
+    ↓
+SDK 持久化到 localStorage
+```
+
+**阶段 2：正常访问 API**
+```
+客户端请求 API
+    ↓
+Header: Authorization: Bearer <access_token>
+    ↓
+Kong 网关验证 JWT 签名
+    ↓
+返回数据
+```
+
+**阶段 3：Access Token 过期，自动刷新**
+```
+Access Token 过期（1 小时后）
+    ↓
+客户端请求 API → 返回 401 Unauthorized
+    ↓
+SDK 自动检测到 401
+    ↓
+使用 refresh_token 请求刷新
+    ↓
+POST /auth/v1/token { grant_type: refresh_token, refresh_token }
+    ↓
+GoTrue 验证 refresh_token
+    ↓
+签发新双 Token：
+- new_access_token: "eyJhbG..."
+- new_refresh_token: "v2_def..." ⚠️ (轮换：旧 refresh_token 失效)
+    ↓
+SDK 更新 localStorage
+```
+
+**阶段 4：Refresh Token 也过期（7 天后）**
+```
+refresh_token 过期
+    ↓
+刷新失败 → 返回 401
+    ↓
+SDK 触发 SIGNED_OUT 事件
+    ↓
+用户需要重新登录
+```
+
+#### 双 Token 对比
+
+| 特性 | Access Token | Refresh Token |
+|------|-------------|---------------|
+| **类型** | JWT（有状态签名） | opaque 字符串（数据库存储） |
+| **有效期** | 短（1 小时） | 长（7-30 天） |
+| **用途** | 访问 API 资源 | 仅用于换取新 Access Token |
+| **存储位置** | localStorage / memory | Http-only Cookie（推荐） |
+| **每次请求携带** | ✅ 是（Authorization Header） | ❌ 否（仅刷新时使用） |
+| **可撤销性** | ❌ 难（JWT 无状态） | ✅ 能（删除数据库记录） |
+| **轮换机制** | ❌ 否 | ✅ 是（每次刷新后失效） |
+
+#### Refresh Token 轮换机制（重要！）
+
+**为什么需要轮换？**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ 攻击场景：Refresh Token 被盗                                     │
+└─────────────────────────────────────────────────────────────────┘
+
+没有轮换的情况：
+1. 攻击者窃取 refresh_token: "v1_abc..."
+2. 合法用户继续使用（不知情）
+3. 攻击者也用同一个 refresh_token 刷新
+4. 结果：攻击者和合法用户都能持续获取新 Access Token ❌
+   → 攻击者可以永久访问账户！
+
+有轮换的情况：
+1. 攻击者窃取 refresh_token: "v1_abc..."
+2. 合法用户先刷新 → 服务器签发：
+   - new_access_token: "eyJhbG..."
+   - new_refresh_token: "v2_def..." ⚠️ v1 失效
+3. 攻击者用 v1 刷新 → 服务器检测到已失效！
+   → 拒绝请求 ⚠️
+   → 可选：使所有会话失效（安全警报）
+4. 结果：攻击者无法继续访问 ✅
+```
+
+**轮换机制核心逻辑：**
+```javascript
+// 服务端伪代码（GoTrue 内部逻辑）
+
+async function refreshToken(refreshToken) {
+  // 1. 查询数据库验证 Refresh Token
+  const tokenRecord = await db.refreshTokens.findOne({ 
+    where: { token: refreshToken } 
+  })
+  
+  if (!tokenRecord) {
+    // ⚠️ Refresh Token 不存在（可能是被盗用！）
+    await db.sessions.invalidateAll(tokenRecord.userId)
+    throw new Error('Refresh token has been revoked')
+  }
+  
+  // 2. 验证是否已使用（检测重放攻击）
+  if (tokenRecord.used) {
+    // ⚠️ 检测到重放攻击！
+    await db.sessions.invalidateAll(tokenRecord.userId)
+    throw new Error('Refresh token reuse detected')
+  }
+  
+  // 3. 标记旧 Token 为已使用
+  tokenRecord.used = true
+  await tokenRecord.save()
+  
+  // 4. 签发新双 Token
+  const newAccessToken = jwt.sign({ ... })
+  const newRefreshToken = generateSecureToken()
+  
+  // 5. 存储新 Refresh Token
+  await db.refreshTokens.create({
+    userId: tokenRecord.userId,
+    token: newRefreshToken,
+    used: false,
+    expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000  // 7 天
+  })
+  
+  return {
+    access_token: newAccessToken,
+    refresh_token: newRefreshToken
+  }
+}
+```
+
+#### 双 Token 安全最佳实践
+
+| 实践 | 说明 |
+|------|------|
+| **Access Token 存内存** | 避免 XSS 窃取（不用 localStorage） |
+| **Refresh Token 存 Http-only Cookie** | JavaScript 无法访问，防 XSS |
+| **Refresh Token 轮换** | 每次刷新后使旧 Token 失效 |
+| **Refresh Token 可撤销** | 数据库存储，登出时删除 |
+| **检测重放攻击** | 发现 Token 复用时使所有会话失效 |
+| **短 Access Token 有效期** | 减少被盗后的暴露窗口 |
+
+---
+
 ## 4.4 RLS 行级安全策略集成
 
 ### Auth 与 RLS 的协同工作
@@ -1973,6 +2171,171 @@ CREATE TABLE storage.objects (
 -- 创建索引加速查询
 CREATE INDEX idx_objects_bucket_name ON storage.objects(bucket_id, name);
 CREATE INDEX idx_objects_path_tokens ON storage.objects USING GIN(path_tokens);
+```
+
+---
+
+### 对象存储元数据详解
+
+#### 什么是对象存储元数据？
+
+**对象存储元数据（Object Metadata）** 是描述文件属性和特征的结构化数据，它与实际文件内容分离存储，用于快速查询和管理。
+
+#### 元数据的存储位置
+
+Supabase Storage 采用**元数据与文件分离**的架构：
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      用户上传文件                            │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+        ┌───────────────────┴───────────────────┐
+        ↓                                       ↓
+┌───────────────────┐                 ┌───────────────────┐
+│   PostgreSQL      │                 │   S3 兼容存储      │
+│   (元数据)        │                 │   (实际文件)       │
+│                   │                 │                   │
+│ - 文件名          │                 │ - 二进制数据       │
+│ - 文件大小        │                 │ - 分块存储         │
+│ - MIME 类型       │                 │ - 冗余备份         │
+│ - 所有者          │                 │                   │
+│ - 自定义 metadata │                 │                   │
+└───────────────────┘                 └───────────────────┘
+```
+
+#### 元数据结构详解
+
+**`storage.objects` 表字段说明：**
+
+| 字段 | 类型 | 说明 | 示例 |
+|------|------|------|------|
+| `id` | UUID | 文件唯一标识 | `550e8400-e29b-41d4-a716-446655440000` |
+| `bucket_id` | TEXT | 所属存储桶 ID | `user-uploads` |
+| `name` | TEXT | 文件名（含路径） | `avatars/user-123.jpg` |
+| `owner` | UUID | 所有者用户 ID | `auth.users.id` |
+| `metadata` | JSONB | 自定义元数据 | 见下方详解 |
+| `path_tokens` | TEXT[] | 路径分段数组 | `['avatars', 'user-123.jpg']` |
+| `version` | TEXT | 版本号（用于并发控制） | `v1`, `v2` |
+| `created_at` | TIMESTAMPTZ | 创建时间 | `2026-04-06 10:00:00+00` |
+| `updated_at` | TIMESTAMPTZ | 最后更新时间 | `2026-04-06 12:00:00+00` |
+
+#### metadata JSONB 字段详解
+
+**`metadata` 字段存储文件的详细属性：**
+
+```json
+{
+  "mimetype": "image/jpeg",
+  "size": 1048576,
+  "etag": "d41d8cd98f00b204e9800998ecf8427e",
+  "cacheControl": "max-age=3600",
+  "contentDisposition": "inline",
+  "contentLanguage": "zh-CN",
+  "contentEncoding": "gzip",
+  "uploadedBy": "user-123",
+  "uploadedAt": "2026-04-06T10:00:00Z",
+  "lastAccessedAt": "2026-04-06T12:00:00Z",
+  "custom": {
+    "projectId": "proj-456",
+    "tags": ["avatar", "profile"],
+    "isPublic": false
+  }
+}
+```
+
+**系统自动填充的元数据：**
+
+| 元数据键 | 说明 | 来源 |
+|----------|------|------|
+| `mimetype` | 文件 MIME 类型 | 自动检测 |
+| `size` | 文件大小（字节） | 自动计算 |
+| `etag` | 文件内容的 MD5 哈希 | S3 返回 |
+| `cacheControl` | CDN 缓存控制 | 上传时指定 |
+| `contentDisposition` | 内容处置方式 | `inline` 或 `attachment` |
+
+**用户自定义元数据：**
+
+```javascript
+// 上传时添加自定义元数据
+const { data, error } = await supabase.storage
+  .from('user-uploads')
+  .upload('documents/report.pdf', file, {
+    metadata: {
+      projectId: 'proj-456',
+      department: 'engineering',
+      classification: 'internal',
+      tags: ['quarterly', 'report', '2026']
+    }
+  })
+```
+
+#### 元数据的实际应用场景
+
+**场景 1：按文件类型查询**
+```sql
+-- 查询某个用户的所有图片文件
+SELECT name, metadata->>'size' as size
+FROM storage.objects
+WHERE bucket_id = 'user-uploads'
+  AND owner = auth.uid()
+  AND metadata->>'mimetype' LIKE 'image/%';
+```
+
+**场景 2：按标签搜索**
+```sql
+-- 查询包含特定标签的文件
+SELECT name
+FROM storage.objects
+WHERE bucket_id = 'documents'
+  AND metadata->'custom'->'tags' ? 'quarterly';
+```
+
+**场景 3：统计存储使用量**
+```sql
+-- 统计每个用户的存储使用量
+SELECT 
+  owner,
+  COUNT(*) as file_count,
+  SUM((metadata->>'size')::BIGINT) as total_bytes
+FROM storage.objects
+WHERE bucket_id = 'user-uploads'
+GROUP BY owner
+ORDER BY total_bytes DESC;
+```
+
+**场景 4：清理过期文件**
+```sql
+-- 删除超过 1 年未访问的文件
+DELETE FROM storage.objects
+WHERE bucket_id = 'temp-uploads'
+  AND (metadata->>'lastAccessedAt')::TIMESTAMPTZ < NOW() - INTERVAL '1 year';
+```
+
+#### 元数据 vs S3 对象元数据
+
+| 特性 | Supabase PostgreSQL 元数据 | AWS S3 对象元数据 |
+|------|---------------------------|------------------|
+| **查询能力** | ✅ 完整 SQL 查询 | ❌ 仅支持前缀搜索 |
+| **索引支持** | ✅ 可创建任意索引 | ❌ 无索引 |
+| **事务支持** | ✅ ACID 事务 | ❌ 无事务 |
+| **关联查询** | ✅ 可 JOIN 业务表 | ❌ 无法关联 |
+| **RLS 集成** | ✅ 行级安全策略 | ❌ 需 IAM 策略 |
+| **自定义字段** | ✅ JSONB 灵活扩展 | ⚠️ 仅支持字符串键值对 |
+
+**示例对比：**
+```sql
+-- Supabase: 一条 SQL 完成复杂查询
+SELECT o.name, u.username
+FROM storage.objects o
+JOIN profiles u ON o.owner = u.id
+WHERE o.bucket_id = 'public-assets'
+  AND (o.metadata->>'size')::BIGINT > 1048576
+  AND o.metadata->'custom'->'tags' ? 'featured';
+
+-- S3: 需要额外的 DynamoDB/数据库配合
+-- 1. 从 DynamoDB 查询符合条件的 key 列表
+-- 2. 再用 key 列表去 S3 获取文件
 ```
 
 ---

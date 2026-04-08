@@ -1,4 +1,8 @@
 {
+  "env": {
+    "CDP_PROXY_PORT": "3456",
+    "CHROME_PATH": "D:\\Dev-tools\\Chrome for Testing\\chrome\\win64-147.0.7727.24\\chrome-win64\\chrome.exe"
+  },
   "permissions": {
     "allow": [
       "mcp__WebSearch__bailian_web_search",
@@ -31,7 +35,16 @@
       "Bash(start-chrome.bat)",
       "Bash(mkdir -p \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试\")",
       "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.md \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")",
-      "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.json \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")"
+      "Bash(mv \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/E2E 测试/drafts/\"*.json \"D:/WorkPlace/VibeCoding/Knowledge Base/Tech/Frameworks/Next.js/.work/archive/2026-04-01-E2E 测试/\")",
+      "Bash(sed -i 's/#第 7 章模块与命名空间/#第 8 章模块与命名空间/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#第 8 章实战最佳实践/#第 9 章实战最佳实践/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#71-es-module/#81-es-module/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#72-命名空间/#82-命名空间/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#73-混合模式/#83-混合模式/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#81-避免-any/#91-避免-any/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#82-类型守卫模式/#92-类型守卫模式/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#83-第三方库/#93-第三方库/' \"TypeScript 核心知识体系.md\")",
+      "Bash(sed -i 's/#84-大型项目/#94-大型项目/' \"TypeScript 核心知识体系.md\")"
     ],
     "deny": [
       "WebSearch",
@@ -39,10 +52,6 @@
       "Bash(curl * | bash)",
       "Bash(sudo *)"
     ]
-  },
-  "env": {
-    "CDP_PROXY_PORT": "3456",
-    "CHROME_PATH": "D:\\Dev-tools\\Chrome for Testing\\chrome\\win64-147.0.7727.24\\chrome-win64\\chrome.exe"
   },
   "hooks": {
     "UserPromptSubmit": [
