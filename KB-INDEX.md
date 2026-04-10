@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-07 (v1.17.0)
+**最后更新：** 2026-04-10 (v1.22.0)
 
 ---
 
@@ -95,11 +95,11 @@ Knowledge Base/
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
-| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md、RESTful API 设计规范.md、GraphQL 核心知识体系.md、浏览器核心知识体系.md |
+| Network | Tech/Fundamentals/Network/ | 计算机网络核心知识体系.md、RESTful API 设计规范.md、GraphQL 核心知识体系.md、浏览器核心知识体系.md、Cookie 核心知识体系.md |
 | MCP | Tech/Fundamentals/MCP/ | MCP 核心知识体系.md |
 | Node.js | Tech/Fundamentals/Node.js/ | Node.js 核心知识体系.md |
 | TypeScript | Tech/Fundamentals/TS/ | TypeScript 核心知识体系.md |
-| Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md |
+| Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md、测试覆盖率 核心知识体系.md |
 | Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md、OAuth 2.1 核心知识体系.md、JWT 核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
@@ -329,6 +329,7 @@ Knowledge Base/
 |--------|------|----------|
 | Vitest 核心知识体系.md | Vitest 测试框架 | 2026-04-05 |
 | Playwright 测试核心知识体系.md | Playwright E2E 测试 | 2026-04-05 |
+| 测试覆盖率 核心知识体系.md | 测试覆盖率 / Code Coverage | 2026-04-10 |
 
 ### Tech/Fundamentals/Security/
 
@@ -345,7 +346,17 @@ Knowledge Base/
 | 计算机网络核心知识体系.md | 计算机网络 | 2026-04-01 |
 | RESTful API 设计规范.md | RESTful API | 2026-04-05 |
 | GraphQL 核心知识体系.md | GraphQL | 2026-04-05 |
-| progress.txt | 进度追踪 | 2026-04-05 |
+| 浏览器核心知识体系.md | 浏览器原理 | 2026-04-05 |
+| Cookie/ | Cookie 子目录 | 2026-04-09 |
+
+### Tech/Fundamentals/MCP/
+
+### Tech/Fundamentals/Network/Cookie/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Cookie 核心知识体系.md | HTTP Cookie | 2026-04-09 |
+| progress.txt | 进度追踪 | 2026-04-09 |
 
 ### Tech/Fundamentals/MCP/
 
@@ -593,6 +604,40 @@ Knowledge Base/
 - Hermes Agent 文档归集到 `Tech/AI/AgentFramework/` 目录
 - 与 ClaudeCode、AgentSkill 等并列 AI 技术子目录
 - 支持后续 Agent 框架相关知识库扩展（如 OpenClaw 等）
+
+---
+
+## 整理记录
+
+### 2026-04-10 整理（测试覆盖率）
+
+**执行的操作：**
+1. ✅ 创建《测试覆盖率 核心知识体系.md》文档（8 章，约 130,000+ 字）
+2. ✅ 创建 `progress.txt` 进度追踪文件
+3. ✅ 归档 3 个草稿文件到 `.work/archive/2026-04-10/`
+4. ✅ 注册文档到 KB-INDEX
+5. ✅ 更新 KB-INDEX 版本至 v1.22.0
+
+**整理后效果：**
+- 测试覆盖率技术文档收录到 `Tech/Fundamentals/Testing/` 目录
+- 8 章涵盖：基础认知、核心指标体系（8 种覆盖率指标）、工作原理与插桩机制（AST/字节码/sys.settrace/V8 原生）、主流工具链（7 种语言）、可视化与报告解读、CI/CD 集成与质量门禁、最佳实践与常见误区、常见误区与面试问题
+- 包含 Mermaid 流程图 10+ 个、代码示例 50+ 个、22+ 来源交叉验证、12 道分级面试题目
+- 与 Vitest、Playwright 测试文档并列 Testing 分类
+
+---
+
+### 2026-04-09 整理（Cookie）
+
+**执行的操作：**
+1. ✅ 创建 `Tech/Fundamentals/Network/Cookie/` 目录
+2. ✅ 创建《Cookie 核心知识体系.md》文档（8 章，约 25,000+ 字）
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 1.21.0
+
+**整理后效果：**
+- Cookie 核心技术文档收录到 `Tech/Fundamentals/Network/` 目录
+- 8 章涵盖：基础认知、核心属性与 API、工作流程与作用域、安全机制、第三方 Cookie 与隐私、CHIPS 分区 Cookie、实战应用、常见误区与面试问题
+- 包含 Mermaid 流程图 10+ 个、代码示例 30+ 个、18 个来源交叉验证、20 道分级面试题目
 
 ---
 

@@ -44,7 +44,9 @@
       "Bash(sed -i 's/#81-避免-any/#91-避免-any/' \"TypeScript 核心知识体系.md\")",
       "Bash(sed -i 's/#82-类型守卫模式/#92-类型守卫模式/' \"TypeScript 核心知识体系.md\")",
       "Bash(sed -i 's/#83-第三方库/#93-第三方库/' \"TypeScript 核心知识体系.md\")",
-      "Bash(sed -i 's/#84-大型项目/#94-大型项目/' \"TypeScript 核心知识体系.md\")"
+      "Bash(sed -i 's/#84-大型项目/#94-大型项目/' \"TypeScript 核心知识体系.md\")",
+      "Bash(lark-cli task:*)",
+      "Bash(wait)"
     ],
     "deny": [
       "WebSearch",
