@@ -1,0 +1,35 @@
+{
+  "skill_name": "[skill-name]",
+  "evals": [
+    {
+      "id": "eval-001",
+      "prompt": "[触发词 1] [测试内容]",
+      "expected_output": "[预期输出描述]",
+      "files": [],
+      "expectations": [
+        "[期望 1 — 具体可验证]",
+        "[期望 2 — 具体可验证]"
+      ]
+    },
+    {
+      "id": "eval-002",
+      "prompt": "[边界场景测试]",
+      "expected_output": "[预期输出描述]",
+      "files": [],
+      "expectations": [
+        "[期望 1]",
+        "[期望 2]"
+      ]
+    },
+    {
+      "id": "eval-003",
+      "prompt": "[错误输入/异常测试]",
+      "expected_output": "[预期输出描述]",
+      "files": [],
+      "expectations": [
+        "[期望 1]",
+        "[期望 2]"
+      ]
+    }
+  ]
+}

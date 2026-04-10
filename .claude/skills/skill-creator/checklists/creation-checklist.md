@@ -81,6 +81,34 @@
 
 ---
 
+## 六、评估体系检查（Stage 9）
+
+### Eval 定义检查
+
+| 检查项 | 说明 | 状态 |
+|--------|------|------|
+| evals.json 存在 | `[skill-name]/evals/evals.json` | - [ ] |
+| 至少 3 个测试用例 | 正常路径 + 边界 + 错误 | - [ ] |
+| 每条期望可验证 | 非"质量好"类模糊描述 | - [ ] |
+| 期望可区分 | 对明显错误输出不应通过 | - [ ] |
+
+### Grader 准备检查
+
+| 检查项 | 说明 | 状态 |
+|--------|------|------|
+| `references/grader-agent.md` 存在 | 评分器指令 | - [ ] |
+| `references/eval-schemas.md` 存在 | 数据格式定义 | - [ ] |
+| `references/eval-iteration-loop.md` 存在 | 迭代流程说明 | - [ ] |
+
+### 版本追踪检查
+
+| 检查项 | 说明 | 状态 |
+|--------|------|------|
+| `evals/history.json` 结构正确 | 包含 skill_name、iterations | - [ ] |
+| 版本与 SKILL.md frontmatter 一致 | version 字段对应 | - [ ] |
+
+---
+
 ## 必须项（不满足不能发布）
 
 - [ ] YAML Frontmatter 格式正确
@@ -93,4 +121,5 @@
 
 ---
 
-*检查清单版本：1.0.0 | skill-creator Skill v3.0.0+*
+*检查清单版本：2.0.0 | skill-creator Skill v8.0.0+*
+*更新：新增第六节 评估体系检查（Eval 定义 + Grader 准备 + 版本追踪）*
