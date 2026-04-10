@@ -34,3 +34,15 @@ temp/
 # 笔记临时文件
 *.bak
 *.backup
+
+# Playwright MCP 临时录制文件
+.playwright-mcp/
+
+# Claude Code 工作树
+.claude/worktrees/
+
+# 本地记忆系统
+memory/
+
+# 草稿工作区
+**/.work/
