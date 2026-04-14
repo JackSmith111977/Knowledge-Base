@@ -1,0 +1,101 @@
+{
+  "version": "2.0.0",
+  "createdAt": "2026-04-13",
+  "lastStudyDate": "2026-04-14",
+  "studyStreak": 2,
+  "totalProblemsCompleted": 16,
+
+  "topicProgress": {
+    "current": "链表、二叉树与回溯",
+    "subtopic": "前后指针",
+    "nextSubtopic": "快慢指针",
+    "topicOrder": [
+      "滑动窗口与双指针",
+      "二分算法",
+      "常用数据结构",
+      "链表、二叉树与回溯",
+      "网格图",
+      "动态规划",
+      "面试冲刺"
+    ]
+  },
+
+  "problemMap": {
+    "滑动窗口与双指针": {
+      "不定长滑动窗口": [3, 209, 713, 1004]
+    },
+    "二分算法": {
+      "二分查找": [34, 35, 704],
+      "二分答案": [875]
+    },
+    "链表、二叉树与回溯": {
+      "反转链表": [24, 25, 92, 206, 2074],
+      "前后指针": [19, 61, 1721]
+    }
+  },
+
+  "reviewQueue": [
+    { "id": 3, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 209, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 1004, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 704, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 35, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 875, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 713, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 34, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 206, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 92, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 24, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 25, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 2074, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
+    { "id": 1721, "due": "2026-04-16", "score": 3, "reviewCount": 0 }
+  ],
+
+  "errorBook": [
+    { "id": 1721, "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "attempts": 2 }
+  ],
+
+  "patternLibrary": [
+    { "tag": "[滑动窗口] 最长子串", "pattern": "hash set 记录窗口 → 遇重复收缩左边界", "dateAdded": "2026-04-01" },
+    { "tag": "[滑动窗口] 最短子数组", "pattern": "越长越合法 → 收缩左边界 → ans = min(ans, right-left+1)", "dateAdded": "2026-04-01" },
+    { "tag": "[滑动窗口] 求子数组个数", "pattern": "越短越合法 → 收缩左边界 → ans += right - left + 1", "dateAdded": "2026-04-13" },
+    { "tag": "[二分查找] 红蓝染色法", "pattern": "有序数组找第一个≥target 的位置 → lowerBound → 返回 left", "dateAdded": "2026-04-13" },
+    { "tag": "[二分答案] 求最小", "pattern": "check(mid) → true: right=mid, false: left=mid+1", "dateAdded": "2026-04-01" },
+    { "tag": "[链表] 翻转整个链表", "pattern": "翻转单向链表 → 三指针迭代 prev/curr/next → 返回 prev", "dateAdded": "2026-04-13" },
+    { "tag": "[链表] 翻转指定区间", "pattern": "翻转 [left, right] → Dummy 定位 + 标准反转 + 重新连接", "dateAdded": "2026-04-13" },
+    { "tag": "[链表] 相邻节点交换", "pattern": "两两交换 → Dummy + 三指针交换 → p0 前进到原 p1", "dateAdded": "2026-04-13" },
+    { "tag": "[链表] K 个一组翻转", "pattern": "分组翻转 → 先检查 k 个 → 标准反转 → 缝合 → p0 前进", "dateAdded": "2026-04-13" },
+    { "tag": "[链表] 条件分组翻转", "pattern": "分组 + 条件判断 → 组长度计数 → 满足条件翻/不满足跳过", "dateAdded": "2026-04-13" },
+    { "tag": "[链表] 前后指针", "pattern": "fast 先走 k 步 + 同步前进 → slow 停在目标位置", "dateAdded": "2026-04-14" }
+  ],
+
+  "dailyLog": [
+    { "date": "2026-04-13", "topic": "链表、二叉树与回溯", "subtopic": "反转链表", "reviewCount": 2, "newCount": 5, "totalMinutes": 90, "avgScore": 5.0 },
+    { "date": "2026-04-14", "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "reviewCount": 0, "newCount": 3, "totalMinutes": 90, "avgScore": 4.3 }
+  ],
+
+  "settings": {
+    "dailyReviewCount": 2,
+    "dailyNewCount": 2,
+    "dailyAcmCount": 1,
+    "dailyFrontendCount": 1,
+    "reviewRule": "3-5-7",
+    "difficultyCap": 1700
+  },
+
+  "acmProgress": {
+    "currentStage": "基础输入输出",
+    "stageOrder": ["基础输入输出", "多组输入与EOF", "字符串处理", "数据结构输入", "综合实战"],
+    "completedIds": [],
+    "reviewQueue": [],
+    "errorBook": []
+  },
+
+  "frontendProgress": {
+    "currentStage": 1,
+    "stageOrder": ["JS基础-工具函数", "JS基础-函数增强", "JS基础-this与原型", "JS基础-异步与事件", "React-自定义Hook", "React-原理实现", "React-高级模式", "业务场景"],
+    "completedIds": [],
+    "reviewQueue": [],
+    "errorBook": []
+  }
+}
