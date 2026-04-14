@@ -107,43 +107,54 @@ state = {
 
 ```javascript
 async function loadChapter(chapterName) {
-  // 1. 从知识库加载章节内容
-  const content = await loadFromKnowledgeBase(chapterName);
+  // 1. 从知识库加载章节内容（完整）
+  const fullContent = await loadFromKnowledgeBase(chapterName);
   
-  // 2. 提取知识点清单
-  const knowledgePoints = extractKnowledgePoints(content);
+  // 2. 评估内容行数，选择展示策略
+  const totalLines = fullContent.split('\n').length;
+  let displayedContent;
+  let displayStrategy;
   
-  // 3. 提取事实来源（如有）
-  const sources = extractSources(content);
+  if (totalLines < 150) {
+    displayedContent = fullContent;
+    displayStrategy = 'full-chapter';
+  } else if (totalLines < 400) {
+    displayedContent = extractFirstSection(fullContent);
+    displayStrategy = 'single-section';
+  } else {
+    displayedContent = truncateSection(extractFirstSection(fullContent), 0.65);
+    displayStrategy = 'partial-section';
+  }
   
-  // 4. 更新状态
+  // 3. ⚠️ 关键修复：仅基于已展示内容提取知识点清单
+  const knowledgePoints = extractKnowledgePoints(displayedContent);
+  
+  // 4. 提取事实来源（如有）
+  const sources = extractSources(displayedContent);
+  
+  // 5. 更新状态
   state.currentChapter = chapterName;
-  state.currentChapterContent = content;
+  state.currentChapterContent = displayedContent;  // 存储已展示部分，非完整章节
   state.currentChapterKnowledgePoints = knowledgePoints;
+  state.displayStrategy = displayStrategy;
   
-  return { content, knowledgePoints, sources };
+  return { displayedContent, knowledgePoints, sources, displayStrategy, totalLines };
 }
 ```
 
 ---
 
-## 阶段 1：展示章节内容（智能长度控制）
+## 阶段 1：展示章节内容（展示策略已在 loadChapter 中执行）
 
 **展示策略：** 详见 `references/smart-chapter-display.md`
 
-**核心逻辑：**
+**核心逻辑（已在 loadChapter 中完成）：**
 ```javascript
-// 1. 加载章节后评估行数
-const totalLines = chapterContent.split('\n').length;
-
-// 2. 根据行数选择展示策略
-if (totalLines < 150) {
-  display = chapterContent;  // 展示整章
-} else if (totalLines < 400) {
-  display = extractFirstSection(chapterContent);  // 展示一个小节
-} else {
-  display = truncateSection(extractFirstSection(chapterContent), 0.65);  // 展示小节的前 65%
-}
+// loadChapter 内部已执行：
+// 1. 评估总行数 → 选择展示策略
+// 2. 截取对应内容 → displayedContent
+// 3. 仅基于 displayedContent 提取知识点清单
+// 4. state.displayStrategy 已设置
 ```
 
 ### 步骤 1.1：章节内容展示格式
@@ -902,5 +913,5 @@ _bmad/memory/study-sidecar/exploration/
 
 ---
 
-*资源版本：2.0.0 | 最后更新：2026-04-14*
-*更新：v1.0.0 → v2.0.0 新增头脑风暴问题强制验证约束，防止超纲提问*
+*资源版本：3.0.0 | 最后更新：2026-04-14*
+*更新：v2.0.0 → v3.0.0 修复知识点提取时机，将 extractKnowledgePoints 从 loadChapter 的完整内容提取移至智能展示策略执行后，仅基于已展示内容（displayedContent）提取知识点清单，从根本上杜绝超纲出题*
