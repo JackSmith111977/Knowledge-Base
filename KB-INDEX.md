@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-10 (v1.22.0)
+**最后更新：** 2026-04-14 (v1.28.0)
 
 ---
 
@@ -14,6 +14,9 @@ Knowledge Base/
 ├── .github/                    # GitHub 配置
 ├── Career/                     # 职业发展相关
 ├── Guide/                      # 指南类文档
+├── News/                       # 每日新闻聚合
+│   ├── AI 前沿/                # AI 前沿新闻
+│   └── 前端开发/               # 前端开发新闻
 ├── Tech/                       # 技术文档
 │   ├── AI/                     # AI 相关
 │   │   ├── AgentFramework/     # AI Agent 框架
@@ -67,6 +70,7 @@ Knowledge Base/
 
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
+| 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发） |
 | Agent Framework | Tech/AI/AgentFramework/ | Hermes Agent 核心知识体系.md |
 | Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
 | BMAD-METHOD | Tech/AI/BMAD/ | BMAD-METHOD 核心知识体系.md |
@@ -85,13 +89,14 @@ Knowledge Base/
 | React | Tech/Frameworks/React/ | React 核心知识体系.md |
 | Zustand | Tech/Frameworks/React/Zustand/ | Zustand 核心知识体系.md |
 | SWR | Tech/Frameworks/React/SWR/ | SWR 核心知识体系.md |
+| TanStack Query | Tech/Frameworks/React/TanStack Query/ | TanStack Query 核心知识体系.md |
 | Supabase | Tech/Frameworks/Supabase/ | Supabase 核心知识体系.md |
 | Tailwind CSS | Tech/Frameworks/TailwindCSS/ | Tailwind CSS 核心知识体系.md |
 | Taro | Tech/Frameworks/Taro/ | Taro 跨端框架核心知识体系.md |
 | Three.js | Tech/Frameworks/Three.js/ | Three.js 核心知识体系.md |
 | Vercel | Tech/Frameworks/Vercel/ | Vercel 核心知识体系.md |
 | shadcn/ui | Tech/Frameworks/UI/shadcn/ | shadcn/ui 核心知识体系.md |
-| Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md |
+| Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md、灵神 LeetCode 题单学习指南.md、链表核心知识体系.md、学习报告.md |
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
@@ -254,6 +259,13 @@ Knowledge Base/
 | SWR 核心知识体系.md | SWR | 2026-04-07 |
 | progress.txt | 进度追踪 | 2026-04-07 |
 
+### Tech/Frameworks/React/TanStack Query/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| TanStack Query 核心知识体系.md | TanStack Query v5 | 2026-04-14 |
+| progress.txt | 进度追踪 | 2026-04-14 |
+
 ### Tech/Frameworks/TailwindCSS/
 
 | 文件名 | 主题 | 创建日期 |
@@ -301,6 +313,9 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | 滑动窗口核心知识体系.md | 算法 | 2026-03-28 |
+| 灵神 LeetCode 题单学习指南.md | 算法题单 | 2026-04-13 |
+| 链表核心知识体系.md | 算法/链表 | 2026-04-13 |
+| 学习报告.md | 学习报告 | 2026-04-13 |
 
 ### Tech/Fundamentals/CSS/
 
@@ -378,6 +393,14 @@ Knowledge Base/
 | ROADMAP.md | 路线图 | 2026-03-27 |
 | STYLE_GUIDE.md | 风格指南 | 2026-03-27 |
 | TECH_STACK.md | 技术栈 | 2026-03-27 |
+
+### News/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| AI 前沿/news-digest-2026-04-11.md | AI 新闻 | 2026-04-11 |
+| AI 前沿/news-digest-2026-04-13.md | AI 新闻 | 2026-04-13 |
+| 前端开发/news-digest-2026-04-13.md | 前端新闻 | 2026-04-13 |
 
 ---
 
@@ -604,6 +627,43 @@ Knowledge Base/
 - Hermes Agent 文档归集到 `Tech/AI/AgentFramework/` 目录
 - 与 ClaudeCode、AgentSkill 等并列 AI 技术子目录
 - 支持后续 Agent 框架相关知识库扩展（如 OpenClaw 等）
+
+---
+
+## 整理记录
+
+### 2026-04-13 整理（AI 前沿新闻聚合 - 每日执行）
+
+**执行的操作：**
+1. ✅ 执行 news-digest Pipeline，搜索 4 个关键词 + CDP 浏览器直连 3 个信源
+2. ✅ 三级去重：L1 精确去重 4 条、L2 标题去重 3 条、L3 语义去重 3 条
+3. ✅ 来源可信度验证 + 链接有效性检查
+4. ✅ 4 维度智能评分（来源权威性 30% + 时效性 20% + 相关性 25% + 内容深度 25%）
+5. ✅ 创建《news-digest-2026-04-13.md》报告（12 条新闻，评分门控 > 4.0）
+6. ✅ 更新 KB-INDEX 版本至 v1.27.0
+
+**本期热点：**
+- GPT-6 定档 4 月 14 日发布（代号 Spud，性能提升 40%）
+- Claude Mythos 门控预览发布，网络安全测试满分引发 Cloudflare 股价暴跌
+- 智元机器人 4 月 17 日合作伙伴大会
+- Anthropic 封堵 OpenClaw 第三方工具滥用
+- Meta 发布首款自研 AI 模型 Muse Spark
+
+---
+
+## 整理记录
+
+### 2026-04-11 整理（AI 前沿新闻聚合）
+
+**执行的操作：**
+1. ✅ 执行 news-digest Pipeline，采集 6 个信源（量子位、36kr、TechCrunch、Anthropic Blog、OpenAI Blog、HackerNews）
+2. ✅ 创建《news-digest-2026-04-11.md》报告（15 条新闻，4 维度评分）
+3. ✅ 更新 KB-INDEX 版本至 v1.25.0
+
+**整理后效果：**
+- 每日 AI 前沿新闻聚合报告生成到 `News/AI 前沿/` 目录
+- 15 条精选新闻涵盖：行业事件、产品发布、融资动态、技术突破、安全治理
+- 评分系统：来源权威性(30%) + 时效性(20%) + 相关性(25%) + 内容深度(25%)
 
 ---
 
