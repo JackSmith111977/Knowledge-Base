@@ -296,6 +296,12 @@ state = {
 - ✅ 每个问题必须标注思考角度（如「对比型」、「权衡型」）
 - ✅ 数量为 2-3 个，不要过多
 
+**⚠️ 强制验证（新增）：**
+- ✅ 生成的每个问题**必须能映射到 `currentChapterKnowledgePoints` 中至少一个知识点**
+- ✅ 问题中涉及的**所有概念/术语**必须在已展示内容中出现过
+- ✅ 如当前展示内容不足以生成 2 个有深度的头脑风暴问题，**减少到 1 个或跳过该环节**
+- ✅ 验证不通过时，**必须重新生成**，不能强行输出
+
 ### 步骤 1.5.3：Agent 内部分析流程
 
 ```javascript
@@ -337,7 +343,64 @@ function generateBrainstormQuestions(content, knowledgePoints) {
   // 返回前 2-3 个最有价值的问题
   return questions.slice(0, 3);
 }
+
+// ⚠️ 强制验证：每个问题必须映射到已展示的知识点（新增）
+function validateBrainstormQuestions(questions, knowledgePoints) {
+  const validQuestions = [];
+  
+  for (const q of questions) {
+    // 提取问题中的关键概念
+    const conceptsInQuestion = extractConcepts(q.question);
+    
+    // 验证：每个概念是否在已展示的知识点清单中
+    const allConceptsCovered = conceptsInQuestion.every(concept =>
+      knowledgePoints.some(kp =>
+        kp.name.includes(concept) || concept.includes(kp.name)
+      )
+    );
+    
+    if (allConceptsCovered) {
+      validQuestions.push(q);
+    } else {
+      // 知识点不匹配，丢弃该问题
+      console.log(`[验证失败] 问题 "${q.question}" 涉及未展示的知识点，已跳过`);
+    }
+  }
+  
+  // 如果验证后不足 2 个有效问题
+  if (validQuestions.length < 2 && validQuestions.length < questions.length) {
+    // 内容不足以生成足够问题，跳过该环节
+    return validQuestions.length > 0 ? validQuestions : null;
+  }
+  
+  return validQuestions.slice(0, 3);
+}
+
+// 完整调用链（AI 必须按此顺序执行）
+function executeBrainstormPhase(content, knowledgePoints) {
+  const rawQuestions = generateBrainstormQuestions(content, knowledgePoints);
+  const validQuestions = validateBrainstormQuestions(rawQuestions, knowledgePoints);
+  
+  if (!validQuestions || validQuestions.length === 0) {
+    // 跳过头脑风暴环节，直接进入提问环节
+    return null;
+  }
+  
+  return validQuestions;
+}
 ```
+
+### 步骤 1.5.4：展示范围验证检查清单（新增）
+
+**生成头脑风暴问题后，AI 必须执行以下内部检查：**
+
+| 检查项 | 验证方法 | 不通过时动作 |
+|--------|---------|-------------|
+| **概念覆盖** | 问题中的每个概念是否在 `currentChapterKnowledgePoints` 中 | 丢弃该问题，重新生成 |
+| **术语来源** | 问题中的专业术语是否在已展示内容中出现过 | 丢弃该问题，重新生成 |
+| **示例关联** | 问题引用的代码/示例是否在已展示范围内 | 替换为已展示范围内的示例 |
+| **章节引用** | 问题是否引用了未展示的小节/章节 | 丢弃该问题，重新生成 |
+| **数量适配** | 当前展示内容是否足以支撑 2-3 个问题 | 减少到 1 个或跳过该环节 |
 
 ---
 
@@ -822,6 +885,8 @@ _bmad/memory/study-sidecar/exploration/
 | **来源标注** | 所有解答必须标注来源 | 检查解答格式 |
 | **补充确认** | 写入文档前必须用户确认 | 检查 confirmedAdditions |
 | **会话记录** | 必须写入 sidecar | 检查 session 文件 |
+| **头脑风暴范围** | 每个问题必须映射到已展示的知识点 | 检查 brainstormQuestions vs currentChapterKnowledgePoints |
+| **超纲拦截** | 问题涉及的术语/概念必须在已展示内容中 | 逐概念与知识点清单交叉验证 |
 
 ---
 
@@ -837,4 +902,5 @@ _bmad/memory/study-sidecar/exploration/
 
 ---
 
-*资源版本：1.0.0 | 最后更新：2026-04-02*
+*资源版本：2.0.0 | 最后更新：2026-04-14*
+*更新：v1.0.0 → v2.0.0 新增头脑风暴问题强制验证约束，防止超纲提问*
