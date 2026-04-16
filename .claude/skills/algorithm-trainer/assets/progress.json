@@ -1,14 +1,14 @@
 {
-  "version": "2.0.0",
+  "version": "3.0.2",
   "createdAt": "2026-04-13",
-  "lastStudyDate": "2026-04-14",
-  "studyStreak": 2,
-  "totalProblemsCompleted": 16,
+  "lastStudyDate": "2026-04-16",
+  "studyStreak": 3,
+  "totalProblemsCompleted": 20,
 
   "topicProgress": {
     "current": "链表、二叉树与回溯",
-    "subtopic": "前后指针",
-    "nextSubtopic": "快慢指针",
+    "subtopic": "快慢指针",
+    "nextSubtopic": "双指针",
     "topicOrder": [
       "滑动窗口与双指针",
       "二分算法",
@@ -30,12 +30,13 @@
     },
     "链表、二叉树与回溯": {
       "反转链表": [24, 25, 92, 206, 2074],
-      "前后指针": [19, 61, 1721]
+      "前后指针": [19, 61, 1721],
+      "快慢指针": [141, 142]
     }
   },
 
   "reviewQueue": [
-    { "id": 3, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
+    { "id": 3, "due": "2026-04-04", "score": 5, "reviewCount": 1 },
     { "id": 209, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
     { "id": 1004, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
     { "id": 704, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
@@ -48,7 +49,7 @@
     { "id": 24, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
     { "id": 25, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
     { "id": 2074, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 1721, "due": "2026-04-16", "score": 3, "reviewCount": 0 }
+    { "id": 1721, "due": "2026-04-16", "score": 4, "reviewCount": 1 }
   ],
 
   "errorBook": [
@@ -66,12 +67,17 @@
     { "tag": "[链表] 相邻节点交换", "pattern": "两两交换 → Dummy + 三指针交换 → p0 前进到原 p1", "dateAdded": "2026-04-13" },
     { "tag": "[链表] K 个一组翻转", "pattern": "分组翻转 → 先检查 k 个 → 标准反转 → 缝合 → p0 前进", "dateAdded": "2026-04-13" },
     { "tag": "[链表] 条件分组翻转", "pattern": "分组 + 条件判断 → 组长度计数 → 满足条件翻/不满足跳过", "dateAdded": "2026-04-13" },
-    { "tag": "[链表] 前后指针", "pattern": "fast 先走 k 步 + 同步前进 → slow 停在目标位置", "dateAdded": "2026-04-14" }
+    { "tag": "[链表] 前后指针", "pattern": "fast 先走 k 步 + 同步前进 → slow 停在目标位置", "dateAdded": "2026-04-14" },
+    { "tag": "[链表] 判断环", "pattern": "fast ×2 + slow ×1 → 相遇 = 有环", "dateAdded": "2026-04-16" },
+    { "tag": "[链表] 找环入口", "pattern": "相遇后 → head + slow 同步前进 → a = (n-1)(b+c)+c → 在入口相遇", "dateAdded": "2026-04-16" },
+    { "tag": "[链表] 倒数第 k 个", "pattern": "fast 先走 k 步 + 同步前进 → slow 停在倒数第 k 个", "dateAdded": "2026-04-16" },
+    { "tag": "[链表] 正倒数第 k 交换", "pattern": "p1=p2=head → p1 走 k-1 步 → p1 走到尾 → p2 同步 → 交换值", "dateAdded": "2026-04-16" }
   ],
 
   "dailyLog": [
-    { "date": "2026-04-13", "topic": "链表、二叉树与回溯", "subtopic": "反转链表", "reviewCount": 2, "newCount": 5, "totalMinutes": 90, "avgScore": 5.0 },
-    { "date": "2026-04-14", "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "reviewCount": 0, "newCount": 3, "totalMinutes": 90, "avgScore": 4.3 }
+    { "date": "2026-04-13", "topic": "链表、二叉树与回溯", "subtopic": "反转链表", "reviewCount": 2, "algorithmNewCount": 5, "acmCount": 0, "frontendCount": 0, "totalMinutes": 90, "avgScore": 5.0 },
+    { "date": "2026-04-14", "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "reviewCount": 0, "algorithmNewCount": 3, "acmCount": 0, "frontendCount": 0, "totalMinutes": 90, "avgScore": 4.3 },
+    { "date": "2026-04-16", "topic": "链表、二叉树与回溯", "subtopic": "快慢指针", "reviewCount": 2, "algorithmNewCount": 2, "acmCount": 1, "frontendCount": 1, "totalMinutes": 90, "avgScore": 4.8 }
   ],
 
   "settings": {
@@ -86,7 +92,7 @@
   "acmProgress": {
     "currentStage": "基础输入输出",
     "stageOrder": ["基础输入输出", "多组输入与EOF", "字符串处理", "数据结构输入", "综合实战"],
-    "completedIds": [],
+    "completedIds": ["nowcoder-ab-1"],
     "reviewQueue": [],
     "errorBook": []
   },
@@ -96,6 +102,56 @@
     "stageOrder": ["JS基础-工具函数", "JS基础-函数增强", "JS基础-this与原型", "JS基础-异步与事件", "React-自定义Hook", "React-原理实现", "React-高级模式", "业务场景"],
     "completedIds": [],
     "reviewQueue": [],
-    "errorBook": []
+    "errorBook": [],
+    "practicePlatform": "nowcoder",
+    "platformUrl": "https://www.nowcoder.com/ta/front-end",
+    "stageProblemMap": {
+      "1": {
+        "name": "JS基础-工具函数",
+        "problems": [
+          { "id": "FED25", "name": "数组去重", "url": "https://www.nowcoder.com/practice/0b5ae9c4a8c546f79e2547c0179bfdc2?tpId=2&tqId=10855" },
+          { "id": "FED26", "name": "斐波那契数列", "url": "https://www.nowcoder.com/practice/aa8ffe28ec7c4050b2aa8bc9d26710e9?tpId=2&tqId=10856" },
+          { "id": "FED27", "name": "时间格式化输出", "url": "https://www.nowcoder.com/practice/a789783e7c984f10a0bf649f6d4e2d59?tpId=2&tqId=10857" },
+          { "id": "FED28", "name": "获取字符串的长度", "url": "https://www.nowcoder.com/practice/e436bbc408744b73b69a8925fac26efc?tpId=2&tqId=10858" },
+          { "id": "FED32", "name": "字符串字符统计", "url": "https://www.nowcoder.com/practice/777d0cd160de485cae0b1fd1dd973b44?tpId=2&tqId=10862" },
+          { "id": "FED31", "name": "将字符串转换为驼峰格式", "url": "https://www.nowcoder.com/practice/2ded24e34ec34325a62d42d0c8479bae?tpId=2&tqId=10861" },
+          { "id": "NC-37871", "name": "数组求和", "url": "https://www.nowcoder.com/practice/cc3ce199461c4c4cb8f63db61d7eba30?tpId=2&tqId=37871" },
+          { "id": "NC-37881", "name": "查找重复元素", "url": "https://www.nowcoder.com/practice/871a468deecf453589ea261835d6b78b?tpId=2&tqId=37881" }
+        ]
+      },
+      "2": {
+        "name": "JS基础-函数增强",
+        "problems": [
+          { "id": "NC-37893", "name": "使用闭包", "url": "https://www.nowcoder.com/practice/578026cd24e3446bbf27fe565473dc26?tpId=2&tqId=37893" },
+          { "id": "NC-37892", "name": "返回函数", "url": "https://www.nowcoder.com/practice/1f9fd23cdfd14675ab10207191e1d035?tpId=2&tqId=37892" },
+          { "id": "NC-37898", "name": "柯里化", "url": "https://www.nowcoder.com/practice/bb78d69986794470969674a8b504ac00?tpId=2&tqId=37898" },
+          { "id": "NC-37894", "name": "二次封装函数", "url": "https://www.nowcoder.com/practice/fb2d46b99947455a897f2e9fe2268355?tpId=2&tqId=37894" },
+          { "id": "NC-37895", "name": "使用 arguments", "url": "https://www.nowcoder.com/practice/df84fa320cbe49d3b4a17516974b1136?tpId=2&tqId=37895" },
+          { "id": "NC-37891", "name": "函数的上下文", "url": "https://www.nowcoder.com/practice/5e97b94794bd438f893137b2d3b28a6a?tpId=2&tqId=37891" }
+        ]
+      },
+      "3": {
+        "name": "JS基础-this与原型",
+        "problems": [
+          { "id": "FED21", "name": "修改 this 指向", "url": "https://www.nowcoder.com/practice/a616b3de81b948fda9a92db7e86bd171?tpId=2&tqId=10851" },
+          { "id": "NC-37906", "name": "改变上下文", "url": "https://www.nowcoder.com/practice/dfcc28bf243642b795eaf5a2a621acc5?tpId=2&tqId=37906" },
+          { "id": "NC-37896", "name": "使用 apply 调用函数", "url": "https://www.nowcoder.com/practice/d47b482e7148497582c7a995df51f393?tpId=2&tqId=37896" },
+          { "id": "FED24", "name": "根据包名，在指定空间中创建对象", "url": "https://www.nowcoder.com/practice/a82e035501504cedbe881d08c824a381?tpId=2&tqId=10854" },
+          { "id": "NC-37907", "name": "批量改变对象的属性", "url": "https://www.nowcoder.com/practice/4f7d25a30eb1463cbf1daac39ec04f8d?tpId=2&tqId=37907" }
+        ]
+      },
+      "4": {
+        "name": "JS基础-异步与事件",
+        "problems": [
+          { "id": "NC-37888", "name": "计时器", "url": "https://www.nowcoder.com/practice/72c661d926494bd8a50608506915268c?tpId=2&tqId=37888" },
+          { "id": "NC-37889", "name": "流程控制", "url": "https://www.nowcoder.com/practice/8a7bff7ab0d345d5ac5c82e41d9f7115?tpId=2&tqId=37889" },
+          { "id": "NC-37890", "name": "函数传参", "url": "https://www.nowcoder.com/practice/80365a2685144559817e3d5e0c27f3a8?tpId=2&tqId=37890" }
+        ]
+      },
+      "5": { "name": "React-自定义Hook", "problems": [] },
+      "6": { "name": "React-原理实现", "problems": [] },
+      "7": { "name": "React-高级模式", "problems": [] },
+      "8": { "name": "业务场景", "problems": [] }
+    }
   }
 }

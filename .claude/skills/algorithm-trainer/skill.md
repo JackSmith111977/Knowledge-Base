@@ -136,7 +136,7 @@ metadata:
 | 复习题 | 2 道 | ~15 min | 从算法 reviewQueue 取 |
 | 算法新题 | 2 道 | ~30 min | 从 problemMap 取 |
 | ACM 新题 | 1 道 | ~20 min | 从牛客网练习场取 |
-| 前端手撕 | 1 道 | ~15 min | 从 frontend-handwriting.md 取 |
+| 前端手撕 | 1 道 | ~15 min | 从 frontend-handwriting.md 取，在线练习：fe.ecool.fun |
 | 模式总结 | — | ~5 min | 总结共性 |
 | 文档阅读 | — | ~5 min | 涉及的专题文档（各类一次） |
 
@@ -185,11 +185,12 @@ metadata:
 #### 前端手撕代码题（每日 1 道）
 
 > **来源**：`references/frontend-handwriting.md`（8 阶段递进）
+> **在线练习平台**：[牛客网前端编程](https://www.nowcoder.com/ta/front-end) — 在线写代码 + 自动判题
 > **目标**：掌握面试常考手写代码题
 
-1. **展示当前阶段和题目**（从 frontend-handwriting.md 取）
-2. 展示题目名称、难度、考察要点
-3. 引导用户手写核心代码（不要求完整可运行，重点在核心逻辑）
+1. **展示当前阶段和题目**（从 frontend-handwriting.md 取，牛客题单从 `stageProblemMap` 取对应题号）
+2. 展示题目名称、难度、考察要点、牛客网在线链接
+3. **引导用户打开牛客网链接在线完成**（阶段 1-3 有完整覆盖）；阶段 4+ 牛客覆盖不足时在对话中手写核心代码
 4. 重点检查：
    - 闭包是否正确（防抖/节流）
    - this 是否正确绑定（call/apply/bind）
@@ -342,6 +343,6 @@ metadata:
 
 ---
 
-*Skill 版本：3.0.0 | 作者：Kei | 创建：2026-04-13*
-*更新：2026-04-14 v2.0.1 → v3.0.0 新增 ACM 模式适应题 + 前端手撕代码题，每日 2+2+1+1*
+*Skill 版本：3.0.2 | 作者：Kei | 创建：2026-04-13*
+*更新：2026-04-16 v3.0.1 → v3.0.2 前端练习平台切换为牛客网，8 阶段映射真实题单*
 *设计模式：Pipeline（8步训练流程）+ Generator（每日计划生成）+ Tool Wrapper（按需加载三类文档）*
