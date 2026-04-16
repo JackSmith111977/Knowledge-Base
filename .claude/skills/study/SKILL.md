@@ -1,11 +1,11 @@
 ---
 name: study
-description: 基于费曼学习法的互动教学 Skill，支持标准模式（7 步）、快速模式（5 步）、闪卡模式（6 段式卡片速记）和探索模式（问答驱动 + 联网搜索）
+description: 基于费曼学习法的互动教学 Skill，支持标准模式（7 步）、快速模式（5 步）、闪卡模式（6 段式卡片速记）和探索模式（问答驱动 + 联网搜索），内置变式出题引擎（6 维度提问）、间隔重复算法和难度自适应机制
 aliases: [study, learn, feynman-study, 费曼学习]
 commands: [/study]
 author: Kei
-triggers: [我想学习，教我，帮我理解，带我做，学习，复习，怎么学，探索，深入研究，闪卡，快速复习，批量复习，复习错题]
-version: 5.2.0
+triggers: [我想学习，教我，帮我理解，带我做，学习，复习，怎么学，探索，深入研究，闪卡，快速复习，批量复习，复习错题，智能复习，间隔复习]
+version: 6.0.0
 metadata:
   category: 调研整理
   type: 互动教学 + 知识巩固
@@ -29,6 +29,12 @@ metadata:
 | **探索模式** | 问答驱动：展示→提问→解答→搜索→补充 | 用户主导 | 深度研究/文档共建 | 灵活 |
 
 **核心原则：** 以教促学、逐题追问、评分反馈、小节覆盖
+
+**新增特性（v6.0.0）：**
+- 🧠 变式出题引擎：知识点 × 6 维度提问角度（记忆/应用/分析/对比/场景/陷阱），防止每次复习同一道题
+- 📅 间隔重复算法：基于掌握等级（新学→薄弱→一般→熟悉→掌握→精通）动态调整复习间隔（1/3/7/14/30 天）
+- 📈 难度自适应：答对自动升阶、答错自动降阶，4 级难度（基础→进阶→挑战→专家）实时适配
+- 🔁 复习出题策略：40% 错题变式 + 30% 旧题复现 + 30% 新角度探索
 
 **新增特性（v5.2.0）：**
 - ⚡ 闪卡模式：6 段式卡片速记（核心概念/要点/误区/口诀/关联/自测），3-5 分钟/章
@@ -104,6 +110,9 @@ metadata:
 | **知识点清单** | Step 1 生成可出题知识点，防止超纲 |
 | **出题验证** | 每次出题前验证知识点是否在清单内 |
 | **错题本** | 记录评分≤3 分的题目，复习时优先重做 |
+| **变式出题** | 知识点 × 6 维度角度（记忆/应用/分析/对比/场景/陷阱），防止重复同一题 |
+| **间隔重复** | 根据掌握等级动态调整复习间隔（1/3/7/14/30 天） |
+| **难度自适应** | 答对升级、答错降级，4 级难度实时适配 |
 
 **闪卡模式核心机制：**
 | 机制 | 说明 |
@@ -171,7 +180,36 @@ state = {
       },
       // ...
     ]
-  }
+  },
+  
+  // === 新增（v6.0.0）：变式引擎核心数据 ===
+  knowledgePointMastery: {
+    // Key: 知识点唯一 ID
+    "chapter-kp-001": {
+      name: "知识点名称",
+      chapter: "章节名",
+      section: "小节名",
+      masteryLevel: "new",         // new/weak/fair/familiar/mastered/expert
+      overallScore: 0,             // 综合得分（各角度平均）
+      angles: {
+        'memory':    { asked: false, score: 0, lastAsked: null, timesAsked: 0 },
+        'application': { asked: false, score: 0, lastAsked: null, timesAsked: 0 },
+        'analysis':  { asked: false, score: 0, lastAsked: null, timesAsked: 0 },
+        'contrast':  { asked: false, score: 0, lastAsked: null, timesAsked: 0 },
+        'scenario':  { asked: false, score: 0, lastAsked: null, timesAsked: 0 },
+        'trap':      { asked: false, score: 0, lastAsked: null, timesAsked: 0 }
+      },
+      lastReviewed: null,
+      nextReview: null,            // 下次复习日期
+      reviewCount: 0,
+      consecutiveCorrect: 0,
+      recentScores: [],            // 最近 5 次得分
+      availableAngles: ['memory'], // 动态计算
+      weakAngles: []               // 得分≤3 的角度
+    }
+  },
+  sessionDifficulty: 1,            // 当前会话难度（1-4）
+  streakCounter: { type: 'correct', count: 0 }  // 连续答对/答错计数
 }
 ```
 
@@ -368,12 +406,19 @@ state = {
 | 总结模板 | `references/study-summary-template.md` | 学习报告格式 |
 | 评分标准 | `references/scoring-rubric.md` | 评分规则详解 |
 | **智能展示机制** | `references/smart-chapter-display.md` | 根据内容长度动态调整展示范围 |
+| **变式出题引擎** | `references/variation-engine.md` | 6 维度角度矩阵 + 间隔重复 + 难度自适应 |
 | 设计文档 | `designs/exploration-mode-design.md` | 探索模式设计方案 |
 
 ---
 
-*Skill 版本：5.4.0 | 作者：Kei | 更新：2026-04-14*
+*Skill 版本：6.0.0 | 作者：Kei | 更新：2026-04-16*
 *更新说明：
+- 新增：变式出题引擎（v6.0.0）— 知识点 × 6 维度提问角度（记忆/应用/分析/对比/场景/陷阱），防止每次复习同一道题
+- 新增：间隔重复算法 — 基于掌握等级（新学→薄弱→一般→熟悉→掌握→精通）动态调整复习间隔（1/3/7/14/30 天）
+- 新增：难度自适应 — 答对自动升阶、答错自动降阶，4 级难度（基础→进阶→挑战→专家）实时适配
+- 新增：复习出题策略 — 40% 错题变式 + 30% 旧题复现 + 30% 新角度探索
+- 新增：knowledgePointMastery 数据结构，追踪每个知识点的角度维度得分、掌握等级、复习间隔
+- 新增文件：references/variation-engine.md（变式出题引擎详解）
 - 修复：探索模式知识点提取时机错误（v5.4.0），将 extractKnowledgePoints 从完整章节内容移至智能展示策略执行后，仅基于 displayedContent 提取知识点清单，从根本上杜绝超纲出题
 - 修复：探索模式头脑风暴问题超纲（v5.3.0），新增强制验证约束
 - 修复：validateBrainstormQuestions 验证函数，确保每个问题映射到已展示知识点

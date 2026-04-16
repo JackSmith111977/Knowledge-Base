@@ -205,7 +205,7 @@ state = {
 
 ---
 
-## Step 5：逐题测验（核心环节）
+## Step 5：逐题测验（核心环节 — 变式引擎集成）
 
 ### 测验前回顾
 
@@ -231,35 +231,60 @@ state = {
 - 根据回答评分（0-5 分）
 - 根据评分决定追问或进入下一题
 - **题目必须覆盖知识点清单中的所有知识点**
+- **出题角度 = 记忆型/应用型/分析型/对比型/场景型/陷阱型（详见 `references/variation-engine.md`）**
+- **难度自适应：根据近期表现动态调整难度等级**
+
+### 出题角度分布（首次学习）
+
+| 题号 | 角度 | 目标 |
+|------|------|------|
+| 1 | 记忆型 | 检查概念记忆 |
+| 2 | 记忆型 或 应用型 | 检查核心定义或基本使用 |
+| 3 | 应用型 | 检查实际运用 |
+| 4 | 分析型 或 对比型 | 检查深度理解 |
+| 5 | 场景型 或 陷阱型 | 检查综合掌握 |
 
 ### 出题范围约束 ⚠️
 
 **重要：所有题目必须严格基于 Step 1 中展示的知识点清单。**
 
-**出题前 AI 必须执行内部验证：**
+**出题前 AI 必须执行内部验证（集成变式引擎）：**
 
 ```javascript
 // 伪代码逻辑 - AI 内部执行
 const currentKnowledgePoints = state.currentChapterKnowledgePoints;
+const mastery = state.knowledgePointMastery;
 const questionTopic = 本题考察的知识点;
+const questionAngle = 本题提问角度;  // memory/application/analysis/contrast/scenario/trap
 
 // 验证 1：知识点是否在清单内
 if (!currentKnowledgePoints.some(kp => kp.name === questionTopic)) {
-    // 知识点超出范围，更换题目
-    generateNewQuestion(currentKnowledgePoints);
+    generateNewQuestion(currentKnowledgePoints, mastery);
     return;
 }
 
-// 验证 2：是否重复出题
-if (state.questionHistory.includes(questionTopic)) {
-    // 已出过该知识点，更换
-    generateNewQuestion(currentKnowledgePoints);
+// 验证 2：角度是否适合该知识点
+if (!mastery[questionTopic]?.availableAngles.includes(questionAngle)) {
+    generateNewQuestion(currentKnowledgePoints, mastery);
     return;
 }
 
-// 验证 3：标记已覆盖知识点
-currentKnowledgePoints.find(kp => kp.name === questionTopic).covered = true;
-state.questionHistory.push(questionTopic);
+// 验证 3：复习模式 — 优先从薄弱角度/未考角度选题
+const isReview = mastery[questionTopic]?.askedAngles?.length > 0;
+if (isReview) {
+    // 复习模式：错题变式(40%) + 旧题复现(30%) + 新角度(30%)
+    const weakAngles = mastery[questionTopic].weakAngles;
+    const unaskedAngles = mastery[questionTopic].availableAngles
+        .filter(a => !mastery[questionTopic].askedAngles.includes(a));
+    // 优先从 weakAngles 中选，其次 unaskedAngles
+}
+
+// 验证 4：标记已覆盖
+if (mastery[questionTopic]) {
+    mastery[questionTopic].angles[questionAngle].asked = true;
+    mastery[questionTopic].angles[questionAngle].timesAsked++;
+    mastery[questionTopic].angles[questionAngle].lastAsked = today();
+}
 ```
 
 **如当前章节内容不足以出满 5 题：**
@@ -274,22 +299,24 @@ state.questionHistory.push(questionTopic);
   3. 更换为清单内的题目
   4. 在后续出题时更加谨慎
 
-### 出题格式
+### 出题格式（集成变式引擎）
 
 ```markdown
 ## 逐题测验
 
 **📊 知识点覆盖进度：** [已覆盖 X/总 Y 个知识点]
+**🎯 当前难度：** [★☆☆ 基础 / ★★☆ 进阶 / ★★★ 挑战 / ★★★★ 专家]
 
-**问题 1/5** [题型：基础/应用/分析]  
-**考察知识点：** [知识点名称]
+**问题 1/5** [题型：记忆型/应用型/分析型/对比型/场景型/陷阱型]  
+**考察知识点：** [知识点名称]  
+**出题策略：** [错题变式 / 旧题复现 / 新角度探索]
 
 [问题内容]
 
 请回答：
 ```
 
-### AI 评分反馈格式
+### AI 评分反馈格式（集成变式引擎）
 
 ```markdown
 ### 评分：[X]/5 [等级]
@@ -300,6 +327,11 @@ state.questionHistory.push(questionTopic);
 **⚠️ 需要补充/纠正：**
 - [遗漏或错误点]
 - [正确理解应该是...]
+
+**📈 掌握度更新：**
+- 「[知识点名称]」的 [角度类型] 得分更新为 [X]/5
+- 当前掌握等级：[薄弱 → 一般]（升级/降级/保持）
+- 下次复习间隔：[X] 天后
 
 **📌 下一步：**
 [追问/进入下一题/详细讲解]
@@ -314,17 +346,17 @@ state.questionHistory.push(questionTopic);
 | **3 分** | 补充讲解后，换角度再问 |
 | **2 分及以下** | 详细讲解 + 示例，重新测试 |
 
-### 题目类型分布
+### 题目类型分布（首次学习）
 
-| 题号 | 题型 | 目标 |
+| 题号 | 角度 | 目标 |
 |------|------|------|
-| 1 | 基础 | 检查概念记忆 |
-| 2 | 基础 | 检查核心定义 |
-| 3 | 应用 | 检查实际运用 |
-| 4 | 分析 | 检查深度理解 |
-| 5 | 综合 | 检查整体掌握 |
+| 1 | 记忆型 | 检查概念记忆 |
+| 2 | 记忆型 或 应用型 | 检查核心定义或基本使用 |
+| 3 | 应用型 | 检查实际运用 |
+| 4 | 分析型 或 对比型 | 检查深度理解 |
+| 5 | 场景型 或 陷阱型 | 检查综合掌握 |
 
-### 错题本功能（新增）
+### 错题本功能（集成变式引擎）
 
 **AI 内部维护错题记录：**
 
@@ -345,21 +377,14 @@ state.errorBook = {
 }
 ```
 
-**复习模式中优先重做错题：**
-- 输入「复习错题」→ 从错题本中抽取题目重做
-- 同一知识点连续错 2 次 → 详细讲解 + 示例
+**复习模式中优先重做错题（变式引擎）：**
+- 输入「复习错题」→ 从错题本中抽取题目，**换一个角度**重新问（如上次考记忆型，这次考应用型）
+- 同一知识点连续错 2 次 → 详细讲解 + 示例，掌握等级标记为「薄弱」
+- 同一知识点在不同角度都答对 → 掌握等级升级，复习间隔延长
 
 ---
 
-### 章节切换增强（新增）
-
-| 题号 | 题型 | 目标 |
-|------|------|------|
-| 1 | 基础 | 检查概念记忆 |
-| 2 | 基础 | 检查核心定义 |
-| 3 | 应用 | 检查实际运用 |
-| 4 | 分析 | 检查深度理解 |
-| 5 | 综合 | 检查整体掌握 |
+### 章节切换增强
 
 ---
 

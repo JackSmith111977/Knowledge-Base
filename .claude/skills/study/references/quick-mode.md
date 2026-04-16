@@ -147,7 +147,7 @@ state = {
 
 ---
 
-## Step 3：逐题测验（核心环节）
+## Step 3：逐题测验（核心环节 — 变式引擎集成）
 
 ### 测验前回顾
 
@@ -173,35 +173,41 @@ state = {
 - 根据回答评分（0-5 分）
 - 根据评分决定追问或进入下一题
 - **题目必须覆盖知识点清单中的所有知识点**
+- **出题角度 = 记忆型/应用型/分析型（快速模式精简版，详见 `references/variation-engine.md`）**
+- **快速模式默认使用基础难度（★☆☆）**
+
+### 出题角度分布（快速模式）
+
+| 题号 | 角度 | 目标 |
+|------|------|------|
+| 1 | 记忆型 | 检查概念记忆 |
+| 2 | 应用型 | 检查实际运用 |
+| 3 | 综合型（记忆+应用） | 检查整体掌握 |
 
 ### 出题范围约束 ⚠️
 
 **重要：所有题目必须严格基于 Step 1 中展示的知识点清单。**
 
-**出题前 AI 必须执行内部验证：**
+**出题前 AI 必须执行内部验证（集成变式引擎）：**
 
 ```javascript
 // 伪代码逻辑 - AI 内部执行
 const currentKnowledgePoints = state.currentChapterKnowledgePoints;
+const mastery = state.knowledgePointMastery;
 const questionTopic = 本题考察的知识点;
+const questionAngle = 本题提问角度;  // 快速模式默认：memory/application
 
 // 验证 1：知识点是否在清单内
 if (!currentKnowledgePoints.some(kp => kp.name === questionTopic)) {
-    // 知识点超出范围，更换题目
-    generateNewQuestion(currentKnowledgePoints);
+    generateNewQuestion(currentKnowledgePoints, mastery);
     return;
 }
 
-// 验证 2：是否重复出题
-if (state.questionHistory.includes(questionTopic)) {
-    // 已出过该知识点，更换
-    generateNewQuestion(currentKnowledgePoints);
-    return;
+// 验证 2：标记已覆盖
+if (mastery[questionTopic]) {
+    mastery[questionTopic].angles[questionAngle].asked = true;
+    mastery[questionTopic].angles[questionAngle].timesAsked++;
 }
-
-// 验证 3：标记已覆盖知识点
-currentKnowledgePoints.find(kp => kp.name === questionTopic).covered = true;
-state.questionHistory.push(questionTopic);
 ```
 
 **如当前章节内容不足以出满 3 题：**
@@ -223,7 +229,7 @@ state.questionHistory.push(questionTopic);
 
 **📊 知识点覆盖进度：** [已覆盖 X/总 Y 个知识点]
 
-**问题 1/3** [题型：基础/应用]  
+**问题 1/3** [题型：记忆型/应用型/综合型]  
 **考察知识点：** [知识点名称]
 
 [问题内容]
@@ -264,30 +270,30 @@ state.questionHistory.push(questionTopic);
 | 2 | 应用 | 检查实际运用 |
 | 3 | 综合 | 检查整体掌握 |
 
-### 错题本功能（新增）
+### 错题本功能（集成变式引擎）
 
-**AI 内部维护错题记录：**
+**AI 内部维护错题记录，追踪角度维度：**
 
 ```javascript
 state.errorBook = {
-  wrongQuestions: [  // 做错的题目（评分<=3 分）
+  wrongQuestions: [
     {
       chapter: "章节名",
       knowledgePoint: "知识点名称",
+      angle: "application",          // 做错的角度
       question: "题目内容",
       userAnswer: "用户回答",
       correctAnswer: "正确答案",
       score: 2,
       date: "2026-04-02"
-    },
-    // ...
+    }
   ]
 }
 ```
 
-**复习模式中优先重做错题：**
-- 输入「复习错题」→ 从错题本中抽取题目重做
-- 同一知识点连续错 2 次 → 简要讲解 + 示例
+**复习模式中优先重做错题（变式引擎）：**
+- 输入「复习错题」→ 从错题本中抽取题目，**换一个角度**重新问
+- 同一知识点在不同角度都答对 → 掌握等级升级
 
 ---
 
