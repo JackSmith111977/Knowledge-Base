@@ -1,9 +1,9 @@
 {
   "version": "3.0.2",
   "createdAt": "2026-04-13",
-  "lastStudyDate": "2026-04-16",
-  "studyStreak": 3,
-  "totalProblemsCompleted": 20,
+  "lastStudyDate": "2026-04-17",
+  "studyStreak": 4,
+  "totalProblemsCompleted": 24,
 
   "topicProgress": {
     "current": "链表、二叉树与回溯",
@@ -31,29 +31,31 @@
     "链表、二叉树与回溯": {
       "反转链表": [24, 25, 92, 206, 2074],
       "前后指针": [19, 61, 1721],
-      "快慢指针": [141, 142]
+      "快慢指针": [141, 142, 876, 234]
     }
   },
 
   "reviewQueue": [
-    { "id": 3, "due": "2026-04-04", "score": 5, "reviewCount": 1 },
-    { "id": 209, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
-    { "id": 1004, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
-    { "id": 704, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
-    { "id": 35, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
-    { "id": 875, "due": "2026-04-04", "score": 5, "reviewCount": 0 },
-    { "id": 713, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 34, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 206, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 92, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 24, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 25, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 2074, "due": "2026-04-16", "score": 5, "reviewCount": 0 },
-    { "id": 1721, "due": "2026-04-16", "score": 4, "reviewCount": 1 }
+    { "id": 209, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 1004, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 704, "due": "2026-04-22", "score": 5, "reviewCount": 1 },
+    { "id": 35, "due": "2026-04-24", "score": 5, "reviewCount": 2 },
+    { "id": 875, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 713, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 34, "due": "2026-04-22", "score": 5, "reviewCount": 1 },
+    { "id": 206, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 92, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 24, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 25, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 2074, "due": "2026-04-20", "score": 5, "reviewCount": 1 },
+    { "id": 1721, "due": "2026-04-24", "score": 4, "reviewCount": 2 },
+    { "id": 876, "due": "2026-04-20", "score": 5, "reviewCount": 0 },
+    { "id": 234, "due": "2026-04-20", "score": 5, "reviewCount": 0 }
   ],
 
   "errorBook": [
-    { "id": 1721, "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "attempts": 2 }
+    { "id": 1721, "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "attempts": 2 },
+    { "id": "FED27", "topic": "前端-工具函数", "subtopic": "Date API", "attempts": 1 }
   ],
 
   "patternLibrary": [
@@ -71,13 +73,15 @@
     { "tag": "[链表] 判断环", "pattern": "fast ×2 + slow ×1 → 相遇 = 有环", "dateAdded": "2026-04-16" },
     { "tag": "[链表] 找环入口", "pattern": "相遇后 → head + slow 同步前进 → a = (n-1)(b+c)+c → 在入口相遇", "dateAdded": "2026-04-16" },
     { "tag": "[链表] 倒数第 k 个", "pattern": "fast 先走 k 步 + 同步前进 → slow 停在倒数第 k 个", "dateAdded": "2026-04-16" },
-    { "tag": "[链表] 正倒数第 k 交换", "pattern": "p1=p2=head → p1 走 k-1 步 → p1 走到尾 → p2 同步 → 交换值", "dateAdded": "2026-04-16" }
+    { "tag": "[链表] 正倒数第 k 交换", "pattern": "p1=p2=head → p1 走 k-1 步 → p1 走到尾 → p2 同步 → 交换值", "dateAdded": "2026-04-16" },
+    { "tag": "[链表] 回文判断", "pattern": "快慢找中点 → 反转后半段 → 双指针逐一比较", "dateAdded": "2026-04-17" }
   ],
 
   "dailyLog": [
     { "date": "2026-04-13", "topic": "链表、二叉树与回溯", "subtopic": "反转链表", "reviewCount": 2, "algorithmNewCount": 5, "acmCount": 0, "frontendCount": 0, "totalMinutes": 90, "avgScore": 5.0 },
     { "date": "2026-04-14", "topic": "链表、二叉树与回溯", "subtopic": "前后指针", "reviewCount": 0, "algorithmNewCount": 3, "acmCount": 0, "frontendCount": 0, "totalMinutes": 90, "avgScore": 4.3 },
-    { "date": "2026-04-16", "topic": "链表、二叉树与回溯", "subtopic": "快慢指针", "reviewCount": 2, "algorithmNewCount": 2, "acmCount": 1, "frontendCount": 1, "totalMinutes": 90, "avgScore": 4.8 }
+    { "date": "2026-04-16", "topic": "链表、二叉树与回溯", "subtopic": "快慢指针", "reviewCount": 2, "algorithmNewCount": 2, "acmCount": 1, "frontendCount": 1, "totalMinutes": 90, "avgScore": 4.8 },
+    { "date": "2026-04-17", "topic": "链表、二叉树与回溯", "subtopic": "快慢指针", "reviewCount": 2, "algorithmNewCount": 2, "acmCount": 1, "frontendCount": 1, "totalMinutes": 24, "avgScore": 4.3 }
   ],
 
   "settings": {
@@ -92,8 +96,10 @@
   "acmProgress": {
     "currentStage": "基础输入输出",
     "stageOrder": ["基础输入输出", "多组输入与EOF", "字符串处理", "数据结构输入", "综合实战"],
-    "completedIds": ["nowcoder-ab-1"],
-    "reviewQueue": [],
+    "completedIds": ["nowcoder-ab-1", "nowcoder-ab-2"],
+    "reviewQueue": [
+      { "id": "nowcoder-ab-1", "due": "2026-04-20", "score": 5, "reviewCount": 0 }
+    ],
     "errorBook": []
   },
 
