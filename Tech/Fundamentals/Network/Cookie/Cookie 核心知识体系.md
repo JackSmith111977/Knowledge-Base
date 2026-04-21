@@ -553,6 +553,36 @@ flowchart TD
 | **第一方** | 用户直接访问的站点设置 | 当前站点 | 会话管理、个性化 |
 | **第三方** | 嵌入的第三方资源设置 | 嵌入内容提供方 | 跨站追踪、广告投放 |
 
+**跨站追踪流程图**：
+
+```mermaid
+sequenceDiagram
+    participant U as 用户浏览器
+    participant A as site-a.com（第一方）
+    participant B as site-b.com（第一方）
+    participant T as ads.com（第三方追踪器）
+
+    Note over U,A: 阶段 1：用户首次访问 site-a.com
+    U->>A: 1. GET https://site-a.com
+    A-->>U: 2. 返回页面，含 ads.com 广告脚本
+    U->>T: 3. GET https://ads.com/ad.js（嵌入请求）
+    T-->>U: 4. Set-Cookie: track_id=abc123; Domain=ads.com
+    Note over T: 记录：用户访问过 site-a.com
+
+    Note over U,B: 阶段 2：用户访问 site-b.com（也嵌入 ads.com）
+    U->>B: 5. GET https://site-b.com
+    B-->>U: 6. 返回页面，含 ads.com 广告脚本
+    U->>T: 7. GET https://ads.com/ad.js<br>+ Cookie: track_id=abc123
+    T->>T: 8. 匹配 track_id，识别同一用户
+    Note over T: 记录：同一用户也访问了 site-b.com<br>→ 构建跨站浏览画像
+
+    Note over U,T: 阶段 3：更多网站 → 更完整画像
+    loop 用户访问其他嵌入 ads.com 的网站
+        U->>T: 携带 track_id 请求广告资源
+        T->>T: 持续累积浏览行为数据
+    end
+```
+
 **淘汰时间线**：
 - 2017：Safari（ITP）率先限制
 - 2019：Firefox（ETP）默认阻止

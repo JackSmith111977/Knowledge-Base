@@ -163,6 +163,23 @@ const element = _jsx('h1', {
 }
 ```
 
+**新 JSX 转换（React 17+）的实际意义：**
+
+| 变化 | React 17 之前 | React 17+ |
+|------|--------------|-----------|
+| **传参方式** | `children` 作为独立第三个参数 | `children` 作为 `props` 的属性 |
+| **import 要求** | 每个使用 JSX 的文件必须 `import React` | 不再需要，编译器自动注入 `react/jsx-runtime` |
+| **调用函数** | `React.createElement(type, props, ...children)` | `_jsx(type, { ...props, children }, key)` |
+
+```jsx
+// React 17 之前：必须 import React
+import React from 'react';
+function App() { return <h1>Hello</h1>; }
+
+// React 17+：不需要 import React
+function App() { return <h1>Hello</h1>; }
+```
+
 **JSX 规则与注意事项：**
 
 | 规则 | 说明 | 示例 |
@@ -342,6 +359,23 @@ Current Tree（当前屏幕显示）    WorkInProgress Tree（内存中构建）
 
 **Fiber 的工作阶段：**
 
+**为什么 Reconciliation 可中断而 Commit 不可中断？**
+
+| 阶段 | 是否可中断 | 原因 |
+|------|-----------|------|
+| **Reconciliation** | ✅ 可中断 | 只在内存中计算 Diff，不影响 UI，随时可以暂停恢复 |
+| **Commit** | ❌ 不可中断 | 必须保证原子性，原因见下 |
+
+**Commit 阶段不能被打断的三个原因：**
+
+| 原因 | 说明 |
+|------|------|
+| **UI 一致性** | Commit 可能同时操作多个 DOM 节点，中途停止会导致页面处于"半更新"状态（旧已删，新未上），用户看到闪烁 |
+| **状态同步** | `memoizedState` 和 `memoizedProps` 在 Commit 阶段才更新为最新值，打断会导致 Fiber 树状态不一致 |
+| **事件监听** | Commit 完成后才会切换引用指针，如果中途插入新事件，可能读到旧状态 |
+
+简单说：Reconciliation 可以"算到一半不算了"，但 Commit 必须"一口气干完"。
+
 ```mermaid
 flowchart TD
     subgraph Phase1[阶段 1 Reconciliation 协调/渲染阶段]
@@ -403,6 +437,23 @@ React 调度器通过 `MessageChannel`（宏任务）实现，内部维护 5 级
 | **3** | Normal | 5000ms | 普通数据更新、setState |
 | **4** | Low | 10000ms | 日志上报、分析 |
 | **5** | Idle | 无限 | 后台预渲染、闲置任务 |
+
+**为什么 React 用 MessageChannel 而不是 setTimeout 或 Promise？**
+
+`MessageChannel` 本身并不具备优先级机制，React 的优先级队列是在其之上自行实现的调度器逻辑。选择它是因为它在浏览器事件循环中的**时机最优**：
+
+```
+事件循环中执行顺序：
+同步代码 → 微任务队列(Promise) → 渲染 → 宏任务队列(setTimeout/MessageChannel) → 下一帧
+```
+
+| 方案 | 问题 |
+|------|------|
+| `setTimeout(fn, 0)` | **最小延迟 4ms**（HTML 规范规定），对于 16ms 的帧预算太慢 |
+| `Promise.then()` | 微任务优先级太高，会阻塞渲染，浏览器得不到绘制机会，UI 卡死 |
+| `MessageChannel` | **延迟几乎为 0**，且作为宏任务，执行完一个后浏览器可以处理输入和重绘 |
+
+**核心总结：** MessageChannel 不是"有优先级"，而是**延迟最低且不会阻塞渲染**。优先级是 React Scheduler 自己用优先队列实现的。
 
 **关键特性：**
 
@@ -667,6 +718,22 @@ function UncontrolledForm() {
   return <input ref={inputRef} />;
 }
 ```
+
+**受控组件 vs 非受控组件多维度对比：**
+
+| 对比维度 | 受控组件 | 非受控组件 |
+|----------|---------|-----------|
+| **值的管理方** | React state | DOM 自身 |
+| **值来源** | `value` + `onChange` | `useRef` 直接读取 |
+| **实时性** | 每次输入都触发更新 | 提交/读取时才获取 |
+| **表单校验** | 支持实时校验 | 只能在提交时校验 |
+| **性能开销** | 每次输入触发重渲染 | 无重渲染开销 |
+| **适用场景** | 实时校验、联动逻辑、复杂表单 | 文件上传、大量输入框、集成第三方 DOM 库 |
+| **必须使用的场景** | — | `<input type="file">`（value 只读）、富文本编辑器 |
+
+**核心原则：**
+- 受控组件：React 管理值 → 适合需要知道"值"的场景
+- 非受控组件：DOM 自己管理值 → 适合"用完即走"的场景
 
 ### 3.4 高阶组件 (HOC)
 

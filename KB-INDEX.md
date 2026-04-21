@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-14 (v1.28.0)
+**最后更新：** 2026-04-20 (v1.34.0)
 
 ---
 
@@ -13,6 +13,7 @@ Knowledge Base/
 ├── .claude/                    # Claude Code 配置与 Skills
 ├── .github/                    # GitHub 配置
 ├── Career/                     # 职业发展相关
+├── Daily/                      # 每日任务计划
 ├── Guide/                      # 指南类文档
 ├── News/                       # 每日新闻聚合
 │   ├── AI 前沿/                # AI 前沿新闻
@@ -20,6 +21,7 @@ Knowledge Base/
 ├── Tech/                       # 技术文档
 │   ├── AI/                     # AI 相关
 │   │   ├── AgentFramework/     # AI Agent 框架
+│   │   ├── AgentHarness/       # AI Agent Harness 工程
 │   │   ├── AgentSkill/         # Agent Skill 设计模式
 │   │   ├── BMAD/               # BMAD 方法
 │   │   ├── ClaudeCode/         # Claude Code 相关
@@ -72,13 +74,14 @@ Knowledge Base/
 |-----------|----------|----------|
 | 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发） |
 | Agent Framework | Tech/AI/AgentFramework/ | Hermes Agent 核心知识体系.md |
+| Agent Harness | Tech/AI/AgentHarness/ | Harness Engineering 核心知识体系.md |
 | Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
 | BMAD-METHOD | Tech/AI/BMAD/ | BMAD-METHOD 核心知识体系.md |
 | Claude Code | Tech/AI/ClaudeCode/ | Claude Code Skills 完全指南.md、Claude Code SubAgent 模式.md、Claude Code 完全指南.md、Claude Code 减少询问配置指南.md、Claude Code Hooks 自动化核心知识体系.md、Claude Code Playwright E2E 测试核心知识体系.md、路由系统可行性研究报告.md |
 | Context Engineering | Tech/AI/ContextEngineering/ | 上下文工程核心知识体系.md |
 | Document First | Tech/AI/DocumentFirst/ | 文档优先开发范式核心知识体系.md、Spec-First 核心知识体系.md |
 | Prompt Engineering | Tech/AI/Prompt Engineering/ | 提示词工程核心知识体系.md |
-| SKILL | Tech/AI/SKILL/ | SKILL 核心知识体系.md、Google 5 种设计模式核心知识体系.md |
+| SKILL | Tech/AI/SKILL/ | SKILL 核心知识体系.md（v2.0, 10 章, Agent Skill 生态全景 + MCP 对比 + 安全治理） |
 | Vite | Tech/BuildTools/Vite/ | Vite 核心知识体系.md |
 | webpack | Tech/BuildTools/webpack/ | webpack 核心知识体系.md |
 | DevOps | Tech/Business/DevOps/ | DevOps 核心知识体系.md |
@@ -96,7 +99,7 @@ Knowledge Base/
 | Three.js | Tech/Frameworks/Three.js/ | Three.js 核心知识体系.md |
 | Vercel | Tech/Frameworks/Vercel/ | Vercel 核心知识体系.md |
 | shadcn/ui | Tech/Frameworks/UI/shadcn/ | shadcn/ui 核心知识体系.md |
-| Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md、灵神 LeetCode 题单学习指南.md、链表核心知识体系.md、学习报告.md |
+| Algorithms | Tech/Fundamentals/Algorithms/ | 滑动窗口核心知识体系.md、灵神 LeetCode 题单学习指南.md、链表核心知识体系.md、学习报告.md、Python ACM 模式面试手撕算法核心知识体系.md |
 | CSS | Tech/Fundamentals/CSS/ | CSS 核心知识体系.md |
 | HTML | Tech/Fundamentals/HTML/ | HTML 核心知识体系.md |
 | JavaScript | Tech/Fundamentals/JS/ | JavaScript 核心知识体系.md |
@@ -107,6 +110,7 @@ Knowledge Base/
 | Testing | Tech/Fundamentals/Testing/ | Vitest 核心知识体系.md、Playwright 测试核心知识体系.md、测试覆盖率 核心知识体系.md |
 | Security | Tech/Fundamentals/Security/ | Web 安全核心知识体系.md、OAuth 2.1 核心知识体系.md、JWT 核心知识体系.md |
 | 职业发展 | Career/ | 软件工程师简历与开源工具指南.md、前端工程师 AI 转型核心知识体系.md |
+| 每日任务 | Daily/ | PROGRESS.md（任务管理索引） |
 | 指南 | Guide/ | GitHub 仓库建设与推广完全指南.md、Mermaid 图表改造指南.md、传统项目接入文档优先 AI 开发系统指南.md |
 | 项目文档 | docs/ | PRD.md、ROADMAP.md、STYLE_GUIDE.md、TECH_STACK.md |
 
@@ -140,6 +144,12 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | Hermes Agent 核心知识体系.md | Hermes Agent 框架 | 2026-04-04 |
+
+### Tech/AI/AgentHarness/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| Harness Engineering 核心知识体系.md | AI Agent Harness 工程 | 2026-04-20 |
 
 ### Tech/AI/AgentSkill/
 
@@ -400,7 +410,11 @@ Knowledge Base/
 |--------|------|----------|
 | AI 前沿/news-digest-2026-04-11.md | AI 新闻 | 2026-04-11 |
 | AI 前沿/news-digest-2026-04-13.md | AI 新闻 | 2026-04-13 |
+| AI 前沿/news-digest-2026-04-14.md | AI 新闻 | 2026-04-14 |
+| AI 前沿/news-digest-2026-04-18.md | AI 新闻 | 2026-04-18 |
+| AI 前沿/news-digest-2026-04-20.md | AI 新闻 | 2026-04-20 |
 | 前端开发/news-digest-2026-04-13.md | 前端新闻 | 2026-04-13 |
+| 前端开发/news-digest-2026-04-20.md | 前端新闻 | 2026-04-20 |
 
 ---
 
@@ -627,6 +641,127 @@ Knowledge Base/
 - Hermes Agent 文档归集到 `Tech/AI/AgentFramework/` 目录
 - 与 ClaudeCode、AgentSkill 等并列 AI 技术子目录
 - 支持后续 Agent 框架相关知识库扩展（如 OpenClaw 等）
+
+---
+
+## 整理记录
+
+### 2026-04-14 整理（Python ACM 模式）
+
+**执行的操作：**
+1. ✅ 创建《Python ACM 模式面试手撕算法核心知识体系.md》文档（8 章，约 2150+ 行）
+2. ✅ 注册文档到 KB-INDEX
+3. ✅ 更新 KB-INDEX 版本至 v1.30.0
+
+**整理后效果：**
+- Python ACM 模式技术文档收录到 `Tech/Fundamentals/Algorithms/` 目录
+- 8 章涵盖：基础认知、输入体系（input vs sys.stdin）、输入场景模板、输出格式规范、数据结构读取、高频踩坑、面试实战模板、常见误区与面试问题
+- 包含 Mermaid 流程图 10+ 个、代码示例 50+ 个、15 个来源交叉验证
+- 与灵神 LeetCode 题单学习指南并列 Algorithms 分类
+
+---
+
+### 2026-04-20 整理（SKILL v2.0 扩展调研）
+
+**执行的操作：**
+1. ✅ 扩展《SKILL 核心知识体系.md》至 v2.0（10 章，约 35,000+ 字）
+2. ✅ 新增 6 个专章：Skill vs MCP 深度对比、底层原理解析、生命周期与工作流程、三层协议架构、Agentic 工作流模式、安全与治理
+3. ✅ 创建 progress.txt 进度追踪文件
+4. ✅ 更新 KB-INDEX 版本至 v1.32.0
+
+**整理后效果：**
+- Agent Skill 生态全景：2025-2026 时间线、85,000+ Skills、27 平台支持
+- Skill vs MCP 深度对比：六维度对比 + 14 维度总结表 + 5 种协作模式
+- 底层原理：渐进式披露 Token 经济学、语义匹配机制、沙箱隔离模型
+- 生命周期：9 阶段状态流转 + 错误处理路径
+- 三层协议：MCP + ACP + A2A + Skill 在各层中的角色
+- Agentic 工作流：Google 21 种设计模式中的 6 种核心模式 + Skill 堆叠实战
+- 安全治理：MSB 安全基准（ICLR 2026）、ClawHavoc 事件、12 类攻击面
+- 跨平台最佳实践：Claude Code + Antigravity + OpenClaw + Cursor
+
+---
+
+## 整理记录
+
+### 2026-04-20 整理 v2（AI 前沿新闻聚合 - v1.4.0 SubAgent 并行模式）
+
+**执行的操作：**
+1. ✅ SubAgent 并行采集：6 组并行 SubAgent 覆盖 4 个信源（HackerNews、Ars Technica、量子位、The Verge），其余 6 组因 429 配额超限失败（36kr、机器之心、TechCrunch、Anthropic、MIT Tech Review、CNBC）
+2. ✅ web-access CDP 模式：check-deps.mjs 检查通过 → CDP `/new` + `/eval` + `/scroll` 提取
+3. ✅ 三级去重：L1 URL 精确去重、L2 标题相似度 >85%、L3 语义重叠（67 条→66 条，1 条重复）
+4. ✅ 4 维度智能评分（来源权威性 30% + 时效性 20% + 相关性 25% + 内容深度 25%）
+5. ✅ 内容质量门控：17 条摘要过短过滤
+6. ✅ 创建《news-digest-2026-04-20.md》报告（49 条新闻，评分门控 > 4.0）
+7. ✅ 更新 KB-INDEX 索引
+8. ✅ 信源调研：8 个候选信源评估（Wired ✅推荐、CNBC ✅推荐、The Register 条件推荐、ZDNet 区域封锁、Protocol 已关闭、TechRadar 404、VentureBeat 已重定向、ainews.com 条件推荐）
+
+**本期热点：**
+- Anthropic Claude Design 发布（HN 1218 分热帖）
+- OpenAI Codex 更新：支持 macOS 应用操作，直接对标 Claude Code
+- NSA 使用 Anthropic Mythos  despite 五角大楼黑名单
+- The Verge 被黑：第三方 AI 工具导致供应链攻击
+- Vercel 平台遭黑客攻击
+- 全球 RAM 短缺可能持续数年（AI 需求推动）
+- OpenAI Sora 负责人 Bill Peebles 和 AI 科学 VP Kevin Weil 离职
+
+---
+
+### 2026-04-20 整理 v1（AI 前沿新闻聚合 - v1.3.0 CDP 模式执行）
+
+**执行的操作：**
+1. ✅ web-access CDP 模式：check-deps.mjs 检查通过 → 并行打开 8 个高权重信源（量子位、TechCrunch、HackerNews、The Verge AI、MIT Tech Review AI、Axios）
+2. ✅ CDP `/new` + `/eval` + `/scroll` 提取新闻列表 → Jina 辅助正文读取
+3. ✅ 三级去重 + 72 小时硬性门控过滤（25 条→15 条→10 条）
+4. ✅ 全文获取：8 成功（CDP 正文提取）/ 2 受限
+5. ✅ 5 维度智能评分（来源权威性 25% + 时效性 15% + 相关性 20% + 内容深度 20% + 事实标注完整性 20%）
+6. ✅ 创建《news-digest-2026-04-20.md》报告（10 条新闻，评分门控 > 4.0）
+7. ✅ 更新 KB-INDEX 索引
+
+**本期热点：**
+- 苏度科技 Sudo R1：零真机数据训练，zero-shot 抓取 98% 成功率
+- Cerebras 提交 IPO：$23B 估值，$10B+ OpenAI 大单
+- NSA 使用 Anthropic Mythos，尽管五角大楼列为供应链风险
+- OpenAI 存在性焦虑：收购 Hiro + TBPN 解决产品和品牌困境
+- Anthropic 与特朗普政府关系缓和
+- Kevin Weil / Bill Peebles 离开 OpenAI，Sora 因日亏 $100 万被关闭
+
+---
+
+### 2026-04-18 整理（AI 前沿新闻聚合 - 每日执行）
+
+**执行的操作：**
+1. ✅ 执行 news-digest Pipeline，3 组 WebSearch 覆盖 20+ 信源
+2. ✅ 三级去重：L1 URL 去重 2 条、L2 标题去重 1 条
+3. ✅ 来源可信度验证 + 链接有效性检查
+4. ✅ 4 维度智能评分（来源权威性 30% + 时效性 20% + 相关性 25% + 内容深度 25%）
+5. ✅ 创建《news-digest-2026-04-18.md》报告（18 条新闻，评分门控 > 4.0）
+6. ✅ 更新 KB-INDEX 索引
+
+**本期热点：**
+- GPT-6 预计 4 月 14 日发布（代号 Spud，5-6 万亿参数，200 万 Token 上下文）
+- Claude 半月内宕机 7 次，API 可用率仅 98.95%，客户流失至 OpenAI
+- Anthropic 研究：LLM 蒸馏过程中会潜意识传递隐藏偏好
+- 五部门出台 AI 拟人化互动服务管理新规，7 月 15 日起施行
+- Anthropic 年化收入突破 300 亿美元，首次超越 OpenAI
+- METR 报告：AI 能力翻倍周期压缩至 88.6 天
+
+---
+
+### 2026-04-14 整理（AI 前沿新闻聚合 - 每日执行）
+
+**执行的操作：**
+1. ✅ 执行 news-digest Pipeline，5 组并行搜索覆盖 20+ 信源
+2. ✅ 三级去重 + 来源可信度验证 + 链接有效性检查
+3. ✅ 4 维度智能评分（来源权威性 30% + 时效性 20% + 相关性 25% + 内容深度 25%）
+4. ✅ 创建《news-digest-2026-04-14.md》报告（15 条新闻，评分门控 > 4.0）
+5. ✅ 更新 KB-INDEX 版本至 v1.29.0
+
+**本期热点：**
+- OpenAI 开设伦敦首个永久办公室（500 人规模）
+- "Giant Superatoms" 突破量子计算难题
+- Anthropic Mythos 模型遭美监管层质询，零日漏洞挖掘能力引发关注
+- AI Agent 完成"成人礼"：腾讯发布 Q1 白皮书
+- Anthropic 年化收入突破 300 亿美元，首次超越 OpenAI
 
 ---
 

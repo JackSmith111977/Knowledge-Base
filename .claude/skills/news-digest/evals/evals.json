@@ -1,0 +1,271 @@
+[
+  {
+    "id": "normal-config-exists",
+    "description": "config.json 存在时正常执行聚合",
+    "prompt": "执行 /news-digest",
+    "expectations": [
+      "读取了 config.json 配置文件",
+      "对每个已启用主题执行了搜索",
+      "使用了 web-access skill 进行新闻收集",
+      "执行了步骤 1.5 全文获取（非仅搜索摘要）",
+      "对新闻执行了原始出处追溯（转载站需标注原载于）",
+      "对新闻执行了链接有效性检查",
+      "按 5 个维度对新闻进行了评分（含事实标注完整性）",
+      "过滤了评分低于 4.0 的新闻",
+      "过滤了摘要 < 50 字且无具体数据的条目",
+      "在对话中输出了报告摘要",
+      "询问用户报告存放位置或直接写入默认路径",
+      "输出包含统计信息（采集数、过滤数、保留数、全文获取成功/失败数）"
+    ]
+  },
+  {
+    "id": "normal-specific-topic",
+    "description": "指定特定主题时只聚合该主题",
+    "prompt": "/news-digest \"AI 前沿\"",
+    "expectations": [
+      "只搜索了 AI 前沿 主题",
+      "没有搜索其他已启用的主题",
+      "报告只包含 AI 前沿 一个主题的内容"
+    ]
+  },
+  {
+    "id": "normal-multi-source-dedup",
+    "description": "多信源报道同一事件时的去重与标注",
+    "prompt": "/news-digest（假设同一事件被 36kr、百家号、腾讯新闻同时报道）",
+    "expectations": [
+      "执行了 L2/L3 去重，保留信源权重最高的版本",
+      "标注了「多信源报道」",
+      "转载站（百家号、腾讯新闻）追溯了原始出处（36kr）",
+      "报告中转载版本未作为独立条目出现"
+    ]
+  },
+  {
+    "id": "boundary-no-config",
+    "description": "config.json 不存在时触发 Inversion 引导配置",
+    "prompt": "执行 /news-digest（假设 config.json 不存在）",
+    "expectations": [
+      "未直接执行新闻聚合",
+      "引导用户配置主题和信源",
+      "询问了需要监控的主题",
+      "询问了各主题的信源",
+      "提出生成 config.json 文件",
+      "没有猜测或假设默认配置"
+    ]
+  },
+  {
+    "id": "boundary-empty-topic",
+    "description": "某主题搜索无结果时的处理",
+    "prompt": "/news-digest（假设某主题无任何新闻结果）",
+    "expectations": [
+      "记录了该主题无结果的情况",
+      "继续处理其他有结果的主题",
+      "在统计中体现零结果主题",
+      "没有因单个主题失败而终止整个流程"
+    ]
+  },
+  {
+    "id": "boundary-all-filtered",
+    "description": "所有新闻评分都低于阈值时的处理",
+    "prompt": "/news-digest（假设所有新闻评分均 < 4.0）",
+    "expectations": [
+      "报告正文中无新闻条目",
+      "在附录中列出被过滤的新闻",
+      "统计信息正确显示过滤数量",
+      "告知用户所有新闻因评分过低被过滤"
+    ]
+  },
+  {
+    "id": "boundary-fulltext-all-failed",
+    "description": "所有新闻链接均无法访问时的处理",
+    "prompt": "/news-digest（假设所有新闻链接均为 404 或付费墙）",
+    "expectations": [
+      "每条新闻标记为 accessLimited",
+      "尝试了搜索同事件的其他信源作为替代",
+      "如找到替代则使用替代来源",
+      "如全部无替代则在报告中注明「原文链接全部受限」",
+      "未因全文获取失败而终止 Pipeline"
+    ]
+  },
+  {
+    "id": "boundary-short-summary",
+    "description": "全文获取后摘要仍少于 50 字且无具体数据",
+    "prompt": "/news-digest（假设某新闻全文获取后摘要仅 30 字且无数据）",
+    "expectations": [
+      "该条目被内容质量门控过滤",
+      "不计入最终报告",
+      "在统计中体现质量门控过滤数量"
+    ]
+  },
+  {
+    "id": "error-invalid-config",
+    "description": "config.json 格式错误时的处理",
+    "prompt": "执行 /news-digest（假设 config.json 为无效 JSON）",
+    "expectations": [
+      "未继续执行新闻聚合",
+      "告知用户配置文件格式错误",
+      "提供了修复建议",
+      "没有猜测或跳过配置"
+    ]
+  },
+  {
+    "id": "error-web-access-failure",
+    "description": "web-access skill 全部搜索失败",
+    "prompt": "/news-digest（假设 web-access 所有搜索均超时或报错）",
+    "expectations": [
+      "记录了各信源的搜索失败情况",
+      "未因搜索失败而终止 Pipeline",
+      "在统计中体现搜索失败数量",
+      "告知用户网络问题建议重试"
+    ]
+  },
+  {
+    "id": "normal-scoring-5-dimensions",
+    "description": "5 维度评分计算正确性验证",
+    "prompt": "对以下新闻进行评分：标题='OpenAI 发布 GPT-6'，来源=TechCrunch（原创），作者='John Smith'，时间=3小时前，全文摘要='详细分析了 GPT-6 的性能提升，包含评测数据和多方观点'，转载信息：无（原创），主题：AI 前沿",
+    "expectations": [
+      "来源权威性评分 >= 7（TechCrunch 为知名原创科技媒体）",
+      "时效性评分 >= 8（3 小时内）",
+      "相关性评分 >= 8（标题摘要均含关键词）",
+      "内容深度评分 >= 7（含评测数据和多方观点）",
+      "事实标注完整性评分 >= 8（标注了原始来源+作者）",
+      "权重使用正确：0.25 + 0.15 + 0.20 + 0.20 + 0.20",
+      "综合得分 > 4.0（应被保留）"
+    ]
+  },
+  {
+    "id": "normal-scoring-repost-traced",
+    "description": "转载内容追溯原始出处后的评分",
+    "prompt": "对以下新闻进行评分：标题='Claude Opus 4.7 发布'，来源=百家号，原始来源=机器之心（weight 0.95），作者='张三'，时间=1天前，全文摘要='Anthropic 发布 Claude Opus 4.7，SWE-bench Pro 从 53.4% 提升至 64.3%，视觉能力 3 倍提升'，主题：AI 前沿",
+    "expectations": [
+      "来源权威性基于机器之心（0.95）评分而非百家号",
+      "事实标注完整性评分 >= 7（标注了原载于机器之心+作者）",
+      "报告中展示了「原始来源：机器之心」和「作者：张三」",
+      "综合得分计算正确"
+    ]
+  },
+  {
+    "id": "normal-scoring-repost-untraced",
+    "description": "转载内容无法追溯原始出处的降权",
+    "prompt": "对以下新闻进行评分：标题='AI 最新动态'，来源=百家号，原始来源=未知，时间=2天前，全文摘要='今天 AI 领域有很多新动态'（无具体数据），主题：AI 前沿",
+    "expectations": [
+      "来源权威性评分 <= 6（无法追溯原始出处）",
+      "内容深度评分 <= 4（摘要空洞无数据）",
+      "事实标注完整性评分 <= 4（无原始来源信息）",
+      "综合得分可能接近或低于 4.0 阈值"
+    ]
+  },
+  {
+    "id": "normal-cron-setup",
+    "description": "设置定时任务",
+    "prompt": "帮我设置每天 9:30 自动执行新闻聚合",
+    "expectations": [
+      "调用了 CronCreate 工具",
+      "cron 表达式正确（30 9 * * *）",
+      "recurring 设置为 true",
+      "durable 设置为 true",
+      "告知用户定时任务已设置成功"
+    ]
+  },
+  {
+    "id": "boundary-no-enabled-topics",
+    "description": "config.json 中无已启用主题",
+    "prompt": "/news-digest（假设 config.json 中所有主题 enabled=false）",
+    "expectations": [
+      "未执行任何搜索",
+      "告知用户没有已启用的主题",
+      "建议用户使用 /news-digest config 启用主题"
+    ]
+  },
+  {
+    "id": "boundary-nonexistent-topic",
+    "description": "指定不存在的主题",
+    "prompt": "/news-digest \"Web3\"（假设 config.json 中无此主题）",
+    "expectations": [
+      "告知用户该主题不存在",
+      "列出可用的主题名称",
+      "未执行搜索"
+    ]
+  },
+  {
+    "id": "normal-web-access-enforced",
+    "description": "必须使用 web-access skill 而非仅 MCP 搜索",
+    "prompt": "/news-digest \"AI 前沿\"",
+    "expectations": [
+      "执行了 check-deps.mjs 检查 CDP 依赖",
+      "使用 web-access skill 的 CDP 模式访问了至少 8 个高权重信源",
+      "不是仅使用 bailian_web_search 或其他 MCP 搜索工具",
+      "信源访问覆盖了 config.json 中 weight >= 0.8 的信源"
+    ]
+  },
+  {
+    "id": "normal-72h-gate",
+    "description": "72 小时硬性门控：超过 3 天的新闻必须被过滤",
+    "prompt": "/news-digest \"AI 前沿\"（假设搜索结果中包含 1 天前、5 天前、15 天前的新闻各 3 条）",
+    "expectations": [
+      "1 天前的 3 条新闻通过了时间过滤",
+      "5 天前和 15 天前的新闻被丢弃或标记为过期",
+      "无法确定发布时间的新闻被标记为 timeUnknown",
+      "报告中未出现 72 小时之前的新闻条目"
+    ]
+  },
+  {
+    "id": "boundary-subagent-timeout",
+    "description": "SubAgent 采集超时或卡死时的处理",
+    "prompt": "/news-digest \"AI 前沿\"（假设 36kr 信源的 SubAgent 启动后 5 分钟无响应，浏览器 hang 住）",
+    "expectations": [
+      "记录了该信源 SubAgent 超时/失败情况",
+      "未因单个 SubAgent 失败而终止整个 Pipeline",
+      "继续执行其他信源的采集任务",
+      "在统计中体现失败信源数量",
+      "建议用户检查网络或重试"
+    ]
+  },
+  {
+    "id": "boundary-dedup-all-duplicate",
+    "description": "去重后所有新闻都是重复的，结果为 0",
+    "prompt": "/news-digest \"AI 前沿\"（假设采集到 20 条新闻，全部为同一事件的重复报道）",
+    "expectations": [
+      "执行了三级去重，保留 1 条 canonical",
+      "如果 canonical 评分通过 → 报告保留 1 条，其余 19 条作为引用附注",
+      "如果 canonical 评分未通过 → 报告正文为空",
+      "统计中去重数量 = 19，最终保留数正确",
+      "未因结果为 0 或 1 而报错或终止"
+    ]
+  },
+  {
+    "id": "boundary-overflow-maxPerTopic",
+    "description": "评分通过条目超过 maxPerTopic(50) 时的溢出处理",
+    "prompt": "/news-digest \"AI 前沿\"（假设有 73 条新闻评分 > 4.0）",
+    "expectations": [
+      "报告正文包含前 50 条详细条目（按得分降序）",
+      "报告末尾生成「更多新闻速览」章节",
+      "溢出章节包含 23 条，格式为「总结式标题 + 来源 + 链接」",
+      "统计中记录了溢出数 = 23",
+      "总保留数 = 73（50 详细 + 23 速览）"
+    ]
+  },
+  {
+    "id": "boundary-keyword-template-not-replaced",
+    "description": "config.json 中 URL 模板变量 {keyword} 未替换导致搜索空结果",
+    "prompt": "/news-digest \"AI 前沿\"（假设 TechCrunch 信源的 URL 为 `https://techcrunch.com/?s={keyword}` 但实际搜索时 {keyword} 未被替换为实际关键词）",
+    "expectations": [
+      "该信源返回空结果或 404 页面",
+      "记录了 URL 模板变量未替换的警告",
+      "继续处理其他信源，未因此终止",
+      "在统计中体现该信源采集数 = 0",
+      "建议在配置中检查 URL 格式是否正确"
+    ]
+  },
+  {
+    "id": "normal-chinese-translation-quality",
+    "description": "英文新闻标题和摘要翻译为中文的质量验证",
+    "prompt": "/news-digest \"AI 前沿\"（假设采集到英文新闻：标题='Anthropic launches Claude Opus 4.7 with 3x SWE-bench improvement'，摘要='The new model achieves state-of-the-art results on coding benchmarks...'）",
+    "expectations": [
+      "标题翻译为中文，保留产品名和数据（如 'Claude Opus 4.7'、'3x'）",
+      "摘要翻译不少于 80 字中文",
+      "保留关键数据和专业术语英文原文",
+      "未出现一句话敷衍式翻译",
+      "报告中标注原文来源"
+    ]
+  }
+]

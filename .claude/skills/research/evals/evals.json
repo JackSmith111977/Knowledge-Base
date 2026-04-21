@@ -1,0 +1,171 @@
+{
+  "skill_name": "research",
+  "skill_version": "10.0.0",
+  "created_at": "2026-04-20",
+  "evals": [
+    {
+      "id": "eval-001",
+      "category": "正常路径",
+      "prompt": "/research 请帮我调研 Taro 框架",
+      "expected_output": "生成完整的 Taro 核心知识体系文档",
+      "expectations": [
+        "阶段 0 检查 KB-INDEX 存在性",
+        "阶段 1 执行知识库重复检测",
+        "阶段 2 输出位置推荐表格（至少包含首选推荐）",
+        "阶段 2 输出调研大纲（8 章结构）",
+        "阶段 2 明确询问用户确认",
+        "阶段 2 等待用户回复后才继续",
+        "阶段 3 调用 web-access Skill 进行调研",
+        "最终文档包含引用来源列表",
+        "图表使用 Mermaid 而非 ASCII"
+      ]
+    },
+    {
+      "id": "eval-002",
+      "category": "边缘情况：KB-INDEX不存在",
+      "prompt": "/research 调研一个全新主题（假设 KB-INDEX 不存在）",
+      "expected_output": "自动创建 KB-INDEX 并继续流程",
+      "expectations": [
+        "检测到 KB-INDEX 不存在",
+        "扫描知识库目录结构",
+        "创建 KB-INDEX.md 文件",
+        "继续执行阶段 1 的重复检测",
+        "正常输出位置推荐和大纲"
+      ],
+      "mock_conditions": {
+        "kb_index_exists": false
+      }
+    },
+    {
+      "id": "eval-003",
+      "category": "边缘情况：发现相似文档",
+      "prompt": "/research 调研 React Hooks",
+      "expected_output": "检测到已有 React 核心知识体系文档，输出重复检测报告",
+      "expectations": [
+        "扫描知识库检测到 React 相关文档",
+        "输出重复检测报告（包含相似度、主题匹配度）",
+        "询问用户决策（合并/单独创建/取消）",
+        "等待用户明确回复",
+        "不直接跳过开始调研"
+      ],
+      "mock_conditions": {
+        "similar_docs_exist": true
+      }
+    },
+    {
+      "id": "eval-004",
+      "category": "边缘情况：用户未确认大纲",
+      "prompt": "/research 调研 Vue 3 Composition API\n\n（模拟场景：Skill 在阶段 2 输出大纲后，用户未回复'继续'）",
+      "expected_output": "Skill 应停在阶段 2 等待确认，不自动继续",
+      "expectations": [
+        "阶段 2 完成后输出确认提示",
+        "包含'请回复继续或提出修改意见'字样",
+        "未收到用户确认时不进入阶段 3",
+        "不会自动开始分章节调研",
+        "遵守 Pipeline 门控指令"
+      ]
+    },
+    {
+      "id": "eval-005",
+      "category": "边缘情况：SubAgent模式选择",
+      "prompt": "/research 调研一个大型主题（章节数≥6）",
+      "expected_output": "推荐 SubAgent 并行模式",
+      "expectations": [
+        "评估主题规模（章节数≥6）",
+        "输出 SubAgent 模式推荐",
+        "说明预计加速效果",
+        "询问用户是否启用",
+        "等待用户确认后才执行"
+      ]
+    },
+    {
+      "id": "eval-006",
+      "category": "边缘情况：特殊站点访问",
+      "prompt": "/research 调研小红书上关于 Taro 的实战经验分享",
+      "expected_output": "使用 CDP 模式访问小红书",
+      "expectations": [
+        "识别小红书为特殊站点",
+        "调用 web-access Skill",
+        "web-access 决策使用 CDP 模式",
+        "输出风险提示（账号封禁可能）",
+        "来源标注小红书 URL"
+      ]
+    },
+    {
+      "id": "eval-007",
+      "category": "边缘情况：来源冲突",
+      "prompt": "/research 调研 Next.js App Router 的数据获取策略",
+      "expected_output": "检测并标注来源冲突",
+      "expectations": [
+        "至少查阅 3-5 个来源",
+        "发现不同观点时标注冲突",
+        "输出冲突观点表格",
+        "给出建议采用的观点和原因",
+        "标注来源优先级（官方文档优先）"
+      ]
+    },
+    {
+      "id": "eval-008",
+      "category": "边缘情况：过程文件存放",
+      "prompt": "/research 调研 Svelte 框架",
+      "expected_output": "草稿文件存放在正确的 .work 目录",
+      "expectations": [
+        "创建 .work/[主题]/drafts/ 目录",
+        "章节草稿保存到 drafts/chapter-X.md",
+        "来源汇总保存到 drafts/sources.json",
+        "临时笔记保存到 drafts/notes/",
+        "不将过程文件散落在项目各处"
+      ]
+    },
+    {
+      "id": "eval-009",
+      "category": "错误输入：主题不明确",
+      "prompt": "/research 帮我调研一下",
+      "expected_output": "询问用户明确主题",
+      "expectations": [
+        "检测到主题不明确",
+        "询问用户具体调研什么",
+        "不假设主题直接开始",
+        "遵守 Inversion 模式的先问后做原则"
+      ]
+    },
+    {
+      "id": "eval-010",
+      "category": "错误输入：触发词误判",
+      "prompt": "帮我整理一下文件夹结构",
+      "expected_output": "不触发 research Skill",
+      "expectations": [
+        "识别这不是调研任务",
+        "不加载 research Skill",
+        "不输出调研大纲或位置推荐",
+        "可能触发其他合适的 Skill"
+      ]
+    },
+    {
+      "id": "eval-011",
+      "category": "隐式触发测试",
+      "prompt": "请对 React Server Components 进行深度分析",
+      "expected_output": "触发 research Skill 执行完整流程",
+      "expectations": [
+        "识别'深度分析'为触发词",
+        "加载 research Skill",
+        "执行阶段 0 KB-INDEX 检查",
+        "执行阶段 1 重复检测",
+        "遵守所有检查点和门控"
+      ]
+    },
+    {
+      "id": "eval-012",
+      "category": "设计模式验证：Pipeline检查点",
+      "prompt": "/research 调研 TypeScript 高级类型",
+      "expected_output": "严格执行所有检查点",
+      "expectations": [
+        "检查点 1：重复检测报告生成（自动通过）",
+        "检查点 2：用户确认位置和大纲（强制等待）",
+        "检查点 3：章节草稿完成（自检）",
+        "检查点 4：Review 检查通过（自检）",
+        "不会跳过任何检查点"
+      ]
+    }
+  ]
+}

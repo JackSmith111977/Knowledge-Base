@@ -482,9 +482,71 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+#### 启动流程详解：从 `node index.js` 到 JS 第一行代码执行
+
+当你执行 `node index.js` 时，经历的是 **C++ 层面的初始化流程**，而非 V8 解释执行流程：
+
+```
+1. main() 函数启动 (C++ 原生可执行文件入口，运行在操作系统上)
+   ↓
+2. 初始化 V8 引擎
+   - CreateDefaultPlatform(): 创建 V8 运行的平台抽象层
+   - V8::Initialize(): 初始化 V8 内部状态
+   ↓
+3. 创建 V8 Isolate（隔离区）
+   - Isolate::CreateNew(): 每个 Node.js 进程一个独立的 V8 执行沙箱
+   ↓
+4. 创建 Node.js Environment
+   - CreateEnvironment(): 将 V8 和 libuv 绑定到一起
+   - 挂载全局对象 (global, process, console 等)
+   ↓
+5. 加载 JavaScript 入口文件
+   - LoadEnvironment() → 执行 "require('module').loadMainModule()"
+   - Core Modules 加载并解析 index.js
+   ↓
+6. 启动事件循环
+   - SpinEventLoop(): 进入事件循环，index.js 中的代码开始执行
+```
+
+**关键理解**：
+- `main()` 是 C++ 编译后的原生程序，**不是在 V8 中运行的**
+- V8 在第 2-3 步才被初始化，是一个被创建的"工具"
+- 你写的 JavaScript 代码在第 6 步才开始执行，前面 5 步全是 C++ 初始化
+
+#### 模块数据流向：从 JavaScript 到操作系统
+
+当调用 `fs.readFile('a.txt')` 时，数据需要穿过 **4 层架构**：
+
+```
+JS:  fs.readFile('a.txt', cb)
+     ↓
+     require('fs') → JS 层 API 封装
+     (lib/fs.js 提供 JavaScript 接口)
+     ↓
+Bindings (C++ 桥接层)
+     node::MakeCallback() / NODE_BINDING()
+     把 JS 函数调用翻译成 C++ 函数调用
+     ↓
+libuv (C 库)
+     uv_fs_open() → uv_fs_read()
+     提交任务到线程池，避免阻塞事件循环
+     ↓
+OS API (系统调用)
+     open("a.txt", O_RDONLY)
+     read(fd, buffer, size)
+     ↓
+     读取结果沿原路返回 → 回调在事件循环中执行
+```
+
+**核心要点**：
+- 内置模块通常是 **JS + C++ 混合实现**：JS 提供 API 接口，C++ 提供底层实现
+- **Bindings 层是不可缺少的一环**：它是 V8 的 JS 世界与 C++ 世界之间的翻译器
+- 文件 I/O 实际在线程池中**同步执行**，但对主线程表现为异步
+
 **来源**
 - [Node.js 官方架构文档](https://nodejs.org/zh-cn/)
 - [libuv 源码分析 - CSDN](https://blog.csdn.net/AnitaSun/article/details/124082843)
+- [Node.js 源码解读：启动流程 - 掘金](https://juejin.cn/post/6844903915887869966)
 
 ---
 
@@ -571,6 +633,17 @@ Ignition 在执行过程中会收集**类型反馈（Type Feedback）**：
 **第三阶段：TurboFan 优化编译**
 
 当某段代码被频繁执行（成为"热点代码"），TurboFan 会介入：
+
+**热点代码（Hot Code）定义**：被频繁执行的代码（循环体、被多次调用的函数）。V8 内部维护执行计数器，每次 Ignition 执行字节码时计数器 +1，超过阈值（如约 10000 次）即标记为"热点"，交由 TurboFan 优化编译。
+
+> **注意**：热点 ≠ 类型稳定。类型稳定是优化能持续生效的前提条件。两者组合有 4 种情况：
+
+| 场景 | 是否热点 | 类型是否稳定 | V8 的处理 |
+|------|----------|-------------|-----------|
+| 循环 10000 次 `add(i, j)` | 是 | 是 | TurboFan 优化，极快 |
+| 调用 10000 次 `add(1, 2)` | 是 | 是 | TurboFan 优化，极快 |
+| 调用 10000 次，每次类型不同 | 是 | 否 | 优化 → 频繁去优化 → **比纯解释还慢** |
+| 只执行 5 次的代码 | 否 | 无所谓 | Ignition 直接解释，不优化 |
 
 ```
 字节码 + 类型反馈
@@ -662,6 +735,11 @@ add(1, "2");  // 类型假设失败，触发去优化
         │
         ▼
 ┌─────────────────┐
+│  恢复执行上下文  │  保存/恢复寄存器、重建栈帧、丢弃优化机器码
+└─────────────────┘
+        │
+        ▼
+┌─────────────────┐
 │  恢复解释执行    │  回到 Ignition 字节码
 └─────────────────┘
         │
@@ -669,6 +747,15 @@ add(1, "2");  // 类型假设失败，触发去优化
 ┌─────────────────┐
 │  丢弃优化代码    │  等待下次优化机会
 └─────────────────┘
+```
+
+**去优化的代价**：
+- **上下文恢复**：需要从优化后的机器码状态回退到 Ignition 字节码的中间执行状态，涉及寄存器状态保存/恢复、栈帧重建
+- **内存回收**：已优化的机器码被丢弃，需要 V8 GC 回收
+- **性能惩罚**：类型频繁变化的热点代码，TurboFan 优化后反复去优化，实际性能比纯解释执行更慢
+
+**为什么不用直接类型检查代替推测优化**：
+JavaScript 是动态类型语言，如果 TurboFan 每次执行都在机器码中插入类型检查（如 `typeof` 判断），运行时开销极大。推测优化的思路是：**假设类型不变**，直接生成最优代码（如整数加法编译为 CPU 原生 `ADD` 指令，不做任何检查），只在运行时类型变化时才去优化。这样在类型稳定的场景下，JavaScript 性能接近 C++。
 ```
 
 #### 代码示例
@@ -906,12 +993,101 @@ crypto.pbkdf2('password', 'salt', 100000, 64, 'sha512', (err, key) => {
 | "Node.js 完全是单线程" | JavaScript 执行是单线程，但 libuv 使用线程池处理 I/O |
 | "线程池越大越好" | 线程池过大会增加上下文切换开销，默认 4 通常是合理的 |
 | "所有 I/O 都是异步的" | 文件 I/O 实际在线程池中同步执行，只是对主线程异步 |
+| "网络 I/O 也占用线程池" | 网络 I/O 由 OS 的 epoll/kqueue/IOCP 异步处理，不占用线程池线程 |
+
+#### 文件 I/O 与网络 I/O 执行路径对比
+
+| 维度 | `fs.readFile`（文件 I/O） | `net.connect`（网络 I/O） |
+|------|--------------------------|--------------------------|
+| **底层执行方式** | libuv **线程池**中**同步**执行 | 操作系统 **epoll/kqueue/IOCP** 异步执行 |
+| **系统调用** | `open()` + `read()`（阻塞） | `epoll_wait()`（非阻塞，OS 通知） |
+| **是否占用线程** | ✅ 占用一个工作线程 | ❌ 不占用线程，由 OS 内核处理 |
+| **为什么不同** | 大多数文件系统**没有**原生异步 I/O | 网络栈天然支持异步多路复用 |
+
+**关键理解**：网络 I/O 是**真正的异步**——OS 内核在数据包到达时通知 libuv；文件 I/O 是**伪异步**——在线程池中同步执行，只是对主线程不阻塞。
 
 #### 最佳实践
 
-1. **合理设置线程池大小**：CPU 密集型 I/O 操作多时，可适当增加 `UV_THREADPOOL_SIZE`
+1. **合理设置线程池大小**：CPU 密集型 I/O 操作多时，可适当增加 `UV_THREADPOOL_SIZE`，但不宜过大（上下文切换开销）
 2. **避免阻塞事件循环**：不要在主线程执行同步 I/O 或 CPU 密集型计算
 3. **使用 Worker Threads 处理 CPU 密集型任务**：对于真正的并行计算，使用 Worker Threads 而非线程池
+4. **大文件使用流式读取**：使用 `fs.createReadStream` 替代 `fs.readFile`，分段读取避免长时间占用线程
+
+#### 线程池调优：流式读取与分批调度
+
+**场景**：需要同时读取 100 个文件，默认 4 线程的线程池会发生什么？
+
+前 4 个文件在线程池中并发执行，其余 96 个全部排队等待。虽然不会崩溃，但整体吞吐率下降，且大量 `fs.readFile` 回调积压可能导致回调队列溢出。
+
+**解决方案一：流式读取（Stream）**
+
+不一次性把整个文件读入内存，而是切分成小块，每次只读一小块：
+
+```javascript
+// ❌ 传统方式：100 个文件 = 100 次 fs.readFile，全部占用线程池
+for (let i = 0; i < 100; i++) {
+  fs.readFile(`file-${i}.txt`, (err, data) => { /* ... */ });
+}
+
+// ✅ 流式读取：不占满线程池，可按节奏消费
+const fs = require('fs');
+const stream = fs.createReadStream('large-file.txt', {
+  highWaterMark: 64 * 1024  // 每次读 64KB
+});
+
+stream.on('data', (chunk) => {
+  process(chunk);  // 每次收到 chunk 就处理，不需要等整个文件读完
+});
+
+stream.on('end', () => {
+  console.log('文件读完');
+});
+```
+
+流式读取通过 `stream.pause()` / `stream.resume()` 可以主动控制读取节奏，减少单个文件对线程池的占用时间。
+
+**适用场景**：大文件处理（日志分析、文件上传/下载、音视频流）
+
+**解决方案二：分批调度（Batch Scheduling）**
+
+控制并发数量，不让 100 个请求同时提交到线程池：
+
+```javascript
+// ✅ 分批调度：每次只并发 4 个
+async function processFilesInBatches(files, batchSize = 4) {
+  const results = [];
+  for (let i = 0; i < files.length; i += batchSize) {
+    const batch = files.slice(i, i + batchSize);
+    const batchResults = await Promise.all(
+      batch.map(f => fs.promises.readFile(f, 'utf8'))
+    );
+    results.push(...batchResults);
+    console.log(`已完成 ${i + batchSize} / ${files.length}`);
+  }
+  return results;
+}
+
+processFilesInBatches(files, 4);
+```
+
+执行时序：
+```
+批次 1: [文件1] [文件2] [文件3] [文件4]  ← 4 个线程同时工作
+        └──── 完成 ────┘
+批次 2: [文件5] [文件6] [文件7] [文件8]  ← 等上一批完成再开始
+        └──── 完成 ────┘
+批次 3: [文件9] ...
+```
+
+**适用场景**：批量处理、数据迁移、批量图片压缩
+
+**方案对比：**
+
+| 维度 | 流式读取 | 分批调度 |
+|------|----------|----------|
+| 解决的问题 | 单个大文件内存占用 + 线程占用 | 多个文件并发过多 |
+| 核心思路 | 分段读取，按需消费 | 控制并发数量 |
+| 对线程池的影响 | 减少单个文件占用线程的时间 | 直接限制并发线程数 |
 
 **来源**
 - [libuv 源码分析 - CSDN](https://blog.csdn.net/AnitaSun/article/details/124082843)
@@ -1032,6 +1208,10 @@ From Space 变成新的 To Space
 - ✅ 优点：效率高，不产生内存碎片
 - ❌ 缺点：需要双倍空间，存活对象多时效率低
 
+> **为什么新生代和老生代用不同的 GC 算法？**
+> 新生代约 95% 的对象很快死亡，存活率低，Scavenge 只需复制少量对象到 To Space，非常高效。
+> 老生代对象存活时间长，如果用 Scavenge 需要复制大量对象且需要双倍空间（老生代约 1.4GB），成本极高。Mark-Sweep 只需遍历和标记，不移动对象，但会产生内存碎片，因此需要 Mark-Compact 定期整理。
+
 **2. Mark-Sweep 算法（老生代 GC / Major GC）**
 
 **工作流程**：
@@ -1111,6 +1291,61 @@ node --v8-options | grep max
 2. **及时清理定时器**：setInterval 等定时器会保持引用
 3. **注意闭包引用**：闭包会保持对外部变量的引用
 4. **使用 WeakMap/WeakSet**：弱引用不会阻止 GC 回收
+
+#### 内存泄漏排查流程
+
+**场景**：Node.js 服务内存持续增长，最终 OOM（Out of Memory）。
+
+**排查五步法：**
+
+```
+第 1 步：确认内存增长
+  ↓
+  process.memoryUsage() 观察 heapUsed 是否持续上升不下降
+  正常情况：heapUsed 呈锯齿形（GC 后回落）
+  异常情况：heapUsed 持续上升，GC 后也不回落
+
+第 2 步：抓取堆快照（Heap Snapshot）
+  ↓
+  启动时加 --inspect 参数：
+    node --inspect index.js
+  打开 Chrome DevTools → Memory → Take Heap Snapshot
+  间隔一段时间抓取第二个快照，对比差异
+
+第 3 步：定位泄漏源
+  ↓
+  Chrome DevTools 的 Retainers 视图查看引用链
+  找出谁在持有不该持有的对象
+  按 Constructor 过滤，查看增长最快的对象类型
+
+第 4 步：常见泄漏点排查
+  ↓
+  ┌─────────────────────────────────────────────────────┐
+  │ 1. 全局变量积累    global.cache = {} 不断写入不删除  │
+  │ 2. 事件监听器未清  EventEmitter.on 没有对应 off      │
+  │    除                                         │
+  │ 3. 闭包持有大对象  闭包引用外部变量导致无法 GC      │
+  │    引用                                         │
+  │ 4. 定时器/Interval  setInterval 未清理，回调保持引用│
+  │    未清理                                         │
+  │ 5. 缓存无过期策略  Map/Object 做缓存，无 maxSize/   │
+  │                     TTL 限制                      │
+  └─────────────────────────────────────────────────────┘
+
+第 5 步：修复后验证
+  ↓
+  修复代码后，重新观察 heapUsed 是否呈正常锯齿形
+  长时间运行（数小时）确认无持续增长
+```
+
+**工具推荐：**
+
+| 工具 | 用途 | 使用方式 |
+|------|------|----------|
+| `process.memoryUsage()` | 实时监控内存 | 定时打印或写入日志 |
+| Chrome DevTools Memory | 堆快照对比分析 | `node --inspect` 启动后连接 |
+| `clinic.js` | 自动诊断内存泄漏 | `clinic doctor -- node index.js` |
+| `node --heapsnapshot-signal=SIGUSR2` | 通过信号触发快照 | 生产环境无需重启即可抓快照 |
 
 **来源**
 - [V8 内存管理及垃圾回收机制 - 腾讯云](https://cloud.tencent.com/developer/article/1663176)

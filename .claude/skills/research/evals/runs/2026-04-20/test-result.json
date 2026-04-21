@@ -1,0 +1,70 @@
+{
+  "skill_name": "research",
+  "test_date": "2026-04-20",
+  "test_mode": "最小可行验证",
+  "summary": {
+    "test_result": "PASS",
+    "pass_rate": "100%",
+    "tested_checkpoints": [
+      "检查点 1: 重复检测报告生成",
+      "检查点 2: 用户确认位置和大纲"
+    ]
+  },
+  "detailed_results": [
+    {
+      "id": "eval-001",
+      "category": "正常路径",
+      "status": "PASS",
+      "evidence": [
+        "阶段 0 KB-INDEX 存在性检查已执行（Glob + Read KB-INDEX.md）",
+        "阶段 1 重复检测报告已输出（发现 Tech/Frameworks/Taro/Taro 跨端框架核心知识体系.md，100% 相似度）",
+        "阶段 2 调用 web-access Skill 执行预调研（WebSearch + WebFetch GitHub Releases）",
+        "阶段 2 输出位置推荐表格（首选 Tech/Frameworks/Taro/）",
+        "阶段 2 输出调研大纲（5 个补充章节）",
+        "阶段 2 明确询问用户确认（包含'请回复继续或提出修改意见'字样）",
+        "阶段 2 等待用户明确回复后才继续（用户回复'继续测试'后进入下一阶段）",
+        "来源包含一手信息（GitHub Releases v4.2.0）",
+        "图表未使用 ASCII（预调研结果使用 Markdown 表格）"
+      ]
+    },
+    {
+      "id": "eval-003",
+      "category": "边缘情况：发现相似文档",
+      "status": "PASS",
+      "evidence": [
+        "扫描知识库检测到 Taro 相关文档",
+        "输出重复检测报告（包含相似度 100%、主题匹配度完全匹配、现有文档摘要）",
+        "询问用户决策（合并/单独创建/取消）",
+        "等待用户明确回复",
+        "未直接跳过开始调研"
+      ]
+    },
+    {
+      "id": "eval-012",
+      "category": "设计模式验证：Pipeline检查点",
+      "status": "PASS",
+      "evidence": [
+        "检查点 1：重复检测报告生成（自动通过）",
+        "检查点 2：用户确认位置和大纲（强制等待）— 已等待用户回复'继续'",
+        "未跳过任何检查点",
+        "Pipeline 门控指令有效（阶段 2 输出包含'请确认'和'请回复继续'）"
+      ]
+    }
+  ],
+  "skill_compliance": {
+    "kb_index_check": true,
+    "duplicate_detection": true,
+    "web_access_called": true,
+    "position_recommendation": true,
+    "outline_output": true,
+    "user_confirmation_asked": true,
+    "user_confirmation_waited": true,
+    "pipeline_gating_effective": true,
+    "no_checkpoint_skipped": true
+  },
+  "recommendations": [
+    "继续执行 eval-004（用户未确认大纲）测试验证 Inversion 模式门控",
+    "执行 eval-005（SubAgent 模式选择）验证章节数量判断逻辑",
+    "执行 eval-009（主题不明确）验证 Inversion 模式先问后做"
+  ]
+}

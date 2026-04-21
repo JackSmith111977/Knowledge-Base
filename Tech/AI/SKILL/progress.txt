@@ -1,0 +1,44 @@
+# SKILL 核心知识体系 - 调研进度
+
+## 状态：已完成
+
+### v2.0 扩展调研（2026-04-20）
+
+- [x] 阶段 0：KB-INDEX 检查
+- [x] 阶段 1：需求澄清与重复检测
+- [x] 阶段 2：预调研与位置推荐（用户确认）
+- [x] 阶段 3：分章节调研（9 章，SubAgent 并行）
+  - [x] 第 1 章：Agent Skill 概述
+  - [x] 第 2 章：核心概念辨析
+  - [x] 第 3 章：Skill vs MCP 深度对比
+  - [x] 第 4 章：底层原理解析
+  - [x] 第 5 章：生命周期与工作流程
+  - [x] 第 6 章：三层协议架构
+  - [x] 第 7 章：Skill 编写规范
+  - [x] 第 8 章：Agentic 工作流模式
+  - [x] 第 9 章：安全与治理
+- [x] 阶段 4：整合输出与索引更新
+- [x] 阶段 5：Review 检查
+
+### 更新内容
+
+- 从 8 章扩展到 10 章（含附录）
+- 新增：Agent Skill 生态全景（2025-2026 时间线）
+- 新增：Skill vs MCP 六维度深度对比（14 维度总结表）
+- 新增：底层原理解析（渐进式披露 Token 经济学、语义匹配、沙箱隔离）
+- 新增：生命周期与工作流程（9 阶段状态流转、错误处理）
+- 新增：三层协议架构（MCP + ACP + A2A）
+- 新增：Agentic 工作流模式（Google 21 种设计模式中的 6 种核心模式）
+- 新增：安全与治理（MSB 安全基准 ICLR 2026、ClawHavoc 事件、12 类攻击面）
+- 新增：跨平台最佳实践（Claude Code + Antigravity + OpenClaw）
+
+### 来源统计
+
+- Anthropic 官方文档与开源仓库
+- agentskills.io 开放标准
+- Google《Agentic Design Patterns》（Antonio Gulli, 424 页）
+- MSB 安全基准（ICLR 2026, 北京邮电大学）
+- A2A 协议文档（Linux Foundation）
+- MCP 官方规范
+- ClawHub / skills.sh 平台数据
+- 行业报告与社区技术文章

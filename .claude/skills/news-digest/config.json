@@ -1,0 +1,83 @@
+{
+  "version": "1.5.0",
+  "topics": [
+    {
+      "name": "AI 前沿",
+      "enabled": true,
+      "keywords": ["AI", "大模型", "LLM", "GPT", "Claude", "Agent", "机器学习"],
+      "outputDirectory": "News/AI 前沿",
+      "sources": [
+        { "name": "36kr", "url": "https://36kr.com/search/articles/{keyword}", "weight": 0.9 },
+        { "name": "机器之心", "url": "https://www.jiqizhixin.com/search?q={keyword}", "weight": 0.95 },
+        { "name": "量子位", "url": "https://www.qbitai.com", "weight": 0.85 },
+        { "name": "新智元", "url": "https://www.xinzhiyuan.com", "weight": 0.7 },
+        { "name": "InfoQ 中国", "url": "https://www.infoq.cn/search?query={keyword}", "weight": 0.8 },
+        { "name": "虎嗅", "url": "https://www.huxiu.com/search/result?keyword={keyword}", "weight": 0.75 },
+        { "name": "TechCrunch", "url": "https://techcrunch.com/?s={keyword}", "weight": 0.85 },
+        { "name": "The Verge AI", "url": "https://www.theverge.com/ai-artificial-intelligence", "weight": 0.8 },
+        { "name": "Ars Technica", "url": "https://arstechnica.com/?s={keyword}", "weight": 0.85 },
+        { "name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/?s={keyword}", "weight": 0.8 },
+        { "name": "MarkTechPost", "url": "https://www.marktechpost.com/?s={keyword}", "weight": 0.75 },
+        { "name": "HackerNews", "url": "https://news.ycombinator.com/", "weight": 0.9 },
+        { "name": "Anthropic Blog", "url": "https://www.anthropic.com/news", "weight": 0.95 },
+        { "name": "OpenAI Blog", "url": "https://openai.com/blog", "weight": 0.95 },
+        { "name": "Google AI Blog", "url": "https://ai.google/discover/ai-blog", "weight": 0.9 },
+        { "name": "DeepMind Blog", "url": "https://deepmind.google/discover/blog", "weight": 0.9 },
+        { "name": "MIT Tech Review AI", "url": "https://www.technologyreview.com/topic/artificial-intelligence", "weight": 0.9 },
+        { "name": "Reddit r/MachineLearning", "url": "https://www.reddit.com/r/MachineLearning/", "weight": 0.8 },
+        { "name": "Reddit r/LocalLLaMA", "url": "https://www.reddit.com/r/LocalLLaMA/", "weight": 0.75 },
+        { "name": "Reddit r/artificial", "url": "https://www.reddit.com/r/artificial/", "weight": 0.7 },
+        { "name": "GitHub Trending", "url": "https://github.com/trending", "weight": 0.85 },
+        { "name": "GitHub Explore AI", "url": "https://github.com/topics/artificial-intelligence", "weight": 0.8 },
+        { "name": "Wired AI", "url": "https://www.wired.com/tag/artificial-intelligence/", "weight": 0.85 },
+        { "name": "CNBC AI", "url": "https://www.cnbc.com/ai-artificial-intelligence/", "weight": 0.85 },
+        { "name": "The Register", "url": "https://www.theregister.com/topics/ai/", "weight": 0.75 },
+        { "name": "AI News", "url": "https://www.ainews.com", "weight": 0.7 }
+      ]
+    },
+    {
+      "name": "前端开发",
+      "enabled": true,
+      "keywords": ["React", "Vue", "Next.js", "TypeScript", "前端", "JavaScript"],
+      "outputDirectory": "News/前端开发",
+      "sources": [
+        { "name": "HackerNews", "url": "https://news.ycombinator.com/", "weight": 0.9 },
+        { "name": "Dev.to", "url": "https://dev.to/search?q={keyword}", "weight": 0.75 },
+        { "name": "掘金", "url": "https://juejin.cn/search?query={keyword}", "weight": 0.8 },
+        { "name": "CSS-Tricks", "url": "https://css-tricks.com/?s={keyword}", "weight": 0.85 },
+        { "name": "Smashing Magazine", "url": "https://www.smashingmagazine.com/?s={keyword}", "weight": 0.85 },
+        { "name": "LogRocket Blog", "url": "https://blog.logrocket.com/?s={keyword}", "weight": 0.8 },
+        { "name": "InfoQ", "url": "https://www.infoq.com/search#q={keyword}", "weight": 0.8 },
+        { "name": "Reddit WebDev", "url": "https://www.reddit.com/r/webdev", "weight": 0.7 },
+        { "name": "Reddit r/reactjs", "url": "https://www.reddit.com/r/reactjs/", "weight": 0.75 },
+        { "name": "Reddit r/javascript", "url": "https://www.reddit.com/r/javascript/", "weight": 0.75 },
+        { "name": "Reddit r/typescript", "url": "https://www.reddit.com/r/typescript/", "weight": 0.7 },
+        { "name": "Vercel Blog", "url": "https://vercel.com/blog", "weight": 0.85 },
+        { "name": "GitHub Trending", "url": "https://github.com/trending", "weight": 0.85 },
+        { "name": "GitHub Explore Frontend", "url": "https://github.com/topics/frontend", "weight": 0.75 }
+      ]
+    }
+  ],
+  "scoring": {
+    "dimensions": {
+      "sourceAuthority": { "weight": 0.25, "description": "来源权威性" },
+      "timeliness": { "weight": 0.15, "description": "时效性" },
+      "relevance": { "weight": 0.20, "description": "与主题相关性" },
+      "contentDepth": { "weight": 0.20, "description": "内容深度" },
+      "factTraceability": { "weight": 0.20, "description": "事实标注完整性" }
+    },
+    "threshold": 4.0,
+    "maxPerTopic": 50
+  },
+  "output": {
+    "baseDirectory": "News",
+    "filenameFormat": "news-digest-{date}.md",
+    "maxPreviewPerTopic": 30,
+    "workDir": "News/.work"
+  },
+  "cron": {
+    "enabled": false,
+    "schedule": "30 9 * * *",
+    "timezone": "Asia/Shanghai"
+  }
+}
