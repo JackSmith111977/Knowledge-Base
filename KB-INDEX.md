@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-20 (v1.34.0)
+**最后更新：** 2026-04-22 (v1.37.0)
 
 ---
 
@@ -17,11 +17,13 @@ Knowledge Base/
 ├── Guide/                      # 指南类文档
 ├── News/                       # 每日新闻聚合
 │   ├── AI 前沿/                # AI 前沿新闻
-│   └── 前端开发/               # 前端开发新闻
+│   ├── 前端开发/               # 前端开发新闻
+│   └── 金融/                   # 金融新闻
 ├── Tech/                       # 技术文档
 │   ├── AI/                     # AI 相关
 │   │   ├── AgentFramework/     # AI Agent 框架
 │   │   ├── AgentHarness/       # AI Agent Harness 工程
+│   │   ├── AgentInfra/         # AI Agent 技术栈全景
 │   │   ├── AgentSkill/         # Agent Skill 设计模式
 │   │   ├── BMAD/               # BMAD 方法
 │   │   ├── ClaudeCode/         # Claude Code 相关
@@ -72,9 +74,10 @@ Knowledge Base/
 
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
-| 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发） |
-| Agent Framework | Tech/AI/AgentFramework/ | Hermes Agent 核心知识体系.md |
+| 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发）、news-digest-2026-04-21.md（金融） |
+| Agent Framework | Tech/AI/AgentFramework/ | LangChain LangGraph 核心知识体系.md, Hermes Agent 核心知识体系.md |
 | Agent Harness | Tech/AI/AgentHarness/ | Harness Engineering 核心知识体系.md |
+| Agent Infra | Tech/AI/AgentInfra/ | AI Agent 技术栈全景核心知识体系.md |
 | Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
 | BMAD-METHOD | Tech/AI/BMAD/ | BMAD-METHOD 核心知识体系.md |
 | Claude Code | Tech/AI/ClaudeCode/ | Claude Code Skills 完全指南.md、Claude Code SubAgent 模式.md、Claude Code 完全指南.md、Claude Code 减少询问配置指南.md、Claude Code Hooks 自动化核心知识体系.md、Claude Code Playwright E2E 测试核心知识体系.md、路由系统可行性研究报告.md |
@@ -143,6 +146,7 @@ Knowledge Base/
 
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
+| LangChain LangGraph 核心知识体系.md | LangChain + LangGraph 框架 | 2026-04-21 |
 | Hermes Agent 核心知识体系.md | Hermes Agent 框架 | 2026-04-04 |
 
 ### Tech/AI/AgentHarness/
@@ -150,6 +154,12 @@ Knowledge Base/
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
 | Harness Engineering 核心知识体系.md | AI Agent Harness 工程 | 2026-04-20 |
+
+### Tech/AI/AgentInfra/
+
+| 文件名 | 主题 | 创建日期 |
+|--------|------|----------|
+| AI Agent 技术栈全景核心知识体系.md | AI Agent 技术栈全景 | 2026-04-21 |
 
 ### Tech/AI/AgentSkill/
 
@@ -413,8 +423,10 @@ Knowledge Base/
 | AI 前沿/news-digest-2026-04-14.md | AI 新闻 | 2026-04-14 |
 | AI 前沿/news-digest-2026-04-18.md | AI 新闻 | 2026-04-18 |
 | AI 前沿/news-digest-2026-04-20.md | AI 新闻 | 2026-04-20 |
+| AI 前沿/news-digest-2026-04-22.md | AI 新闻 | 2026-04-22 |
 | 前端开发/news-digest-2026-04-13.md | 前端新闻 | 2026-04-13 |
 | 前端开发/news-digest-2026-04-20.md | 前端新闻 | 2026-04-20 |
+| 金融/news-digest-2026-04-21.md | 金融新闻 | 2026-04-21 |
 
 ---
 
@@ -658,6 +670,21 @@ Knowledge Base/
 - 8 章涵盖：基础认知、输入体系（input vs sys.stdin）、输入场景模板、输出格式规范、数据结构读取、高频踩坑、面试实战模板、常见误区与面试问题
 - 包含 Mermaid 流程图 10+ 个、代码示例 50+ 个、15 个来源交叉验证
 - 与灵神 LeetCode 题单学习指南并列 Algorithms 分类
+
+---
+
+### 2026-04-21 整理（AI Agent 技术栈全景调研）
+
+**执行的操作：**
+1. ✅ 创建 `Tech/AI/AgentInfra/` 目录
+2. ✅ 创建《AI Agent 技术栈全景核心知识体系.md》文档（11 章）
+3. ✅ 注册文档到 KB-INDEX
+4. ✅ 更新 KB-INDEX 版本至 v1.35.0
+
+**整理后效果：**
+- AI Agent 技术栈全景文档收录到 `Tech/AI/AgentInfra/` 目录
+- 11 章：技术栈知识图谱、10 大框架横评、架构设计模式、向量数据库对比、模型部署框架、可观测性工具、MCP/A2A 协议、安全防御架构、K8s GPU 调度、开发者技能图谱、生产选型速查表
+- 与 AgentFramework/AgentHarness/AgentSkill 并列，形成完整 AI Agent 知识体系
 
 ---
 

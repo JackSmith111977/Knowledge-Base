@@ -70,11 +70,11 @@ metadata:
    脚本会检查 Node.js 和 Chrome CDP 端口，自动启动 Proxy。通过后在回复中展示 web-access 的温馨提示。
 3. **[硬性门控] 并行 SubAgent 调度**：
    **必须使用 `Agent` 工具启动子 Agent 进行并行采集，禁止主 Agent 串行逐个访问信源。**
-   **[硬性门控] 并发限制：每批次最多启动 4 个 SubAgent，批次间间隔 30 秒，防止 429 配额超限。按权重从高到低排序后分批。**
+   **[硬性门控] 并发限制：每批次最多启动 2 个 SubAgent，批次间间隔 30 秒，防止 429 配额超限。按权重从高到低排序后分批。**
 
    按以下步骤分批执行：
    1. 将信源按权重从高到低排序
-   2. 每 4 个信源为一组，启动一批并行 SubAgent
+   2. 每 2 个信源为一组，启动一批并行 SubAgent
    3. 每批完成后使用 `TaskOutput` 等待全部完成，**等待 30 秒后再启动下一批**
    4. 对每个信源：
       - 调用 `Agent` 工具，参数：
@@ -271,7 +271,7 @@ HTML 快照：News/.work/html-dumps/{source}-{page}-{timestamp}.html
 - **步骤 1 必须使用 `web-access` skill（CDP 模式）访问真实信源，禁止仅用 MCP 搜索工具替代；web-access 初始化失败时才降级为 MCP 搜索**
 - **72 小时硬性门控：仅保留 3 天内的新闻，无法确定时间的标记 `timeUnknown` 需人工确认**
 - **所有已启用信源（不按权重过滤）每次必须全部触发，每个信源对应一个独立 SubAgent 并行采集**
-- **SubAgent 并发限制：每批次最多 4 个并行，批次间间隔 30 秒。禁止一次性启动超过 4 个 SubAgent**
+- **SubAgent 并发限制：每批次最多 2 个并行，批次间间隔 30 秒。禁止一次性启动超过 2 个 SubAgent**
 - 溢出处理：评分通过的条目超过 `maxPerTopic` 时，在报告末尾添加"更多新闻速览"章节，以「总结式标题 + 来源 + 链接」形式列出
 - web-access 搜索失败时，记录错误但不中断 Pipeline
 - **步骤 1.5 全文获取不可跳过，仅基于搜索摘要生成报告会导致内容质量不达标**
@@ -288,4 +288,4 @@ HTML 快照：News/.work/html-dumps/{source}-{page}-{timestamp}.html
 
 ---
 
-*版本：1.5.0 | 设计模式：Pipeline + Inversion + Generator + Reviewer*
+*版本：1.6.0 | 设计模式：Pipeline + Inversion + Generator + Reviewer*

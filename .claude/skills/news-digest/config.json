@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "topics": [
     {
       "name": "AI 前沿",
@@ -36,25 +36,19 @@
       ]
     },
     {
-      "name": "前端开发",
+      "name": "金融",
       "enabled": true,
-      "keywords": ["React", "Vue", "Next.js", "TypeScript", "前端", "JavaScript"],
-      "outputDirectory": "News/前端开发",
+      "keywords": ["金融", "银行", "保险", "股市", "基金", "理财", "金融科技", "货币政策"],
+      "outputDirectory": "News/金融",
       "sources": [
-        { "name": "HackerNews", "url": "https://news.ycombinator.com/", "weight": 0.9 },
-        { "name": "Dev.to", "url": "https://dev.to/search?q={keyword}", "weight": 0.75 },
-        { "name": "掘金", "url": "https://juejin.cn/search?query={keyword}", "weight": 0.8 },
-        { "name": "CSS-Tricks", "url": "https://css-tricks.com/?s={keyword}", "weight": 0.85 },
-        { "name": "Smashing Magazine", "url": "https://www.smashingmagazine.com/?s={keyword}", "weight": 0.85 },
-        { "name": "LogRocket Blog", "url": "https://blog.logrocket.com/?s={keyword}", "weight": 0.8 },
-        { "name": "InfoQ", "url": "https://www.infoq.com/search#q={keyword}", "weight": 0.8 },
-        { "name": "Reddit WebDev", "url": "https://www.reddit.com/r/webdev", "weight": 0.7 },
-        { "name": "Reddit r/reactjs", "url": "https://www.reddit.com/r/reactjs/", "weight": 0.75 },
-        { "name": "Reddit r/javascript", "url": "https://www.reddit.com/r/javascript/", "weight": 0.75 },
-        { "name": "Reddit r/typescript", "url": "https://www.reddit.com/r/typescript/", "weight": 0.7 },
-        { "name": "Vercel Blog", "url": "https://vercel.com/blog", "weight": 0.85 },
-        { "name": "GitHub Trending", "url": "https://github.com/trending", "weight": 0.85 },
-        { "name": "GitHub Explore Frontend", "url": "https://github.com/topics/frontend", "weight": 0.75 }
+        { "name": "财联社", "url": "https://www.cls.cn/telegraph", "weight": 0.95 },
+        { "name": "路透社", "url": "https://www.reuters.com/markets/", "weight": 0.95 },
+        { "name": "第一财经", "url": "https://www.yicai.com/news", "weight": 0.95 },
+        { "name": "华尔街见闻", "url": "https://wallstreetcn.com/news/global", "weight": 0.90 },
+        { "name": "FT中文网", "url": "https://www.ftchinese.com/channel/finance", "weight": 0.90 },
+        { "name": "金十数据", "url": "https://www.jin10.com/", "weight": 0.85 },
+        { "name": "CNBC", "url": "https://www.cnbc.com/finance/", "weight": 0.85 },
+        { "name": "36kr", "url": "https://36kr.com", "weight": 0.70 }
       ]
     }
   ],
