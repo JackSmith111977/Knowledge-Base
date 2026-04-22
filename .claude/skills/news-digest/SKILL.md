@@ -10,7 +10,7 @@ triggers:
   - news digest
   - 今日新闻
 author: Kei
-version: 1.5.0
+version: 1.8.0
 metadata:
   patterns: [pipeline, inversion, generator, reviewer]
   type: 数据获取与分析
