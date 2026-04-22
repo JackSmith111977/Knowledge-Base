@@ -63,11 +63,12 @@ metadata:
 
 对每个已启用的主题：
 1. 从 config.json 读取该主题的搜索关键词和信源列表
-2. **CDP 启动**（首次执行或 Proxy 未运行时）：
+2. **[硬性门控] CDP Proxy 统一启动**（首次执行或 Proxy 未运行时，**仅由主 Agent 执行一次**）：
    ```bash
    node "$CLAUDE_SKILL_DIR/../web-access/scripts/check-deps.mjs"
    ```
    脚本会检查 Node.js 和 Chrome CDP 端口，自动启动 Proxy。通过后在回复中展示 web-access 的温馨提示。
+   **[硬性门控] 所有 SubAgent 复用此 Proxy，禁止各自启动新实例。**
 3. **[硬性门控] 并行 SubAgent 调度**：
    **必须使用 `Agent` 工具启动子 Agent 进行并行采集，禁止主 Agent 串行逐个访问信源。**
    **[硬性门控] 并发限制：每批次最多启动 2 个 SubAgent，批次间间隔 30 秒，防止 429 配额超限。按权重从高到低排序后分批。**
@@ -76,6 +77,10 @@ metadata:
    1. 将信源按权重从高到低排序
    2. 每 2 个信源为一组，启动一批并行 SubAgent
    3. 每批完成后使用 `TaskOutput` 等待全部完成，**等待 30 秒后再启动下一批**
+   3.5 **[硬性门控] 批次 Tab 清理**：每批 SubAgent 完成后，
+       主 Agent 通过 `curl -s http://localhost:3456/targets` 检查当前 tab 列表，
+       如有 SubAgent 遗留的 tab（非用户原始 tab），使用 `curl -s "http://localhost:3456/close?target=ID"` 清理，
+       确保无 tab 泄漏后再等待 30 秒启动下一批
    4. 对每个信源：
       - 调用 `Agent` 工具，参数：
         - `subagent_type`: "general-purpose"
@@ -84,13 +89,17 @@ metadata:
           ```
           你是 news-digest Pipeline 的子采集 Agent。
           1. 加载 web-access skill 并遵循指引
-          2. 通过 CDP 打开 {SOURCE_URL}（{SOURCE_NAME}）
-          3. 搜索关键词：{KEYWORDS}
-          4. 提取最近 72 小时内的新闻列表（标题、链接、来源、发布时间、简介）
+          2. **[硬性门控] Proxy 复用**：直接通过已有 CDP Proxy (localhost:3456) 操作，
+             **禁止**再次执行 check-deps.mjs 或启动新 Proxy 实例
+          3. 通过 CDP `/new` 创建新后台 tab 打开 {SOURCE_URL}（{SOURCE_NAME}），
+             **记录返回的 targetId 用于后续清理**
+          4. 搜索关键词：{KEYWORDS}
+          5. 提取最近 72 小时内的新闻列表（标题、链接、来源、发布时间、简介）
              **标题和简介必须使用中文（如原文为英文，需翻译为中文，保留关键数据和专业术语）**
-          5. 滚动触发懒加载，确保覆盖首页 + 下一页
-          6. 将结果以 JSON 写入 {WORK_DIR}/{topic}-{source}-{timestamp}.json
-          7. 关闭所有打开的 tab
+          6. 滚动触发懒加载，确保覆盖首页 + 下一页
+          7. 将结果以 JSON 写入 {WORK_DIR}/{topic}-{source}-{timestamp}.json
+          8. **[硬性门控] Tab 清理**：使用记录的 targetId 通过 CDP `/close` 关闭自己创建的 tab，
+             **禁止关闭用户原有 tab**。无论成功失败，此步骤必须执行
           ```
    5. 汇总所有子 Agent 的 JSON 结果到统一数据池
 4. 提取每条新闻的：标题、简介、链接、来源、**发布时间**、**原始作者/出处（如可从转载页面或摘要中识别）**
@@ -272,6 +281,12 @@ HTML 快照：News/.work/html-dumps/{source}-{page}-{timestamp}.html
 - **72 小时硬性门控：仅保留 3 天内的新闻，无法确定时间的标记 `timeUnknown` 需人工确认**
 - **所有已启用信源（不按权重过滤）每次必须全部触发，每个信源对应一个独立 SubAgent 并行采集**
 - **SubAgent 并发限制：每批次最多 2 个并行，批次间间隔 30 秒。禁止一次性启动超过 2 个 SubAgent**
+- **[硬性门控] SubAgent 浏览器生命周期**：
+  Proxy 由主 Agent 统一启动（步骤 1 第 2 点），SubAgent 禁止各自启动新实例
+- **[硬性门控] SubAgent Tab 管理**：
+  每个 SubAgent 必须记录自己创建的 tab targetId，结束时逐一关闭；
+  主 Agent 每批结束后对比 tab 列表清理遗留，防止 tab 泄漏累积
+- **Tab 泄漏后果**：大量 tab 残留会拖慢 Chrome 性能，甚至触发网站反爬风控
 - 溢出处理：评分通过的条目超过 `maxPerTopic` 时，在报告末尾添加"更多新闻速览"章节，以「总结式标题 + 来源 + 链接」形式列出
 - web-access 搜索失败时，记录错误但不中断 Pipeline
 - **步骤 1.5 全文获取不可跳过，仅基于搜索摘要生成报告会导致内容质量不达标**
@@ -288,4 +303,4 @@ HTML 快照：News/.work/html-dumps/{source}-{page}-{timestamp}.html
 
 ---
 
-*版本：1.6.0 | 设计模式：Pipeline + Inversion + Generator + Reviewer*
+*版本：1.7.0 | 设计模式：Pipeline + Inversion + Generator + Reviewer*
