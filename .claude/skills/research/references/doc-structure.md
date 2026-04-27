@@ -1,10 +1,31 @@
-# 文档结构模板
+# 文档结构模板（T1 核心知识体系）
 
-> 调研生成的目标文档结构
+> 调研生成的目标文档结构 — 通用技术/框架调研默认模板
+>
+> **模板 ID：** T1 | **Diátaxis 映射：** Tutorial + Explanation 混合
+> **向后兼容：** 此文件保留完整模板内容，旧版本 research Skill 可直接引用
 
 ---
 
-## 标准 8 章节结构
+## 模板库索引
+
+| 模板 ID | 类型 | 文件 | 适用场景 |
+|---------|------|------|----------|
+| T1 | 核心知识体系 | `doc-structure.md`（本文件） | 通用技术/框架调研 |
+| T2 | 知识图谱 | `templates/T2-knowledge-graph.md` | 概念网络、实体关系 |
+| T3 | 操作指南 | `templates/T3-how-to-guide.md` | 操作步骤、部署流程 |
+| T4 | 深度解析 | `templates/T4-deep-analysis.md` | 源码分析、底层机制 |
+| T5 | 快速入门 | `templates/T5-quick-start.md` | 5 分钟上手、备忘录 |
+| T6 | API 参考 | `templates/T6-api-reference.md` | 接口文档、SDK 参考 |
+| T7 | 概念解析 | `templates/T7-concept-analysis.md` | 纯理论、设计思想 |
+| T8 | 最佳实践 | `templates/T8-best-practices.md` | 生产经验、反模式 |
+| T9 | 对比分析 | `templates/T9-comparison-analysis.md` | 技术选型、迁移指南 |
+
+**模板选择规则：** 详见 `references/template-decision-tree.md`
+
+---
+
+## 标准 8 章节结构（T1）
 
 ```markdown
 # [主题] 核心知识体系
@@ -56,7 +77,7 @@
 **定义：** [准确简洁的定义]
 
 **工作原理：**
-[深入底层机制，包含流程图/架构图]
+[深入底层机制，包含 Mermaid 流程图/架构图]
 
 **示例：**
 ```[语言]
@@ -221,26 +242,16 @@
 
 ### 禁止 ASCII 流程图
 
-````
-❌ 避免以下画法：
-
-┌─────────────┐     ┌──────────────┐     ┌──────────────┐
-│  State 变化  │ ──> │ 创建新 VDOM  │ ──> │   Diff 对比   │
-└─────────────┘     └──────────────┘     └──────────────┘
-```
-````
+❌ 避免 ASCII 字符绘制的流程图。
 
 ### 推荐使用 Mermaid
 
-````mermaid
-✅ 推荐画法：
-
+```mermaid
 flowchart LR
     A[State 变化] --> B[创建新 VDOM]
     B --> C[Diff 对比]
     C --> D[批量更新 DOM]
 ```
-````
 
 ### 图表类型选择
 
@@ -279,4 +290,5 @@ flowchart LR
 
 ---
 
-*资源版本：1.0.0*
+*资源版本：2.0.0*
+*更新：2026-04-27 增加模板库索引，指向 T2-T9 模板文件*
