@@ -97,7 +97,40 @@ skill-name/
 | **Generator** | `assets/template.md` + `references/style-guide.md` | 模板 + 风格指南 |
 | **Reviewer** | `references/checklist-*.md` | 审查清单 |
 | **Inversion** | 阶段问题列表 + 门控指令 | SKILL.md 内定义 |
-| **Pipeline** | 步骤定义 + 检查点指令 | SKILL.md 内定义 |
+| **Pipeline** | `temp/steps/` + `temp/progress.yaml` + 硬性门控指令 | Step 文件 + 进度追踪 |
+
+### 3.5 Pipeline 进度追踪资源
+
+**适用 Skill 类型：** 产品验证、部署流程、代码生成
+
+**必须创建的资源：**
+
+```
+[skill-name]/
+├── temp/                       # 临时目录（任务完成清除）
+│   ├── steps/                  # Step 文件目录
+│   │   ├── step-01-init.md
+│   │   ├── step-02-xxx.md
+│   │   └── ...
+│   └── progress.yaml           # 进度追踪文件
+├── references/
+│   └ pipeline-progress-format.md  # 进度格式规范（引用）
+│   └ [其他资源]
+```
+
+**progress.yaml 格式：**
+
+```yaml
+stepsCompleted: []
+currentStep: step-01-init
+nextStep: step-02-xxx
+checkpoint: self-check
+status: in-progress
+createdAt: [timestamp]
+updatedAt: [timestamp]
+```
+
+**详细规范：** 详见 `pipeline-progress-format.md`
 
 ---
 
@@ -216,7 +249,23 @@ skill-name/
 | **Generator** | `assets/template.md` + `references/style-guide.md` 存在 |
 | **Reviewer** | `references/checklist-*.md` 存在、审查分离架构正确 |
 | **Inversion** | 阶段问题列表完整、门控指令（DO NOT）存在 |
-| **Pipeline** | 步骤定义清晰、检查点指令完整、禁止跳步指令存在 |
+| **Pipeline** | `temp/steps/` 目录存在、`progress.yaml` 格式正确、硬性门控指令（🛑）完整、步骤依赖关系清晰 |
+
+### Pipeline 进度追踪专项检查
+
+**适用 Skill 类型：** 产品验证、部署流程、代码生成
+
+**检查清单：**
+
+- [ ] `temp/` 目录存在（任务完成清除）
+- [ ] `temp/steps/` 包含所有步骤文件
+- [ ] `temp/progress.yaml` 格式符合规范
+- [ ] SKILL.md 包含硬性门控指令（🛑 DON'T）
+- [ ] 每个 step 文件包含：
+  - [ ] `stepId`、`stepName`、`checkpoint`、`requires`、`produces`
+  - [ ] 前置检查逻辑
+  - [ ] 完成后操作（更新 progress.yaml）
+- [ ] 引用 `references/pipeline-progress-format.md`
 
 **完整检查清单：** 详见 `checklists/creation-checklist.md`
 

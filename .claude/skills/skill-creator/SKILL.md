@@ -1,10 +1,10 @@
 ---
 name: skill-creator
-description: 通过问答引导创建 Skill，包含 9 种类型模板、检查清单、支持读取修改已有 Skill
+description: 通过问答引导创建 Skill，包含 9 种类型模板、检查清单、支持读取修改已有 Skill、Pipeline 进度追踪
 aliases: [create-skill, skill-generator, 创建 Skill, skill 创建器]
 author: Kei
 triggers: [帮我创建一个 Skill, 想要做一个，我想创建，帮我写一个 skill, 生成一个 skill, 优化 skill]
-version: 9.0.0
+version: 10.0.0
 metadata:
   category: 工具类
   type: 元技能
@@ -12,6 +12,7 @@ metadata:
   interaction: multi-turn
   stages: "9"
   gating: required
+  pipelineTracking: true
 ---
 
 # Skill Creator - Skill 创建器
@@ -136,17 +137,19 @@ metadata:
 
 ## 9 种 Skill 类型与设计模式推荐
 
-| 类型 | 适用场景 | 推荐设计模式 | 模板文件 |
-|------|----------|--------------|----------|
-| 库和 API 参考 | 内部库、CLI、SDK 使用指南 | **Tool Wrapper** | `templates/library-reference.md` |
-| 产品验证 | 测试流程、断言验证 | **Pipeline + Reviewer** | `templates/product-verification.md` |
-| 数据获取与分析 | 数据查询、报表生成 | **Tool Wrapper + Generator** | `templates/data-analysis.md` |
-| 代码生成 | 规格转代码、设计稿转前端 | **Generator + Pipeline** | `templates/code-generation.md` |
-| 文档生成 | PR 描述、API 文档、发布说明 | **Generator + Inversion** | `templates/doc-generation.md` |
-| 代码审查 | 安全检查、性能分析、代码质量 | **Reviewer + Tool Wrapper** | `templates/code-review.md` |
-| 部署流程 | 部署、发布、回滚 | **Pipeline + Reviewer** | `templates/deployment.md` |
-| 团队规范 | 编码风格、提交规范 | **Tool Wrapper** | `templates/team-norms.md` |
-| 调研整理 | 技术调研、知识整理 | **Inversion + Generator** | `templates/research.md` |
+| 类型 | 适用场景 | 推荐设计模式 | Pipeline 进度追踪 | 模板文件 |
+|------|----------|--------------|------------------|----------|
+| 库和 API 参考 | 内部库、CLI、SDK 使用指南 | **Tool Wrapper** | 不需要 | `templates/library-reference.md` |
+| 产品验证 | 测试流程、断言验证 | **Pipeline + Reviewer** | **需要** | `templates/product-verification.md` |
+| 数据获取与分析 | 数据查询、报表生成 | **Tool Wrapper + Generator** | 不需要 | `templates/data-analysis.md` |
+| 代码生成 | 规格转代码、设计稿转前端 | **Generator + Pipeline** | **需要** | `templates/code-generation.md` |
+| 文档生成 | PR 描述、API 文档、发布说明 | **Generator + Inversion** | 不需要 | `templates/doc-generation.md` |
+| 代码审查 | 安全检查、性能分析、代码质量 | **Reviewer + Tool Wrapper** | 不需要 | `templates/code-review.md` |
+| 部署流程 | 部署、发布、回滚 | **Pipeline + Reviewer** | **需要** | `templates/deployment.md` |
+| 团队规范 | 编码风格、提交规范 | **Tool Wrapper** | 不需要 | `templates/team-norms.md` |
+| 调研整理 | 技术调研、知识整理 | **Inversion + Generator** | 不需要 | `templates/research.md` |
+
+**Pipeline 进度追踪详解：** 详见 `references/pipeline-progress-format.md`
 
 ---
 
@@ -250,11 +253,12 @@ version: 1.0.0
 | 检查清单 | `checklists/creation-checklist.md` | Review 检查 |
 | 使用示例 | `examples/usage-examples.md` | 典型场景 |
 | **谷歌设计模式** | `references/google-design-patterns.md` | 5 种设计模式详解与组合策略 |
+| **Pipeline 进度追踪** | `references/pipeline-progress-format.md` | Pipeline 模式进度追踪格式规范 |
 | **Eval Schema** | `references/eval-schemas.md` | 评估数据格式（evals/grading/metrics/history） |
 | **Grader Agent** | `references/grader-agent.md` | 评分器指令 |
 | **Eval 迭代循环** | `references/eval-iteration-loop.md` | 写→测→评→改迭代流程 |
 
 ---
 
-*Skill 版本：9.0.0 | 作者：Kei | 创建日期：2026-03-25*
-*更新：2026-04-10 v8 → v9 流程抽象化，详细步骤移至 references/execution-guide.md，主文件 < 500 行*
+*Skill 版本：10.0.0 | 作者：Kei | 创建日期：2026-03-25*
+*更新：2026-04-27 v9 → v10 增加 Pipeline 进度追踪架构，采用 BMAD step-file architecture*

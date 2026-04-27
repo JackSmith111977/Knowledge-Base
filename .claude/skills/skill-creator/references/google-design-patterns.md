@@ -282,59 +282,135 @@ metadata:
 
 ### 核心思想
 
-> "把 Agent 升级为'工作流引擎'"
+> "把 Agent 升级为'工作流引擎'，强制顺序执行，硬性门控防止跳步"
 
 ### 解决的问题
 
 - 步骤跳过：Agent 为了快速输出，省略中间步骤
 - 顺序混乱：先写文档再分析代码
 - 检查缺失：没有中间验证环节
+- 进度不透明：用户不知道当前执行到哪一步
 
 ### 工作机制
 
 ```
-步骤 1 → [检查点 1] → 步骤 2 → [检查点 2] → ... → 输出
+初始化 → progress.yaml 创建 → step-01 → [检查点] → step-02 → [检查点] → ... → 完成 → 清理 temp/
 
 检查点类型：
-- 自检检查点：Agent 自行验证
-- 用户确认检查点：需要用户确认
-- 自动化检查点：脚本验证
+- user-confirm：用户确认后继续
+- self-check：Agent 自检后继续
+- auto-verify：脚本验证后继续
+
+硬性门控：
+- 启动每步前验证 stepsCompleted 包含所有前序步骤
+- 缺失则 HALT，禁止跳步
 ```
+
+### 进度追踪架构
+
+**采用 BMAD step-file architecture：**
+
+```yaml
+# progress.yaml（存放在 temp/）
+stepsCompleted:
+  - step-01-init
+  - step-02-discovery
+currentStep: step-03-generate
+nextStep: step-04-validate
+checkpoint: user-confirm
+status: in-progress
+createdAt: 2026-04-27T10:00:00
+updatedAt: 2026-04-27T10:30:00
+```
+
+**Step 文件结构（存放在 temp/steps/）：**
+
+```yaml
+---
+stepId: step-03-generate
+stepName: 生成草稿
+checkpoint: user-confirm
+requires:
+  - step-01-init
+  - step-02-discovery
+produces:
+  - draft: string
+nextStep: step-04-validate
+---
+
+# 步骤内容...
+
+## 前置检查
+验证 progress.yaml 中 stepsCompleted 包含所有 requires
+
+## 执行内容
+[具体指令...]
+
+## 完成后操作
+更新 progress.yaml，追加当前步骤到 stepsCompleted
+```
+
+**详细规范：** 详见 `pipeline-progress-format.md`
 
 ### SKILL.md 示例
 
 ```yaml
 ---
 name: doc-pipeline
-description: 通过多步骤流水线从 Python 源代码生成 API 文档。强制执行顺序，设置检查点。
+description: 通过多步骤流水线从 Python 源代码生成 API 文档。强制执行顺序，设置检查点，进度可追踪。
 metadata:
   pattern: pipeline
   steps: "4"
   interaction: sequential
+  progressTracking: true
 ---
 
 # 文档生成流水线（Pipeline 模式）
 
-## 硬性门控
+## 硬性门控（Gating Instructions）
 
 **按顺序执行每一步。如果某一步失败，不得继续。**
 
 **DON'T:**
-- 不要跳过任何步骤
-- 不要合并多个步骤
-- 不要在未通过检查点时继续
+- 🛑 不要跳过任何步骤
+- 🛑 不要合并多个步骤
+- 🛑 不要在未通过检查点时继续
+- 🛑 不要加载多个 step 文件同时执行
+- 🛑 不要在未验证前序步骤完成时开始新步骤
 
-## 步骤 1：解析与清单生成
-[检查点 1：用户确认]
+## 进度追踪
 
-## 步骤 2：生成文档字符串
-[检查点 2：自检]
+**初始化：**
+创建 `temp/progress.yaml`，记录执行状态
 
-## 步骤 3：组装文档
-[检查点 3：自检]
+**每步完成：**
+追加步骤 ID 到 `stepsCompleted` 数组
 
-## 步骤 4：质量检查
-[检查点 4：用户确认]
+**任务完成：**
+清除 `temp/` 目录（step 文件 + progress.yaml）
+
+**进度格式：** 详见 `references/pipeline-progress-format.md`
+
+## 步骤流程
+
+### 步骤 1：初始化
+[检查点：self-check]
+- 创建 progress.yaml
+- 加载配置
+
+### 步骤 2：解析与清单生成
+[检查点：user-confirm]
+- 依赖：步骤 1 完成
+- 加载：`temp/steps/step-02-parse.md`
+
+### 步骤 3：生成文档字符串
+[检查点：self-check]
+- 依赖：步骤 2 完成
+
+### 步骤 4：质量检查
+[检查点：user-confirm]
+- 依赖：步骤 3 完成
+- 完成后清理 temp/
 ```
 
 ### 效果数据
