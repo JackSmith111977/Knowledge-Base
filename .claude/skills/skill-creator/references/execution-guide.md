@@ -53,7 +53,22 @@ metadata:
 1. **分析需求** — 根据阶段 1 的回答，识别适用模式
 2. **推荐模式** — 推荐 1-2 种最匹配的模式（可组合）
 3. **解释原因** — 说明为什么推荐这些模式
-4. **用户确认** — 等待用户选择或调整
+4. **用户确认** — 使用 `AskUserQuestion` 工具确认模式选择
+
+**AskUserQuestion 示例：**
+```json
+{
+  "questions": [{
+    "header": "设计模式",
+    "multiSelect": false,
+    "options": [
+      {"label": "Pipeline + Reviewer", "description": "质量提升 +29%，适用代码审查"},
+      {"label": "Generator + Inversion", "description": "质量提升 +36%，适用需求驱动内容生成"}
+    ],
+    "question": "推荐使用哪种设计模式？"
+  }]
+}
+```
 
 ---
 
@@ -493,7 +508,31 @@ skill-name/
 
 ## 输出格式规范
 
-**阶段输出：** 每个阶段结束标注当前阶段、下一步、等待确认
+**阶段输出：** 每个阶段结束标注当前阶段、下一步。
+
+**反转询问规范：**
+
+需要用户确认/选择时，**必须使用 `AskUserQuestion` 工具**：
+
+```json
+{
+  "questions": [{
+    "header": "短标签",     // 显示为 chip/tag，≤12 字符
+    "multiSelect": false,   // 单选 false / 多选 true
+    "options": [
+      {"label": "选项名", "description": "说明", "preview": "预览内容（可选）"}
+    ],
+    "question": "完整问题?"
+  }]
+}
+```
+
+**适用场景：**
+- 需求澄清（阶段 1）— Skill 类型、触发方式选择
+- 设计模式确认（阶段 2）— 模式选择
+- 用例定义（阶段 3）— 触发方式确认
+- 草稿确认（阶段 5）— 输出位置、是否继续
+- 修改确认（M2）— 修改内容确认
 
 **Skill 草稿格式：**
 ```yaml

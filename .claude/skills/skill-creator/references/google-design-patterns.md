@@ -119,7 +119,22 @@ metadata:
 加载 `assets/report-template.md` 获取所需的输出结构。
 
 ### 步骤 3：询问缺失信息
-向用户询问填充模板所需的缺失信息。
+使用 `AskUserQuestion` 向用户询问填充模板所需的缺失信息：
+
+```json
+{
+  "questions": [{
+    "header": "模板变量",
+    "multiSelect": false,
+    "options": [
+      {"label": "项目名称", "description": "填写项目名称"},
+      {"label": "作者信息", "description": "填写作者和日期"},
+      {"label": "技术栈详情", "description": "填写具体技术版本"}
+    ],
+    "question": "模板中缺少哪些信息？请选择需要补充的项目："
+  }]
+}
+```
 
 ### 步骤 4：填充模板
 按照风格指南规则填充模板。
@@ -262,10 +277,44 @@ metadata:
 - 不要跳过任何问题
 
 ## 阶段 1：问题发现
-询问核心问题和目标。
+使用 `AskUserQuestion` 询问核心问题和目标：
+
+```json
+{
+  "questions": [{
+    "header": "问题定义",
+    "multiSelect": false,
+    "options": [
+      {"label": "新功能开发", "description": "从零开始构建新功能"},
+      {"label": "现有功能优化", "description": "改进或重构已有功能"},
+      {"label": "Bug 修复", "description": "解决已知问题"}
+    ],
+    "question": "本次项目的核心目标是什么？"
+  }]
+}
+```
 
 ## 阶段 2：技术约束
-收集技术栈、部署环境、团队规模等。
+使用 `AskUserQuestion` 收集技术栈、部署环境、团队规模等：
+
+```json
+{
+  "questions": [{
+    "header": "技术栈",
+    "multiSelect": true,
+    "options": [
+      {"label": "React", "description": "前端框架"},
+      {"label": "Node.js", "description": "后端运行时"},
+      {"label": "PostgreSQL", "description": "数据库"}
+    ],
+    "question": "项目使用哪些技术？"
+  }]
+}
+```
+
+**DON'T:**
+- 不要用自由文本提问（如"请告诉我技术栈"）
+- 必须使用 AskUserQuestion 提供选项
 
 ## 阶段 3：综合输出
 加载模板，生成完整方案。
