@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-22 (v1.37.0)
+**最后更新：** 2026-04-23 (v1.39.0)
 
 ---
 
@@ -75,7 +75,7 @@ Knowledge Base/
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
 | 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发）、news-digest-2026-04-21.md（金融） |
-| Agent Framework | Tech/AI/AgentFramework/ | LangChain LangGraph 核心知识体系.md, Hermes Agent 核心知识体系.md |
+| Agent Framework | Tech/AI/AgentFramework/ | CrewAI 核心知识体系.md, LangChain LangGraph 核心知识体系.md, Hermes Agent 核心知识体系.md |
 | Agent Harness | Tech/AI/AgentHarness/ | Harness Engineering 核心知识体系.md |
 | Agent Infra | Tech/AI/AgentInfra/ | AI Agent 技术栈全景核心知识体系.md |
 | Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
@@ -146,8 +146,11 @@ Knowledge Base/
 
 | 文件名 | 主题 | 创建日期 |
 |--------|------|----------|
+| CrewAI 核心知识体系.md | CrewAI 多智能体编排框架 | 2026-04-22 |
 | LangChain LangGraph 核心知识体系.md | LangChain + LangGraph 框架 | 2026-04-21 |
 | Hermes Agent 核心知识体系.md | Hermes Agent 框架 | 2026-04-04 |
+| AutoGen 核心知识体系.md | AutoGen 多智能体编程框架 | 2026-04-22 |
+| OpenAI Agents SDK 核心知识体系.md | OpenAI Agents SDK 轻量级多 Agent 框架 | 2026-04-23 |
 
 ### Tech/AI/AgentHarness/
 
@@ -198,6 +201,7 @@ Knowledge Base/
 |--------|------|----------|
 | 文档优先开发范式核心知识体系.md | Document-First Development | 2026-04-01 |
 | SpecFirst/Spec-First 核心知识体系.md | Spec-Driven Development | 2026-04-06 |
+| SpecFirst/spec-coding-knowledge-graph.md | Spec Coding 全景知识图谱 | 2026-04-27 |
 
 ### Tech/AI/Prompt Engineering/
 
@@ -672,6 +676,24 @@ Knowledge Base/
 - 与灵神 LeetCode 题单学习指南并列 Algorithms 分类
 
 ---
+
+### 2026-04-23 整理（OpenAI Agents SDK 调研完成）
+
+**执行的操作：**
+1. ✅ 创建 `OpenAI Agents SDK 核心知识体系.md` 文档（8 章，3629+ 行）
+2. ✅ 注册文档到 KB-INDEX
+3. ✅ 更新 KB-INDEX 版本至 v1.39.0
+4. ✅ 归档草稿至 `.work/openai-agents/archive/2026-04-23/`
+
+**整理后效果：**
+- OpenAI Agents SDK 调研文档收录到 `Tech/AI/AgentFramework/` 目录
+- 8 章涵盖：基础认知、架构设计、Agent 设计、编排模式、工具与集成、安全与 Guardrails、生产实践、常见误区与最佳实践
+- Mermaid 图表 25+ 个，10+ 来源交叉验证
+- 与 CrewAI/LangGraph/Hermes/AutoGen 并列 AgentFramework 分类
+
+---
+
+## 整理记录
 
 ### 2026-04-21 整理（AI Agent 技术栈全景调研）
 
