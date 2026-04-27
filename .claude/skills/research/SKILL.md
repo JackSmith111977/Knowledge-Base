@@ -1,11 +1,11 @@
 ---
 name: research
-description: 深度调研任意主题并生成结构化知识文档，基于 KB-INDEX 索引快速推荐位置，支持知识库重复检测和 SubAgent 并行模式，集成 web-access 进行智能调研
+description: 深度调研任意主题并生成结构化知识文档，基于 KB-INDEX 索引快速推荐位置，支持知识库重复检测和 SubAgent 并行模式，集成 web-access 进行智能调研，v14 新增草稿评分 + 合并决策树解决多草稿重叠/冲突问题
 aliases: [research, 调研助手，整理文档，研究]
 commands: [/research]
 author: Kei
 triggers: [调研，研究，整理一份，帮我调研，生成文档，深度分析，整理资料，做调研]
-version: 13.0.0
+version: 14.0.0
 compatibility: 需要 WebSearch、WebFetch 和 web-access Skill，SubAgent 模式需 parallel-task Skill
 metadata:
   category: 调研整理
@@ -513,10 +513,12 @@ Knowledge Base/
 | KB-INDEX 模板 | `references/kb-index-template.md` | 索引文件模板 |
 | 检查清单 | `checklists/review-checklist.md` | Review 检查 |
 | 踩坑清单 | `references/gotchas.md` | 常见错误 |
-| **整合后处理 Pipeline** | `references/post-processing-pipeline.md` | **冗余去重/Mermaid校验/格式检验/语义一致性/质量评分** |
+| **整合后处理 Pipeline** | `references/post-processing-pipeline.md` | **§0 草稿评分/§1 冗余去重+决策树/Mermaid校验/格式检验/语义一致性/质量评分** |
+| **合并决策树** | `references/merge-decision-tree.md` | **多草稿重叠/内容冲突处理规则** |
+| **自动化脚本** | `scripts/` | **评分/去重/整合流水线脚本** |
 | 示例 | `examples/` | 使用示例 |
 
 ---
 
-*Skill 版本：13.0.0 | 作者：Kei | 更新：2026-04-27*
-*更新说明：v12 → v13 — YAML 门控增强（gates 数组定义阻塞条件 + HALT 指令双重保证，修复跳步问题）、多模板系统（T1-T9 9 种文档模板 + 模板选择决策树）、阶段 2 增加模板选择环节、所有阶段增加 STAGE_GATE 标记*
+*Skill 版本：14.0.0 | 作者：Kei | 更新：2026-04-27*
+*更新说明：v13 → v14 — 新增草稿评分机制（§0）+ 合并决策树 + 来源优先级规则，解决多草稿重叠和内容冲突问题*
