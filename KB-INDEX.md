@@ -2,7 +2,7 @@
 
 > 本文档提供知识库目录结构与主题分类映射，用于快速推荐文档存储位置
 
-**最后更新：** 2026-04-23 (v1.39.0)
+**最后更新：** 2026-04-27 (v1.40.0)
 
 ---
 
@@ -74,8 +74,8 @@ Knowledge Base/
 
 | 主题/技术 | 推荐目录 | 现有文档 |
 |-----------|----------|----------|
-| 新闻聚合 | News/ | news-digest-2026-04-13.md（AI 前沿 + 前端开发）、news-digest-2026-04-21.md（金融） |
-| Agent Framework | Tech/AI/AgentFramework/ | CrewAI 核心知识体系.md, LangChain LangGraph 核心知识体系.md, Hermes Agent 核心知识体系.md |
+| 新闻聚合 | News/ | news-digest-2026-04-28.md（AI 前沿）、news-digest-2026-04-21.md（金融） |
+| Agent Framework | Tech/AI/AgentFramework/ | CrewAI 核心知识体系.md, LangChain LangGraph 核心知识体系.md, Hermes Agent 核心知识体系.md, AutoGen 核心知识体系.md, OpenAI Agents SDK 核心知识体系.md, Claude Agent SDK 核心知识体系.md, Google ADK 核心知识体系.md |
 | Agent Harness | Tech/AI/AgentHarness/ | Harness Engineering 核心知识体系.md |
 | Agent Infra | Tech/AI/AgentInfra/ | AI Agent 技术栈全景核心知识体系.md |
 | Agent Skill | Tech/AI/AgentSkill/ | Google 5 种设计模式核心知识体系.md |
@@ -151,6 +151,8 @@ Knowledge Base/
 | Hermes Agent 核心知识体系.md | Hermes Agent 框架 | 2026-04-04 |
 | AutoGen 核心知识体系.md | AutoGen 多智能体编程框架 | 2026-04-22 |
 | OpenAI Agents SDK 核心知识体系.md | OpenAI Agents SDK 轻量级多 Agent 框架 | 2026-04-23 |
+| Claude Agent SDK 核心知识体系.md | Claude Agent SDK 官方 Agent Harness | 2026-04-27 |
+| Google ADK 核心知识体系.md | Google Agent Development Kit | 2026-04-27 |
 
 ### Tech/AI/AgentHarness/
 
@@ -428,6 +430,7 @@ Knowledge Base/
 | AI 前沿/news-digest-2026-04-18.md | AI 新闻 | 2026-04-18 |
 | AI 前沿/news-digest-2026-04-20.md | AI 新闻 | 2026-04-20 |
 | AI 前沿/news-digest-2026-04-22.md | AI 新闻 | 2026-04-22 |
+| AI 前沿/news-digest-2026-04-28.md | AI 新闻 | 2026-04-28 |
 | 前端开发/news-digest-2026-04-13.md | 前端新闻 | 2026-04-13 |
 | 前端开发/news-digest-2026-04-20.md | 前端新闻 | 2026-04-20 |
 | 金融/news-digest-2026-04-21.md | 金融新闻 | 2026-04-21 |
