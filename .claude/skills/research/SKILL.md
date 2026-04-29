@@ -61,7 +61,7 @@ gates:
 9. **CDP 统一管理：主 Agent 启动一次 Proxy，SubAgent 共享使用，禁止各自启动**
 10. **批次化调度：每批最多 2 个 SubAgent 并发，批次间等待 30s，应对 API 限流**
 
-**搜索规则：** 必须使用 `mcp__WebSearch__bailian_web_search` 或 `web-access` Skill
+**搜索规则：** 使用原生 WebSearch/WebFetch 或 `web-access` Skill
 
 **web-access 集成说明：**
 - 预调研（阶段 2）和分章节调研（阶段 3）均托管给 `web-access` Skill

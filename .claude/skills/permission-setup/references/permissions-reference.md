@@ -59,11 +59,12 @@
 
 ## 常用 MCP 工具前缀
 
-| MCP 服务器 | 工具前缀 | 示例 |
-|------------|----------|------|
-| WebSearch | `mcp__WebSearch__` | `mcp__WebSearch__bailian_web_search` |
-| Next DevTools | `mcp__next-devtools__` | `mcp__next-devtools__nextjs_index` |
-| Playwright | `mcp__playwright__` | `mcp__playwright__browser_navigate` |
+| 常用工具 | 说明 | 示例 |
+|----------|------|------|
+| WebSearch | 网络搜索（原生） | `WebSearch` |
+| WebFetch | 获取网页内容 | `WebFetch(domain:*)` |
+| Playwright MCP | `mcp__playwright__` | `mcp__playwright__browser_navigate` |
+| Next DevTools MCP | `mcp__next-devtools__` | `mcp__next-devtools__nextjs_index` |
 
 ## WebFetch 配置
 

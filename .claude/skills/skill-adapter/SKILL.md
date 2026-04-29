@@ -67,7 +67,7 @@ metadata:
 | **Hooks 脚本路径** | hooks command 中的脚本引用 | `node .claude/scripts/xxx.js` |
 | **领域特定** | 技术名词库、模式库 | `TECH_ENTITIES`、`COMMAND_PATTERNS` |
 | **文件引用** | 相对路径引用 | `references/xxx.md` |
-| **MCP 服务依赖** | `mcp__` 前缀工具调用 | `mcp__WebSearch__bailian_web_search` |
+| **MCP 服务依赖** | `mcp__` 前缀工具调用 | `mcp__playwright__browser_navigate` |
 | **环境变量** | `$VAR`、`${VAR}` 格式 | `$PROJECT_DIR` |
 | **触发器配置** | YAML Frontmatter 中的 `triggers`/`commands`/`aliases` | `triggers: [调研，研究]` |
 

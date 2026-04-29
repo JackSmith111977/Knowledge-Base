@@ -137,7 +137,8 @@ const TECH_ENTITIES = [
 
 **示例：**
 ```
-mcp__WebSearch__bailian_web_search
+WebSearch
+WebFetch(domain:example.com)
 ```
 
 **适配方式：**

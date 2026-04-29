@@ -193,7 +193,7 @@
     "expectations": [
       "执行了 check-deps.mjs 检查 CDP 依赖",
       "使用 web-access skill 的 CDP 模式访问了至少 8 个高权重信源",
-      "不是仅使用 bailian_web_search 或其他 MCP 搜索工具",
+      "不是仅使用 WebSearch 或其他轻量搜索工具",
       "信源访问覆盖了 config.json 中 weight >= 0.8 的信源"
     ]
   },

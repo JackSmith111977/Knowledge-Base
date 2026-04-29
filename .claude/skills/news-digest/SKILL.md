@@ -10,7 +10,7 @@ triggers:
   - news digest
   - 今日新闻
 author: Kei
-version: 1.8.0
+version: 1.7.0
 metadata:
   patterns: [pipeline, inversion, generator, reviewer]
   type: 数据获取与分析
@@ -59,7 +59,7 @@ metadata:
 
 ### 步骤 1：搜索与采集
 
-**[硬性门控] 必须使用 `web-access` skill 执行采集，禁止仅用 MCP 搜索工具（bailian_web_search 等）替代。仅允许在 web-access 初始化失败时降级为 MCP 搜索作为兜底。**
+**[硬性门控] 必须使用 `web-access` skill 执行采集，禁止仅用 MCP 搜索工具替代。仅允许在 web-access 初始化失败时降级为原生 WebSearch 作为兜底。**
 
 对每个已启用的主题：
 1. 从 config.json 读取该主题的搜索关键词和信源列表

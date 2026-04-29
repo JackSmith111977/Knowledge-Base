@@ -8,9 +8,8 @@
 
 ### 核心规则
 
-- **禁止使用原生 WebSearch**：必须使用 MCP 提供的 `mcp__WebSearch__bailian_web_search` 进行搜索
-- 会话中必须遵守的规则
-- 沟通风格与输出格式
+- **搜索工具优先级**：CDP 浏览器 > 原生 WebSearch/WebFetch > MCP 搜索工具
+- WebFetch 已配置 `skipWebFetchPreflight: true`，无需确认
 
 ---
 

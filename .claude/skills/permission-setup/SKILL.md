@@ -127,7 +127,6 @@ find .claude -name "settings*.json" 2>/dev/null
 ## MCP 工具权限配置
 
 检测到以下 MCP 服务器:
-- mcp__WebSearch__: bailian_web_search
 - mcp__next-devtools__: nextjs_index, nextjs_call, ...
 
 建议允许所有 MCP 工具？[Y/n]
@@ -238,7 +237,8 @@ find .claude -name "settings*.json" 2>/dev/null
 ### 新增规则
 - + "Bash(npm run:*)"
 - + "Bash(git add:*)"
-- + "mcp__WebSearch__bailian_web_search"
+- + "WebSearch"
+- + "WebFetch(domain:*)"
 - + "Edit(.claude/settings.local.json)"（新增）
 - + "Write(.claude/settings.local.json)"（新增）
 
@@ -296,7 +296,8 @@ node -e "JSON.parse(require('fs').readFileSync('.claude/settings.local.json'))"
       "Write",
       "Glob",
       "Grep",
-      "mcp__WebSearch__bailian_web_search",
+      "WebSearch",
+      "WebFetch(domain:*)",
       "mcp__playwright__*",
       "Agent",
       "WebFetch(domain:*)",
@@ -309,7 +310,6 @@ node -e "JSON.parse(require('fs').readFileSync('.claude/settings.local.json'))"
       "Write(.claude/settings.local.json)"
     ],
     "deny": [
-      "WebSearch",
       "Bash(rm -rf *)",
       "Bash(git push --force)",
       "Bash(curl * | bash)",
