@@ -1,0 +1,59 @@
+# LangChain + LangGraph 知识库进度追踪
+
+**最后更新：** 2026-04-21
+**当前状态：** 已完成
+
+---
+
+## 文档完成状态
+
+| 章节 | 主题 | 状态 | 完成日期 |
+|------|------|------|----------|
+| 第 1 章 | 基础认知 — LangChain 生态全景 | ✅ 完成 | 2026-04-21 |
+| 第 2 章 | LangChain 1.0 核心升级 | ✅ 完成 | 2026-04-21 |
+| 第 3 章 | LangGraph 架构设计 | ✅ 完成 | 2026-04-21 |
+| 第 4 章 | 状态与持久化 | ✅ 完成 | 2026-04-21 |
+| 第 5 章 | 人机协同与调试 | ✅ 完成 | 2026-04-21 |
+| 第 6 章 | 生产级部署 | ✅ 完成 | 2026-04-21 |
+| 第 7 章 | Middleware 深度解析 | ✅ 完成 | 2026-04-21 |
+| 第 8 章 | 常见误区与最佳实践 | ✅ 完成 | 2026-04-21 |
+
+---
+
+## 待办事项
+
+- [ ] 后续可根据官方更新补充新功能
+- [ ] 添加更多实战案例
+- [ ] 补充中文社区资源链接
+
+---
+
+## 草稿归档
+
+| 归档日期 | 位置 | 说明 |
+|----------|------|------|
+| 2026-04-21 | `.work/langchain/archive/2026-04-21/` | 8 章草稿 + merged-full.md |
+
+**保留期限：** 7 天后删除（2026-04-28）
+
+---
+
+## 文档信息
+
+- **总章节数：** 8 章
+- **总行数：** 5000+ 行
+- **存储位置：** `Tech/AI/AgentFramework/LangChain LangGraph 核心知识体系.md`
+- **KB-INDEX 注册：** 已完成（v1.36.0）
+
+---
+
+## 调研来源
+
+1. LangChain 官方文档：https://docs.langchain.com/
+2. LangGraph 官方文档：https://langchain-ai.github.io/langgraph/
+3. LangChain GitHub 仓库：https://github.com/langchain-ai/langchain
+4. LangGraph GitHub 仓库：https://github.com/langchain-ai/langgraph
+
+---
+
+*使用 /research Skill 自动生成*

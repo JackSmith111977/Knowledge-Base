@@ -1,0 +1,46 @@
+# OpenAI Agents SDK 调研进度追踪
+
+**最后更新：** 2026-04-23
+**当前状态：** 已完成
+
+---
+
+## 文档完成状态
+
+| 章节 | 主题 | 状态 | 完成日期 |
+|------|------|------|----------|
+| 第 1 章 | 基础认知 — OpenAI Agents SDK 生态全景 | ✅ 完成 | 2026-04-23 |
+| 第 2 章 | 架构设计 — 轻量级多 Agent 架构 | ✅ 完成 | 2026-04-23 |
+| 第 3 章 | Agent 设计 — 定义与配置 | ✅ 完成 | 2026-04-23 |
+| 第 4 章 | 编排模式 — Handoff 与 Agents as Tools | ✅ 完成 | 2026-04-23 |
+| 第 5 章 | 工具与集成 — MCP、Function Tools、托管工具 | ✅ 完成 | 2026-04-23 |
+| 第 6 章 | 安全与 Guardrails — 输入输出验证 | ✅ 完成 | 2026-04-23 |
+| 第 7 章 | 生产实践 — 追踪、评估、部署 | ✅ 完成 | 2026-04-23 |
+| 第 8 章 | 常见误区与最佳实践 | ✅ 完成 | 2026-04-23 |
+
+---
+
+## 文档信息
+
+- **存储位置：** `Tech/AI/AgentFramework/OpenAI Agents SDK 核心知识体系.md`
+- **总行数：** 3629+ 行
+- **图表数：** Mermaid 图表 25+ 个
+- **来源数：** 10+ 来源交叉验证
+
+---
+
+## 子 Agent 配置
+
+- **模式：** SubAgent 批次化调度（v2.0）
+- **批次策略：** 每批最多 2 个 SubAgent 并发，批次间等待 30s
+- **批次 1：** 第 1-4 章（主会话直接编写，SubAgent 失败回退）
+- **批次 2：** 第 5-8 章（SubAgent 成功完成）
+- **CDP Proxy：** 共享 `http://localhost:3456`
+
+---
+
+## 调研来源
+
+1. OpenAI Agents SDK 官方文档：https://developers.openai.com/api/docs/guides/agents
+2. GitHub Python SDK：https://github.com/openai/openai-agents-python
+3. GitHub TypeScript SDK：https://github.com/openai/openai-agents-js
